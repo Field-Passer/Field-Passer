@@ -49,7 +49,7 @@
     </appender>
 
     <!--전역 로깅 설정 ROOT 부터 하위로 내려감, additivity-> 상속여부-->
-    <logger name="com.example.fieldpasserbe" level="info" additivity="false">
+    <logger name="com.example.fieldpasserb" level="info" additivity="false">
         <appender-ref ref="RollingFile" />
         <appender-ref ref="Console" />
     </logger>
