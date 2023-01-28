@@ -33,7 +33,7 @@ public class Report {
 
     @Column(name = "CATEGORY")
     @Enumerated(EnumType.STRING)
-    private RCategory reportCategory;
+    private ReportCategory reportCategory;
 
     @Column(name = "REPORT_DATE")
     @Temporal(TemporalType.TIMESTAMP)
