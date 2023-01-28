@@ -7,7 +7,8 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
-import java.time.LocalDateTime;
+import java.util.Date;
+
 
 @AllArgsConstructor
 @NoArgsConstructor
@@ -24,12 +25,10 @@ public class Answer {
 
     @ManyToOne
     @JoinColumn(name = "ID")
-    @Column(name = "ID")
-    private Member admin;
+    private Member adminId;
 
     @OneToOne
     @JoinColumn(name = "QUESTION_ID")
-    @Column(name = "QUESTION_ID")
     private Question question;
 
     @Column(name = "TITLE")
@@ -40,5 +39,5 @@ public class Answer {
 
     @Column(name = "REGISTER_DATE")
     @Temporal(TemporalType.TIMESTAMP)
-    private LocalDateTime registerDate;
+    private Date registerDate;
 }

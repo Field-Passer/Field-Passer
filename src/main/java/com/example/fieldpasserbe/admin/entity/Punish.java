@@ -6,7 +6,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
-import java.time.LocalDateTime;
+import java.util.Date;
 
 @AllArgsConstructor
 @NoArgsConstructor
@@ -32,10 +32,10 @@ public class Punish {
 
     @Column(name = "JUDGE_DATE")
     @Temporal(TemporalType.TIMESTAMP)
-    private LocalDateTime judgeDate;
+    private Date judgeDate;
 
     @Column(name = "RELEASE_DATE")
     @Temporal(TemporalType.TIMESTAMP)
-    private LocalDateTime releaseDate;
+    private Date releaseDate;
 
 }

@@ -6,7 +6,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
-import java.time.LocalDateTime;
+import java.util.Date;
 
 @AllArgsConstructor
 @NoArgsConstructor
@@ -23,7 +23,6 @@ public class Question {
 
     @ManyToOne
     @JoinColumn(name = "ID")
-    @Column(name = "ID")
     private Member member;
 
     @Column(name = "TITLE")
@@ -35,11 +34,11 @@ public class Question {
 
     @Column(name = "REGISTER_DATE")
     @Temporal(TemporalType.TIMESTAMP)
-    private LocalDateTime registerDate;
+    private Date registerDate;
 
     @Column(name = "UPDATE_DATE")
     @Temporal(TemporalType.TIMESTAMP)
-    private LocalDateTime updateDate;
+    private Date updateDate;
 
     @Column(name = "PROCCESS")
     @Enumerated(EnumType.STRING)

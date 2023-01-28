@@ -3,6 +3,7 @@ package com.example.fieldpasserbe.admin.entity;
 import lombok.*;
 import javax.persistence.*;
 import java.time.LocalDateTime;
+import java.util.Date;
 
 @AllArgsConstructor
 @NoArgsConstructor
@@ -37,7 +38,7 @@ public class Member {
 
     @Column(name = "SIGNUP_DATE")
     @Temporal(TemporalType.TIMESTAMP)
-    private LocalDateTime signUpDate;
+    private Date signUpDate;
 
     @Column(name = "VISIT_COUNT")
     private Integer visitCount;

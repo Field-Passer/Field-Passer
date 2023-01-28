@@ -6,7 +6,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
-import java.time.LocalDateTime;
+import java.util.Date;
 
 @AllArgsConstructor
 @NoArgsConstructor
@@ -22,13 +22,11 @@ public class Report {
     private int reportId;
 
     @ManyToOne
-    @JoinColumn(name = "ID")
-    @Column(name = "REPOTER_ID")
+    @JoinColumn(referencedColumnName = "ID")
     private Member reporterMember;
 
     @ManyToOne
-    @JoinColumn(name = "ID")
-    @Column(name = "TARGET_ID")
+    @JoinColumn(referencedColumnName = "ID")
     private Member targetMember;
 
     @Column(name = "CATEGORY")
@@ -37,7 +35,7 @@ public class Report {
 
     @Column(name = "REPORT_DATE")
     @Temporal(TemporalType.TIMESTAMP)
-    private LocalDateTime reportDate;
+    private Date reportDate;
 
     @Column(name = "PROCCESS")
     @Enumerated(EnumType.STRING)

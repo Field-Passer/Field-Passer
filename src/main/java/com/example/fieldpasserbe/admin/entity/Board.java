@@ -2,7 +2,7 @@ package com.example.fieldpasserbe.admin.entity;
 
 import lombok.*;
 import javax.persistence.*;
-import java.time.LocalDateTime;
+import java.util.Date;
 
 @AllArgsConstructor
 @NoArgsConstructor
@@ -21,17 +21,14 @@ public class Board {
 
     @ManyToOne
     @JoinColumn(name = "CATEGORY_ID")
-    @Column(name = "CATEGORY_ID")
     private Category category;
 
     @ManyToOne
     @JoinColumn(name = "DISTRICT_ID")
-    @Column(name = "DISTRICT_ID")
     private District district;
 
     @ManyToOne
     @JoinColumn(name = "STADIUM_ID")
-    @Column(name = "STADIUM_ID")
     private Stadium stadium;
 
     @Column(name = "TITLE")
@@ -42,23 +39,23 @@ public class Board {
 
     @Column(name = "REGISTER_DATE")
     @Temporal(TemporalType.TIMESTAMP)
-    private LocalDateTime registerDate;
+    private Date registerDate;
 
     @Column(name = "UPDATE_DATE")
     @Temporal(TemporalType.TIMESTAMP)
-    private LocalDateTime updateDate;
+    private Date updateDate;
 
     @Column(name = "DELETE_DATE")
     @Temporal(TemporalType.TIMESTAMP)
-    private LocalDateTime deleteDate;
+    private Date deleteDate;
 
     @Column(name = "START_TIME")
     @Temporal(TemporalType.TIMESTAMP)
-    private LocalDateTime startTime;
+    private Date startTime;
 
     @Column(name = "END_TIME")
     @Temporal(TemporalType.TIMESTAMP)
-    private LocalDateTime endTime;
+    private Date endTime;
 
     @Column(name = "IMAGE_URL")
     private String imageURL;
