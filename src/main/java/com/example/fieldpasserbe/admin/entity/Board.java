@@ -2,20 +2,15 @@ package com.example.fieldpasserbe.admin.entity;
 
 import lombok.*;
 import javax.persistence.*;
-import java.util.Date;
+import java.time.LocalDateTime;
 
 @AllArgsConstructor
 @NoArgsConstructor
 @Getter
-@Setter
 @Builder
 @Entity
 @Table(name = "BOARD")
 public class Board {
-
-    enum TransactionStatus {
-        거래_중, 예약_중, 거래_완료
-    }
 
     @Id
     @Column(name = "POST_ID")
@@ -24,14 +19,20 @@ public class Board {
     @Column(name = "ID")
     private int id;
 
+    @ManyToOne
+    @JoinColumn(name = "CATEGORY_ID")
     @Column(name = "CATEGORY_ID")
-    private int categoryId;
+    private Category category;
 
+    @ManyToOne
+    @JoinColumn(name = "DISTRICT_ID")
     @Column(name = "DISTRICT_ID")
-    private int districtId;
+    private District district;
 
+    @ManyToOne
+    @JoinColumn(name = "STADIUM_ID")
     @Column(name = "STADIUM_ID")
-    private int stadiumId;
+    private Stadium stadium;
 
     @Column(name = "TITLE")
     private String title;
@@ -41,30 +42,29 @@ public class Board {
 
     @Column(name = "REGISTER_DATE")
     @Temporal(TemporalType.TIMESTAMP)
-    private Date registerDate;
+    private LocalDateTime registerDate;
 
     @Column(name = "UPDATE_DATE")
     @Temporal(TemporalType.TIMESTAMP)
-    private Date updateDate;
+    private LocalDateTime updateDate;
 
     @Column(name = "DELETE_DATE")
     @Temporal(TemporalType.TIMESTAMP)
-    private Date deleteDate;
+    private LocalDateTime deleteDate;
 
     @Column(name = "START_TIME")
     @Temporal(TemporalType.TIMESTAMP)
-    private Date startTime;
+    private LocalDateTime startTime;
 
     @Column(name = "END_TIME")
     @Temporal(TemporalType.TIMESTAMP)
-    private Date endTime;
+    private LocalDateTime endTime;
 
     @Column(name = "IMAGE_URL")
     private String imageURL;
 
     @Column(name = "TRANSACTION_STATUS")
-    @Enumerated(EnumType.STRING)
-    private TransactionStatus transactionStatus;
+    private byte transactionStatus;
 
     @Column(name = "PRICE")
     private int price;

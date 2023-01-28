@@ -7,7 +7,6 @@ import java.util.Date;
 @AllArgsConstructor
 @NoArgsConstructor
 @Getter
-@Setter
 @Builder
 @Entity
 @Table(name = "ADMINLIST")
@@ -15,13 +14,13 @@ public class Admin {
 
     @Id
     @Column(name = "ADMIN_ID")
-    private int admin_id;
+    private int adminId;
 
     @Column(name = "PROMOTE_DATE")
     @Temporal(TemporalType.TIMESTAMP)
     private Date promoteDate;
 
     @OneToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "ID", referencedColumnName = "ID")
+    @JoinColumn(name = "ID")
     private Member member;
 }
