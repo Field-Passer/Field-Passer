@@ -1,6 +1,8 @@
 package com.example.fieldpasserbe.admin.entity;
 
 
+import com.example.fieldpasserbe.member.entity.Member;
+import com.example.fieldpasserbe.serviceCenter.entity.Question;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;

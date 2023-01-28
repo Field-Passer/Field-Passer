@@ -1,4 +1,4 @@
-package com.example.fieldpasserbe.admin.entity;
+package com.example.fieldpasserbe.board.entity;
 
 import lombok.*;
 import javax.persistence.*;
