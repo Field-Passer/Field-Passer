@@ -1,5 +1,6 @@
 package com.example.fieldpasserbe.admin.entity;
 
+import com.example.fieldpasserbe.member.entity.Member;
 import lombok.*;
 import javax.persistence.*;
 import java.util.Date;
