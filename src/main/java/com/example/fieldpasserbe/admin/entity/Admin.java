@@ -22,6 +22,6 @@ public class Admin {
     private Date promoteDate;
 
     @OneToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "ID")
+    @JoinColumn(name = "ID", referencedColumnName = "ID")
     private Member member;
 }

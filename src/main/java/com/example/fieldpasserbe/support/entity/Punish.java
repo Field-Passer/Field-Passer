@@ -1,4 +1,4 @@
-package com.example.fieldpasserbe.serviceCenter.entity;
+package com.example.fieldpasserbe.support.entity;
 
 import com.example.fieldpasserbe.member.entity.Member;
 import lombok.AllArgsConstructor;
@@ -28,17 +28,13 @@ public class Punish {
 
     @ManyToOne
     @JoinColumn(name = "ADMIN_ID", referencedColumnName = "ID")
-    public Member admin;
+    private Member admin;
 
     @ManyToOne
     @JoinColumn(name = "TARGET_ID", referencedColumnName = "ID")
-    public Member target;
+    private Member target;
 
-    @Column(name = "JUDGE_DATE")
-    @Temporal(TemporalType.TIMESTAMP)
-    private Date judgeDate;
+    @Embedded
+    private PunishPeriod punishPeriod;
 
-    @Column(name = "RELEASE_DATE")
-    @Temporal(TemporalType.TIMESTAMP)
-    private Date releaseDate;
 }

@@ -3,7 +3,6 @@ package com.example.fieldpasserbe.member.entity;
 import com.example.fieldpasserbe.admin.entity.Admin;
 import lombok.*;
 import javax.persistence.*;
-import java.time.LocalDateTime;
 import java.util.Date;
 
 @AllArgsConstructor

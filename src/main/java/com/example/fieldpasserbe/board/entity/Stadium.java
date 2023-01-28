@@ -5,10 +5,7 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
 
 @AllArgsConstructor
 @NoArgsConstructor
@@ -22,11 +19,13 @@ public class Stadium {
     @Column(name = "STADIUM_ID")
     private int stadiumId;
 
-    @Column(name = "CATEGORY_ID")
-    private int categoryId;
+    @ManyToOne
+    @JoinColumn(name = "CATEGORY_ID", referencedColumnName = "CATEGORY_ID")
+    private Category category;
 
-    @Column(name = "DISTRICT_ID")
-    private int districtId;
+    @ManyToOne
+    @JoinColumn(name = "DISTRICT_ID", referencedColumnName = "DISTRICT_ID")
+    private District district;
 
     @Column(name = "STADIUM_NAME")
     private String stadiumName;

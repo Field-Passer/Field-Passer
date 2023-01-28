@@ -2,6 +2,7 @@ package com.example.fieldpasserbe.board.entity;
 
 import lombok.*;
 import javax.persistence.*;
+import java.time.LocalDateTime;
 import java.util.Date;
 
 @AllArgsConstructor
@@ -38,24 +39,16 @@ public class Board {
     private String content;
 
     @Column(name = "REGISTER_DATE")
-    @Temporal(TemporalType.TIMESTAMP)
-    private Date registerDate;
+    private LocalDateTime registerDate;
 
     @Column(name = "UPDATE_DATE")
-    @Temporal(TemporalType.TIMESTAMP)
-    private Date updateDate;
+    private LocalDateTime updateDate;
 
-    @Column(name = "DELETE_DATE")
-    @Temporal(TemporalType.TIMESTAMP)
-    private Date deleteDate;
-
-    @Column(name = "START_TIME")
-    @Temporal(TemporalType.TIMESTAMP)
-    private Date startTime;
+    @Embedded
+    private UsageTime usageTime;
 
     @Column(name = "END_TIME")
-    @Temporal(TemporalType.TIMESTAMP)
-    private Date endTime;
+    private LocalDateTime endTime;
 
     @Column(name = "IMAGE_URL")
     private String imageURL;

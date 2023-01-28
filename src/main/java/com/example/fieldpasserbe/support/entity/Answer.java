@@ -1,14 +1,14 @@
-package com.example.fieldpasserbe.serviceCenter.entity;
+package com.example.fieldpasserbe.support.entity;
 
 
 import com.example.fieldpasserbe.member.entity.Member;
-import com.example.fieldpasserbe.serviceCenter.entity.Question;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import java.time.LocalDateTime;
 import java.util.Date;
 
 
@@ -40,6 +40,5 @@ public class Answer {
     private String content;
 
     @Column(name = "REGISTER_DATE")
-    @Temporal(TemporalType.TIMESTAMP)
-    private Date registerDate;
+    private LocalDateTime registerDate;
 }
