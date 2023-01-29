@@ -3,6 +3,7 @@ package com.example.fieldpasserbe.member.entity;
 import com.example.fieldpasserbe.admin.entity.Admin;
 import lombok.*;
 import javax.persistence.*;
+import java.time.LocalDateTime;
 import java.util.Date;
 
 @AllArgsConstructor
@@ -37,12 +38,31 @@ public class Member {
     private byte authority;
 
     @Column(name = "SIGNUP_DATE")
-    @Temporal(TemporalType.TIMESTAMP)
-    private Date signUpDate;
+    private LocalDateTime signUpDate;
 
     @Column(name = "VISIT_COUNT")
     private Integer visitCount;
 
+    @Column(name = "DELETE_CHECK")
+    private byte delete;
+
     @OneToOne(mappedBy = "member")
     private Admin admin;
+
+
+    public String convertPrivilege(int p) {
+        if (p == 0) {
+            return "일반 회원";
+        } else {
+            return "관리자";
+        }
+    }
+
+    public String convertAuthority(int a) {
+        if (a == 0) {
+            return "이메일 인증 전";
+        } else {
+            return "인증 완료";
+        }
+    }
 }
