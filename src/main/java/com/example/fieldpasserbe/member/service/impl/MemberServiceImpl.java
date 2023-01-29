@@ -7,12 +7,11 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Optional;
 
 @Service
 public class MemberServiceImpl implements MemberService {
-
-
     @Autowired
     private MemberRepositoryJPA memberRepository;
 
@@ -44,6 +43,15 @@ public class MemberServiceImpl implements MemberService {
             return true;
         } catch (Exception e) {
             return false;
+        }
+    }
+
+    @Override
+    public List<Member> findAllMembers() throws NullPointerException{
+        if (memberRepository.findAllMembers().isEmpty()) {
+            throw new NullPointerException("조회할 수 있는 회원이 없습니다.");
+        } else {
+            return memberRepository.findAllMembers();
         }
     }
 }
