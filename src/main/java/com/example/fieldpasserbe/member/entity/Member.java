@@ -65,4 +65,8 @@ public class Member {
             return "인증 완료";
         }
     }
+
+    public void promote() {
+        this.privilege = 1;
+    }
 }
