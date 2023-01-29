@@ -48,6 +48,12 @@ public class AdminServiceImpl implements AdminService {
         }
     }
 
+    /**
+     * 비밀번호 매칭 검사
+     * @param admin
+     * @param member
+     * @return
+     */
     private boolean isValidPassword(AdminLoginRequestDTO admin, Member member) {
         if (member.getPassword().equals(admin.getPassword())) {
             return true;
@@ -61,7 +67,7 @@ public class AdminServiceImpl implements AdminService {
      * @param email
      * @return
      */
-    public static boolean isValidEmail(String email) {
+    private static boolean isValidEmail(String email) {
         String regex = "^[_a-z0-9-]+(.[_a-z0-9-]+)*@(?:\\w+\\.)+\\w+$";
         Pattern p = Pattern.compile(regex);
         Matcher m = p.matcher(email);
