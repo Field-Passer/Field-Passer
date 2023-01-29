@@ -3,10 +3,14 @@ package com.example.fieldpasserbe.admin.service;
 import com.example.fieldpasserbe.admin.dto.AdminLoginRequestDTO;
 import com.example.fieldpasserbe.admin.vo.AdminLoginVO;
 import com.example.fieldpasserbe.admin.vo.MemberListVO;
+import com.example.fieldpasserbe.admin.vo.SimpleVO;
 
 import javax.servlet.http.HttpSession;
+import java.util.Map;
 
 public interface AdminService {
     AdminLoginVO adminLogin(AdminLoginRequestDTO admin, HttpSession session) throws Exception;
     MemberListVO lookUpmembers() throws Exception;
+
+    SimpleVO promoteAdmin(String email);
 }

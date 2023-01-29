@@ -6,11 +6,14 @@ import com.example.fieldpasserbe.admin.service.AdminService;
 import com.example.fieldpasserbe.admin.service.impl.AdminServiceImpl;
 import com.example.fieldpasserbe.admin.vo.AdminLoginVO;
 import com.example.fieldpasserbe.admin.vo.MemberListVO;
+import com.example.fieldpasserbe.admin.vo.SimpleVO;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpSession;
+import java.util.HashMap;
+import java.util.Map;
 
 @RestController
 public class AdminController {
@@ -40,5 +43,11 @@ public class AdminController {
                     .resultCode(e.getMessage())
                     .build();
         }
+    }
+
+    @PutMapping("/admin/promote")
+    @ResponseBody
+    public SimpleVO promoteAdmin(@RequestBody Map<String, String> map) {
+        return adminService.promoteAdmin(map.get("email"));
     }
 }

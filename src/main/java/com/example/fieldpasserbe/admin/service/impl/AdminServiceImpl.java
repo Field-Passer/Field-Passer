@@ -3,9 +3,12 @@ package com.example.fieldpasserbe.admin.service.impl;
 import com.example.fieldpasserbe.admin.dto.AdminLoginRequestDTO;
 import com.example.fieldpasserbe.admin.dto.AdminLoginResponceDTO;
 import com.example.fieldpasserbe.admin.dto.MemberListDTO;
+import com.example.fieldpasserbe.admin.entity.Admin;
+import com.example.fieldpasserbe.admin.repository.AdminRepositoryJPA;
 import com.example.fieldpasserbe.admin.service.AdminService;
 import com.example.fieldpasserbe.admin.vo.AdminLoginVO;
 import com.example.fieldpasserbe.admin.vo.MemberListVO;
+import com.example.fieldpasserbe.admin.vo.SimpleVO;
 import com.example.fieldpasserbe.board.service.BoardService;
 import com.example.fieldpasserbe.member.entity.Member;
 import com.example.fieldpasserbe.member.service.MemberService;
@@ -14,8 +17,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.servlet.http.HttpSession;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -26,9 +33,10 @@ public class AdminServiceImpl implements AdminService {
     private MemberService memberService;
     @Autowired
     private BoardService boardService;
-
     @Autowired
     private PunishService punishService;
+    @Autowired
+    private AdminRepositoryJPA adminRepository;
 
     /**
      * 로그인
@@ -125,6 +133,26 @@ public class AdminServiceImpl implements AdminService {
                     .build();
         } catch (NullPointerException e) {
             throw new Exception("failed : 조회할 수 있는 회원이 없습니다.");
+        }
+    }
+
+    @Override
+    public SimpleVO promoteAdmin(String email) {
+        try {
+            Member member = memberService.findMemberByEmail(email).get();
+            Admin newAdmin = Admin.builder()
+                    .member(member)
+                    .promoteDate(LocalDateTime.now())
+                    .build();
+            newAdmin.promote();
+            adminRepository.save(newAdmin);
+            return SimpleVO.builder()
+                    .resultCode("success")
+                    .build();
+        } catch (NullPointerException e) {
+            return SimpleVO.builder()
+                    .resultCode("failed : 승격에 실패했습니다.")
+                    .build();
         }
     }
 }
