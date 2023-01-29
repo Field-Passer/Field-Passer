@@ -11,9 +11,9 @@ public interface MemberService {
 
     Optional<Member> findMemberById(int id);
 
-    Optional<Member> findMemberByEmail(String email);
+    Optional<Member> findMemberByEmail(String email) throws NullPointerException;
 
-    Optional<Member> findAdminByEmail(String email) throws Exception;
+    Optional<Member> findAdminByEmail(String email) throws NullPointerException;
 
     boolean updateVisitCount(int id);
 

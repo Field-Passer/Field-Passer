@@ -21,8 +21,12 @@ public class MemberServiceImpl implements MemberService {
     }
 
     @Override
-    public Optional<Member> findMemberByEmail(String email) {
-        return memberRepository.findMemberByEmail(email);
+    public Optional<Member> findMemberByEmail(String email) throws NullPointerException{
+        if (!memberRepository.findMemberByEmail(email).isPresent()) {
+            throw new NullPointerException("존재하지 않는 회원입니다.");
+        } else {
+            return memberRepository.findMemberByEmail(email);
+        }
     }
 
     @Override

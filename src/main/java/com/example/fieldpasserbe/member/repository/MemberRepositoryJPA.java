@@ -16,7 +16,8 @@ public interface MemberRepositoryJPA extends JpaRepository<Member, Integer> {
     Optional<Member> findMemberById(int id);
 
     //이메일로 유저 찾기
-    Optional<Member> findMemberByEmail(String email);
+    @Query("select m from Member m where m.delete = 0 AND m.email = :email")
+    Optional<Member> findMemberByEmail(@Param("email") String email);
 
     //이메일로 관리자 찾기
     @Query("select m from Member m where m.privilege = 1 AND m.email = :email")

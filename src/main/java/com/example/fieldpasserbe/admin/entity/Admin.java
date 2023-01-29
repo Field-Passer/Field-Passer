@@ -3,7 +3,7 @@ package com.example.fieldpasserbe.admin.entity;
 import com.example.fieldpasserbe.member.entity.Member;
 import lombok.*;
 import javax.persistence.*;
-import java.util.Date;
+import java.time.LocalDateTime;
 
 @AllArgsConstructor
 @NoArgsConstructor
@@ -18,10 +18,13 @@ public class Admin {
     private int adminId;
 
     @Column(name = "PROMOTE_DATE")
-    @Temporal(TemporalType.TIMESTAMP)
-    private Date promoteDate;
+    private LocalDateTime promoteDate;
 
     @OneToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "ID", referencedColumnName = "ID")
     private Member member;
+
+    public void promote() {
+        member.promote();
+    }
 }
