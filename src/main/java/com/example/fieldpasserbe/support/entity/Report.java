@@ -34,6 +34,9 @@ public class Report {
     @Enumerated(EnumType.STRING)
     private ReportCategory reportCategory;
 
+    @Column(name = "CONTENT")
+    private String content;
+
     @Column(name = "REPORT_DATE")
     @Temporal(TemporalType.TIMESTAMP)
     private Date reportDate;

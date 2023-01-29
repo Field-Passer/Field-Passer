@@ -7,6 +7,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
 import java.util.Optional;
 
 public interface MemberRepositoryJPA extends JpaRepository<Member, Integer> {
@@ -25,4 +26,8 @@ public interface MemberRepositoryJPA extends JpaRepository<Member, Integer> {
     @Modifying(clearAutomatically = true)
     @Query("update Member m set m.visitCount = m.visitCount + 1 where m.id = :id")
     int updateVisitCount(@Param("id") int id);
+
+    //전체 회원 조회
+    @Query("select m from Member m where m.delete = 0")
+    List<Member> findAllMembers();
 }
