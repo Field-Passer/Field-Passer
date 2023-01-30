@@ -26,10 +26,6 @@ public class Post {
     @JoinColumn(name = "ID")
     private Member member;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "CATEGORY_ID")
-    private CategoryList categoryList;
-
     @Column(name = "TITLE", nullable = false)
     private String title;
 
