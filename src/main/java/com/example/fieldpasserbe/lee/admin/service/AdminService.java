@@ -9,7 +9,7 @@ import javax.servlet.http.HttpSession;
 
 public interface AdminService {
     AdminLoginVO adminLogin(AdminLoginRequestDTO admin, HttpSession session) throws Exception;
-    MemberListVO lookUpmembers() throws Exception;
+    MemberListVO lookUpmembers(int page) throws Exception;
 
     SimpleVO promoteAdmin(String email);
 }
