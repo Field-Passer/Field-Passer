@@ -2,6 +2,7 @@ package com.example.fieldpasserbe.lee.admin.vo;
 
 import com.example.fieldpasserbe.lee.admin.dto.MemberListDTO;
 import lombok.*;
+import org.springframework.data.domain.Sort;
 
 import java.util.List;
 
@@ -12,6 +13,9 @@ import java.util.List;
 @Builder
 public class MemberListVO {
     private String resultCode;
-    private int resultDataNum;
-    List<MemberListDTO> resultData;
+    private Long resultDataNum;
+    private List<MemberListDTO> resultData;
+    private int currentPage;
+    private int totalPage;
+    private Sort sort;
 }
