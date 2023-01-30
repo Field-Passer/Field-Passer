@@ -1,4 +1,4 @@
-package com.example.fieldpasserbe.entity;
+package com.example.fieldpasserbe.seok.entity;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -14,21 +14,21 @@ import java.util.List;
 @Getter
 @AllArgsConstructor
 @NoArgsConstructor
-@Table(name = "DISTRICT_LIST")
-public class DistrictList {
+@Table(name = "CATEGORY_LIST")
+public class CategoryList {
 
     @Id
-    @Column(name = "DISTRICT_ID")
+    @Column(name = "CATEGORY_ID")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int districtId;
+    private int categoryId;
 
-    @Column(name = "DISTRICT")
-    private String district;
+    @Column(name = "CATEGORY")
+    private String category;
 
-    @OneToMany(mappedBy = "districtList")
+    @OneToMany(mappedBy = "categoryList")
     private List<Post> postList = new ArrayList<>();
 
-    @OneToMany(mappedBy = "districtList")
+    @OneToMany(mappedBy = "categoryList")
     private List<StadiumList> stadiumLists = new ArrayList<>();
 
 }
