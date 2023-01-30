@@ -26,6 +26,9 @@ public class CategoryList {
     private String category;
 
     @OneToMany(mappedBy = "categoryList")
+    private List<Post> postList = new ArrayList<>();
+
+    @OneToMany(mappedBy = "categoryList")
     private List<StadiumList> stadiumLists = new ArrayList<>();
 
 }

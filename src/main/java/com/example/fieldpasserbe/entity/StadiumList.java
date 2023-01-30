@@ -22,6 +22,10 @@ public class StadiumList {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int stadiumId;
 
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "CATEGORY_ID")
+    private CategoryList categoryList;
+
     @Column(name = "STADIUM_NAME")
     private String stadiumName;
 
