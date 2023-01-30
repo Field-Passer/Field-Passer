@@ -14,6 +14,8 @@ import com.example.fieldpasserbe.lee.member.entity.Member;
 import com.example.fieldpasserbe.lee.member.service.MemberService;
 import com.example.fieldpasserbe.lee.support.service.PunishService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import javax.servlet.http.HttpSession;
@@ -107,11 +109,12 @@ public class AdminServiceImpl implements AdminService {
      * @throws Exception
      */
     @Override
-    public MemberListVO lookUpmembers() throws Exception{
+    public MemberListVO lookUpmembers(int page) throws Exception{
         try {
-            List<Member> members = memberService.findAllMembers();
+            Page<Member> members = memberService.findAllMembers(page);
+            Sort sort = members.getSort();
             List<MemberListDTO> resultData = new ArrayList<>();
-            for (Member member : members) {
+            for (Member member : members.getContent()) {
                 resultData.add(MemberListDTO.builder()
                                 .email(member.getEmail())
                                 .memberName(member.getMemberName())
@@ -123,10 +126,15 @@ public class AdminServiceImpl implements AdminService {
                                 .authority(member.convertAuthority(member.getAuthority()))
                         .build());
             }
+            System.out.println("members.getTotalPages() = " + members.getTotalPages());
+            System.out.println("members.getNumber() = " + members.getNumber());
             return MemberListVO.builder()
                     .resultCode("success")
-                    .resultDataNum(members.size())
+                    .resultDataNum(members.getTotalElements())
                     .resultData(resultData)
+                    .currentPage(members.getNumber())
+                    .totalPage(members.getTotalPages())
+                    .sort(members.getSort())
                     .build();
         } catch (NullPointerException e) {
             throw new Exception("failed : 조회할 수 있는 회원이 없습니다.");

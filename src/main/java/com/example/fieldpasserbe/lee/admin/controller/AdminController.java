@@ -31,9 +31,9 @@ public class AdminController {
 
     @GetMapping("/admin/members")
     @ResponseBody
-    public MemberListVO lookUpMembers() {
+    public MemberListVO lookUpMembers(@RequestParam(name = "page") int page) {
         try {
-            return adminService.lookUpmembers();
+            return adminService.lookUpmembers(page);
         } catch (Exception e) {
             return MemberListVO.builder()
                     .resultCode(e.getMessage())
