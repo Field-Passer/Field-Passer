@@ -26,6 +26,10 @@ public class StadiumList {
     @JoinColumn(name = "CATEGORY_ID")
     private CategoryList categoryList;
 
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "DISTRICT_ID")
+    private DistrictList districtList;
+
     @Column(name = "STADIUM_NAME")
     private String stadiumName;
 
