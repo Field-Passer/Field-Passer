@@ -6,6 +6,8 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Builder
@@ -34,4 +36,7 @@ public class StadiumList {
 
     @Column(name = "IMAGE_URL")
     private String defaultImageUrl;
+
+    @OneToMany(mappedBy = "stadiumList")
+    private List<Post> postList = new ArrayList<>();
 }

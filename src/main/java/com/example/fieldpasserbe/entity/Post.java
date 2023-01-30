@@ -34,6 +34,10 @@ public class Post {
     @JoinColumn(name = "DISTRICT_ID")
     private DistrictList districtList;
 
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "STADIUM_ID")
+    private StadiumList stadiumList;
+
     @Column(name = "TITLE", nullable = false)
     private String title;
 
