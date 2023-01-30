@@ -83,5 +83,10 @@ public class Post {
     @Column(name = "DELETE_CHECK", columnDefinition = "TINYINT(1) DEFAULT 0", length = 1)
     private int deleteCheck;
 
+    @PrePersist
+    public void prePersist() {
+        this.viewCount = this.viewCount == null ? 0 : this.viewCount;
+        this.wishCount = this.wishCount == null ? 0 : this.wishCount;
+    }
 
 }
