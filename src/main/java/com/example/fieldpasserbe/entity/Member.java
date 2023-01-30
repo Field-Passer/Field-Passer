@@ -8,6 +8,8 @@ import org.hibernate.annotations.CreationTimestamp;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Builder
@@ -49,4 +51,7 @@ public class Member {
 
     @Column(name = "VISIT_COUNT")
     private int visitCount;
+
+    @OneToMany(mappedBy = "member")
+    private List<Post> postList = new ArrayList<>();
 }

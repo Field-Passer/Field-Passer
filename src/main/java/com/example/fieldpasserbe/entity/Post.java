@@ -22,6 +22,10 @@ public class Post {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int postId;
 
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "ID")
+    private Member member;
+
     @Column(name = "TITLE", nullable = false)
     private String title;
 
