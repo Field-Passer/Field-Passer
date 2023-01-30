@@ -1,6 +1,7 @@
 package com.example.fieldpasserbe.lee.member.service;
 
 import com.example.fieldpasserbe.lee.member.entity.Member;
+import org.springframework.data.domain.Page;
 
 import java.util.List;
 import java.util.Optional;
@@ -15,5 +16,5 @@ public interface MemberService {
 
     boolean updateVisitCount(int id);
 
-    List<Member> findAllMembers();
+    Page<Member> findAllMembers(int page);
 }

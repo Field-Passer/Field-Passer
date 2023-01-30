@@ -1,6 +1,9 @@
 package com.example.fieldpasserbe.lee.member.repository;
 
 import com.example.fieldpasserbe.lee.member.entity.Member;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
@@ -29,5 +32,5 @@ public interface MemberRepositoryJPA extends JpaRepository<Member, Integer> {
 
     //전체 회원 조회
     @Query("select m from Member m where m.delete = 0")
-    List<Member> findAllMembers();
+    Page<Member> findAllMembers(Pageable pageable);
 }

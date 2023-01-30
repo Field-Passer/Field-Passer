@@ -3,7 +3,11 @@ package com.example.fieldpasserbe.lee.member.service.impl;
 import com.example.fieldpasserbe.lee.member.entity.Member;
 import com.example.fieldpasserbe.lee.member.repository.MemberRepositoryJPA;
 import com.example.fieldpasserbe.lee.member.service.MemberService;
+import com.mysql.cj.x.protobuf.MysqlxCrud;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -11,6 +15,8 @@ import java.util.Optional;
 
 @Service
 public class MemberServiceImpl implements MemberService {
+
+    private final int contentsSize = 10;
     @Autowired
     private MemberRepositoryJPA memberRepository;
 
@@ -50,11 +56,12 @@ public class MemberServiceImpl implements MemberService {
     }
 
     @Override
-    public List<Member> findAllMembers() throws NullPointerException{
-        if (memberRepository.findAllMembers().isEmpty()) {
+    public Page<Member> findAllMembers(int page) throws NullPointerException{
+        PageRequest pageRequest = PageRequest.of(page - 1, contentsSize, Sort.by(Sort.Direction.DESC, "id"));
+        if (memberRepository.findAllMembers(pageRequest).getContent().isEmpty()) {
             throw new NullPointerException("조회할 수 있는 회원이 없습니다.");
         } else {
-            return memberRepository.findAllMembers();
+            return memberRepository.findAllMembers(pageRequest);
         }
     }
 }
