@@ -1,4 +1,4 @@
-package com.example.fieldpasserbe;
+package com.example.kim;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
