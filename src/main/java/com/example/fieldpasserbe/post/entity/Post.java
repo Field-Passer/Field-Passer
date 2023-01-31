@@ -1,4 +1,4 @@
-package com.example.fieldpasserbe.board.entity;
+package com.example.fieldpasserbe.post.entity;
 
 import lombok.*;
 import javax.persistence.*;
@@ -10,7 +10,7 @@ import java.time.LocalDateTime;
 @Builder
 @Entity
 @Table(name = "BOARD")
-public class Board {
+public class Post {
 
     @Id
     @Column(name = "POST_ID")

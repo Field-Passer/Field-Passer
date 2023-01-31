@@ -9,7 +9,7 @@ import com.example.fieldpasserbe.admin.repository.AdminRepositoryJPA;
 import com.example.fieldpasserbe.admin.vo.AdminLoginVO;
 import com.example.fieldpasserbe.admin.vo.MemberListVO;
 import com.example.fieldpasserbe.admin.vo.SimpleVO;
-import com.example.fieldpasserbe.board.service.BoardService;
+import com.example.fieldpasserbe.post.service.PostService;
 import com.example.fieldpasserbe.member.entity.Member;
 import com.example.fieldpasserbe.member.service.MemberService;
 import com.example.fieldpasserbe.support.service.PunishService;
@@ -30,7 +30,7 @@ import java.util.regex.Pattern;
 public class AdminServiceImpl implements AdminService {
 
     private final MemberService memberService;
-    private final BoardService boardService;
+    private final PostService postService;
     private final PunishService punishService;
     private final AdminRepositoryJPA adminRepository;
 
@@ -116,7 +116,7 @@ public class AdminServiceImpl implements AdminService {
                                 .email(member.getEmail())
                                 .memberName(member.getMemberName())
                                 .signupDate(member.getSignUpDate())
-                                .postCount(boardService.countPostById(member.getId()))  //글 개수
+                                .postCount(postService.countPostById(member.getId()))  //글 개수
                                 .visitCount(member.getVisitCount())
                                 .privilege(member.convertPrivilege(member.getPrivilege()))
                                 .reportNum(punishService.countBytargetId(member.getId()))  //신고 수

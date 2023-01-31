@@ -1,4 +1,4 @@
-package com.example.fieldpasserbe.board.entity;
+package com.example.fieldpasserbe.post.entity;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
