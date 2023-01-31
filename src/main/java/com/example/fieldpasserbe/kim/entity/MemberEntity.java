@@ -9,10 +9,9 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 @NoArgsConstructor
 @Getter
-@Setter
 @Builder
 @Entity
-@Table(name="member")
+@Table(name="MEMBER")
 public class MemberEntity {
 
     @Id
@@ -33,14 +32,14 @@ public class MemberEntity {
     private String profile_img;
 
     @Column(name="PRIVILEGE", columnDefinition = "TINYINT(1) DEFAULT 0", length = 1)
-    private int privilege;
+    private byte privilege;
 
     @Column(name = "AUTHORITY",columnDefinition = "TINYINT(1) DEFAULT 0",length = 1)
-    private int authority;
+    private byte authority;
 
     @CreationTimestamp
     @Column(name="SIGNUP_DATE",nullable=false)
-    private LocalDateTime signup_date = LocalDateTime.now();
+    private LocalDateTime signup_date ;
 
     @Column(name="VISIT_COUNT",nullable=false)
     private Integer visit_count;
