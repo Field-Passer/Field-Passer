@@ -1,6 +1,6 @@
 package com.example.fieldpasserbe.post.entity;
 
-import com.example.fieldpasserbe.seok.entity.*;
+import com.example.fieldpasserbe.member.entity.Member;
 import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
@@ -26,15 +26,15 @@ public class Post {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "CATEGORY_ID")
-    private CategoryList categoryList;
+    private Category categoryList;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "DISTRICT_ID")
-    private DistrictList districtList;
+    private District districtList;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "STADIUM_ID")
-    private StadiumList stadiumList;
+    private Stadium stadiumList;
 
     @Column(name = "TITLE", nullable = false)
     private String title;
