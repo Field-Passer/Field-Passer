@@ -45,7 +45,7 @@ public class Member {
     @Column(name = "DELETE_CHECK")
     private byte delete;
 
-    @OneToOne(mappedBy = "member")
+    @OneToOne(mappedBy = "member", fetch = FetchType.LAZY)
     private Admin admin;
 
 
