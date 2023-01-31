@@ -1,6 +1,5 @@
 package com.example.fieldpasserbe.post.entity;
 
-import com.example.fieldpasserbe.seok.entity.Post;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
