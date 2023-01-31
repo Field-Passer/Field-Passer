@@ -1,4 +1,4 @@
-package com.example.fieldpasserbe.board.entity;
+package com.example.fieldpasserbe.post.entity;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -6,6 +6,8 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 
 @AllArgsConstructor
 @NoArgsConstructor
@@ -17,14 +19,15 @@ public class Stadium {
 
     @Id
     @Column(name = "STADIUM_ID")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int stadiumId;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "CATEGORY_ID", referencedColumnName = "CATEGORY_ID")
+    @JoinColumn(name = "CATEGORY_ID")
     private Category category;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "DISTRICT_ID", referencedColumnName = "DISTRICT_ID")
+    @JoinColumn(name = "DISTRICT_ID")
     private District district;
 
     @Column(name = "STADIUM_NAME")
@@ -40,5 +43,8 @@ public class Stadium {
     private String phone;
 
     @Column(name = "IMAGE_URL")
-    private String imageURL;
+    private String defaultImageUrl;
+
+    @OneToMany(mappedBy = "stadiumList")
+    private List<Post> postList = new ArrayList<>();
 }
