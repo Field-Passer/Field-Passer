@@ -5,6 +5,7 @@ import com.example.fieldpasserbe.lee.admin.service.AdminService;
 import com.example.fieldpasserbe.lee.admin.vo.AdminLoginVO;
 import com.example.fieldpasserbe.lee.admin.vo.MemberListVO;
 import com.example.fieldpasserbe.lee.admin.vo.SimpleVO;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -12,13 +13,12 @@ import javax.servlet.http.HttpSession;
 import java.util.Map;
 
 @RestController
+@RequiredArgsConstructor
 public class AdminController {
 
-    @Autowired
-    private AdminService adminService;
+    private final AdminService adminService;
 
     @PostMapping("/admin/auth/login")
-    @ResponseBody
     public AdminLoginVO adminLogin(@RequestBody AdminLoginRequestDTO adminLoginRequest, HttpSession session) {
         try {
             return adminService.adminLogin(adminLoginRequest, session);
@@ -30,7 +30,6 @@ public class AdminController {
     }
 
     @GetMapping("/admin/members")
-    @ResponseBody
     public MemberListVO lookUpMembers(@RequestParam(name = "page") int page) {
         try {
             return adminService.lookUpmembers(page);
@@ -42,7 +41,6 @@ public class AdminController {
     }
 
     @PutMapping("/admin/promote")
-    @ResponseBody
     public SimpleVO promoteAdmin(@RequestBody Map<String, String> map) {
         return adminService.promoteAdmin(map.get("email"));
     }
