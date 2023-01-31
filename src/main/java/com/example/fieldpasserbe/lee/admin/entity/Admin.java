@@ -20,7 +20,7 @@ public class Admin {
     @Column(name = "PROMOTE_DATE")
     private LocalDateTime promoteDate;
 
-    @OneToOne(fetch = FetchType.EAGER)
+    @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "ID", referencedColumnName = "ID")
     private Member member;
 
