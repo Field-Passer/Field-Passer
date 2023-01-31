@@ -21,7 +21,7 @@ public class Admin {
     private LocalDateTime promoteDate;
 
     @OneToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "ID", referencedColumnName = "ID")
+    @JoinColumn(name = "ID")
     private Member member;
 
     public void promote() {
