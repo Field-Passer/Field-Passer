@@ -16,7 +16,7 @@ import java.util.List;
 @Getter
 @AllArgsConstructor
 @NoArgsConstructor
-@Table(name = "member")
+@Table(name = "Member")
 public class Member {
 
     @Id
@@ -40,14 +40,14 @@ public class Member {
     private String profileImg;
 
     @Column(name = "PRIVILEGE", columnDefinition = "TINYINT", length = 1)
-    private int privilege;
+    private byte privilege;
 
     @Column(name = "AUTHORITY", columnDefinition = "TINYINT", length = 1)
-    private int authority;
+    private byte authority;
 
     @CreationTimestamp
     @Column(name = "SIGNUP_DATE")
-    private LocalDateTime signupDate = LocalDateTime.now();
+    private LocalDateTime signupDate;
 
     @Column(name = "VISIT_COUNT")
     private int visitCount;

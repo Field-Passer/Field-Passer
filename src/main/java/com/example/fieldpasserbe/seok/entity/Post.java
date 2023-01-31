@@ -46,11 +46,11 @@ public class Post {
 
     @CreationTimestamp
     @Column(name = "REGISTER_DATE")
-    private LocalDateTime registerDate = LocalDateTime.now();
+    private LocalDateTime registerDate;
 
     @UpdateTimestamp
     @Column(name = "UPDATE_DATE")
-    private LocalDateTime updateDate = LocalDateTime.now();
+    private LocalDateTime updateDate;
 
     @Column(name = "DELETE_DATE")
     private LocalDateTime deleteDate;
@@ -78,10 +78,10 @@ public class Post {
     private Integer wishCount;
 
     @Column(name = "BLIND" , columnDefinition = "TINYINT(1) DEFAULT 0", length = 1)
-    private int blind;
+    private byte blind;
 
     @Column(name = "DELETE_CHECK", columnDefinition = "TINYINT(1) DEFAULT 0", length = 1)
-    private int deleteCheck;
+    private byte deleteCheck;
 
     @PrePersist
     public void prePersist() {
