@@ -25,9 +25,9 @@ public class District {
     @Column(name = "DISTRICT")
     private String district;
 
-    @OneToMany(mappedBy = "districtList")
+    @OneToMany(mappedBy = "district")
     private List<Post> postList = new ArrayList<>();
 
-    @OneToMany(mappedBy = "districtList")
+    @OneToMany(mappedBy = "district")
     private List<Stadium> stadiumList = new ArrayList<>();
 }
