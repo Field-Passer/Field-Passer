@@ -29,7 +29,6 @@ public class Member {
 
     @Column(name = "PROFILE_IMG")
     private String profileImg;
-
     @Column(name = "PRIVILEGE")
     private byte privilege;
 

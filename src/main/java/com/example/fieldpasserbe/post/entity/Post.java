@@ -13,7 +13,7 @@ import java.time.LocalDateTime;
 @Getter
 @Builder
 @Entity
-@Table(name = "Post")
+@Table(name = "POST")
 public class Post {
     @Id
     @Column(name = "POST_ID")
@@ -26,15 +26,15 @@ public class Post {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "CATEGORY_ID")
-    private Category categoryList;
+    private Category category;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "DISTRICT_ID")
-    private District districtList;
+    private District district;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "STADIUM_ID")
-    private Stadium stadiumList;
+    private Stadium stadium;
 
     @Column(name = "TITLE", nullable = false)
     private String title;

@@ -1,7 +1,7 @@
-package com.example.fieldpasserbe.seok.controller;
+package com.example.fieldpasserbe.post.controller;
 
-import com.example.fieldpasserbe.seok.dto.PostListResponseDto;
-import com.example.fieldpasserbe.seok.service.PostService;
+import com.example.fieldpasserbe.post.service.PostService;
+import com.example.fieldpasserbe.post.dto.PostListResponseDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Slice;
 import org.springframework.web.bind.annotation.GetMapping;

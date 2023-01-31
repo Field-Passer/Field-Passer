@@ -1,7 +1,7 @@
-package com.example.fieldpasserbe.seok.dto;
+package com.example.fieldpasserbe.post.dto;
 
-import com.example.fieldpasserbe.seok.entity.Post;
-import com.example.fieldpasserbe.seok.entity.TransactionStatus;
+import com.example.fieldpasserbe.post.entity.Post;
+import com.example.fieldpasserbe.post.entity.TransactionStatus;
 import lombok.*;
 
 import java.time.LocalDateTime;
@@ -13,7 +13,7 @@ import java.time.LocalDateTime;
 @ToString
 public class PostListResponseDto {
     private int postId;
-    private String memberId;
+    private int memberId;
     private String memberName;
     private String category;
     private String district;
@@ -34,11 +34,11 @@ public class PostListResponseDto {
 
     public PostListResponseDto(Post post) {
         this.postId = post.getPostId();
-        this.memberId = post.getMember().getMemberId();
+        this.memberId = post.getMember().getId();
         this.memberName = post.getMember().getMemberName();
-        this.category = post.getCategoryList().getCategory();
-        this.district = post.getDistrictList().getDistrict();
-        this.stadiumName = post.getStadiumList().getStadiumName();
+        this.category = post.getCategory().getCategory();
+        this.district = post.getDistrict().getDistrict();
+        this.stadiumName = post.getStadium().getStadiumName();
         this.title = post.getTitle();
         this.registerDate = post.getRegisterDate();
         this.updateDate = post.getUpdateDate();
