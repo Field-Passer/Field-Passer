@@ -25,9 +25,9 @@ public class Category {
     @Column(name = "CATEGORY")
     private String category;
 
-    @OneToMany(mappedBy = "categoryList")
+    @OneToMany(mappedBy = "category")
     private List<Post> postList = new ArrayList<>();
 
-    @OneToMany(mappedBy = "categoryList")
+    @OneToMany(mappedBy = "category")
     private List<Stadium> stadiumList = new ArrayList<>();
 }
