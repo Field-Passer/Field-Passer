@@ -17,7 +17,7 @@ public class PostServiceImpl implements PostService {
 
     @Override
     public Slice<PostListResponseDto> PostList(int page) {
-        PageRequest pageRequest = PageRequest.of(page, 4, Sort.by(Sort.Direction.DESC, "registerDate"));
+        PageRequest pageRequest = PageRequest.of(page - 1, 4, Sort.by(Sort.Direction.DESC, "registerDate"));
 
         return postRepository.findDefaultAll(pageRequest)
                 .map(post -> new PostListResponseDto(post));
