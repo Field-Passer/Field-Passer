@@ -4,21 +4,21 @@ import com.example.fieldpasserbe.lee.member.entity.Member;
 import com.example.fieldpasserbe.lee.member.repository.MemberRepositoryJPA;
 import com.example.fieldpasserbe.lee.member.service.MemberService;
 import com.mysql.cj.x.protobuf.MysqlxCrud;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
 import java.util.Optional;
 
 @Service
+@RequiredArgsConstructor
 public class MemberServiceImpl implements MemberService {
 
     private final int contentsSize = 10;
-    @Autowired
-    private MemberRepositoryJPA memberRepository;
+    private final MemberRepositoryJPA memberRepository;
 
     @Override
     public Optional<Member> findMemberById(int id) {

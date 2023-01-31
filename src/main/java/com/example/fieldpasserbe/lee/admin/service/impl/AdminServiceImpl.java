@@ -13,6 +13,7 @@ import com.example.fieldpasserbe.lee.board.service.BoardService;
 import com.example.fieldpasserbe.lee.member.entity.Member;
 import com.example.fieldpasserbe.lee.member.service.MemberService;
 import com.example.fieldpasserbe.lee.support.service.PunishService;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Sort;
@@ -26,16 +27,13 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 @Service
+@RequiredArgsConstructor
 public class AdminServiceImpl implements AdminService {
 
-    @Autowired
-    private MemberService memberService;
-    @Autowired
-    private BoardService boardService;
-    @Autowired
-    private PunishService punishService;
-    @Autowired
-    private AdminRepositoryJPA adminRepository;
+    private final MemberService memberService;
+    private final BoardService boardService;
+    private final PunishService punishService;
+    private final AdminRepositoryJPA adminRepository;
 
     /**
      * 로그인
