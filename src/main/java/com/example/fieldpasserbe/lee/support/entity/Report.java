@@ -22,11 +22,11 @@ public class Report {
     @Column(name = "REPORT_ID")
     private int reportId;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(referencedColumnName = "ID")
     private Member reporterMember;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(referencedColumnName = "ID")
     private Member targetMember;
 

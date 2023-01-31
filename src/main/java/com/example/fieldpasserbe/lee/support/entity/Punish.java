@@ -21,15 +21,15 @@ public class Punish {
     @Column(name = "PUNISH_ID")
     private int punishId;
 
-    @OneToOne
+    @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "REPORT_ID", referencedColumnName = "REPORT_ID")
     private Report report;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "ADMIN_ID", referencedColumnName = "ID")
     private Member admin;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "TARGET_ID", referencedColumnName = "ID")
     private Member target;
 

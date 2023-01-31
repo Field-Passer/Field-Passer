@@ -24,11 +24,11 @@ public class Answer {
     @Column(name = "RESPONSE_ID")
     private int responseId;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "ID")
     private Member adminId;
 
-    @OneToOne
+    @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "QUESTION_ID")
     private Question question;
 

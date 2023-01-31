@@ -22,7 +22,7 @@ public class Question {
     @Column(name = "QUESTION_ID")
     private int questionId;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "ID")
     private Member member;
 
