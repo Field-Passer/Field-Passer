@@ -19,11 +19,11 @@ public class Stadium {
     @Column(name = "STADIUM_ID")
     private int stadiumId;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "CATEGORY_ID", referencedColumnName = "CATEGORY_ID")
     private Category category;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "DISTRICT_ID", referencedColumnName = "DISTRICT_ID")
     private District district;
 
