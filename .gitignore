@@ -34,6 +34,7 @@
 .idea/**/contentModel.xml
 
 # Sensitive or high-churn files
+.idea/dataSources.xml
 .idea/**/dataSources/
 .idea/**/dataSources.ids
 .idea/**/dataSources.local.xml
@@ -236,4 +237,7 @@ gradle-app.setting
 # Java heap dump
 *.hprof
 
+### resources ###
+src/main/resources/application.properties
+src/main/resources/logback-spring.xml
 # End of https://www.toptal.com/developers/gitignore/api/windows,macos,intellij+iml,gradle,java,git,vim
