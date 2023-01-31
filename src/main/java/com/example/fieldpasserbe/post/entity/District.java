@@ -6,6 +6,8 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 
 @AllArgsConstructor
 @NoArgsConstructor
@@ -17,8 +19,15 @@ public class District {
 
     @Id
     @Column(name = "DISTRICT_ID")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int districtId;
 
     @Column(name = "DISTRICT")
     private String district;
+
+    @OneToMany(mappedBy = "districtList")
+    private List<Post> postList = new ArrayList<>();
+
+    @OneToMany(mappedBy = "districtList")
+    private List<Stadium> stadiumList = new ArrayList<>();
 }
