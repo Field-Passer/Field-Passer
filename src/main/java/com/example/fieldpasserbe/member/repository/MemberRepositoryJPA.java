@@ -13,7 +13,7 @@ import java.util.Optional;
 public interface MemberRepositoryJPA extends JpaRepository<Member, Integer> {
 
     //id로 유저 찾기
-    Optional<Member> findMemberById(int id);
+    Optional<Member> findMemberByMemberId(int id);
 
     //이메일로 유저 찾기
     @Query("select m from Member m where m.delete = 0 AND m.email = :email")
