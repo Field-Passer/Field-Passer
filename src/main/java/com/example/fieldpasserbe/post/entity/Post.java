@@ -76,10 +76,10 @@ public class Post {
     private Integer wishCount;
 
     @Column(name = "BLIND" , columnDefinition = "TINYINT(1) DEFAULT 0", length = 1)
-    private byte blind;
+    private int blind;
 
     @Column(name = "DELETE_CHECK", columnDefinition = "TINYINT(1) DEFAULT 0", length = 1)
-    private byte deleteCheck;
+    private int deleteCheck;
 
     @PrePersist
     public void prePersist() {
