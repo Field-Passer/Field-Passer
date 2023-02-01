@@ -7,5 +7,14 @@ public interface PostService {
 
     Long countPostById(int id);
 
-    Slice<PostListResponseDto> PostList(int page);
+    Slice<PostListResponseDto> postList(int page);
+
+    Slice<PostListResponseDto> postListByCategory(String category, int page);
+
+    Slice<PostListResponseDto> postListByDistrict(String district, int page);
+
+    Slice<PostListResponseDto> postListByCategoryAndDistrict(String category, String district, int page);
+
+    Slice<PostListResponseDto> postListByCategoryAndDistrictAndStadium(String category, String district, String stadiumName, int page);
+
 }

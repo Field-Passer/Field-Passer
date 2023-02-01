@@ -16,6 +16,34 @@ public class PostController {
 
     @GetMapping("/api/post")
     public Slice<PostListResponseDto> postList(@RequestParam(name = "page") int page) {
-        return postService.PostList(page);
+        return postService.postList(page);
+    }
+
+    // 구장 종류별 조회
+    @GetMapping("/api/post/category")
+    public Slice<PostListResponseDto> postListByCategory(@RequestParam(name = "category") String category,
+                                                         @RequestParam(name = "page") int page) {
+        return postService.postListByCategory(category, page);
+    }
+
+    @GetMapping("/api/post/district")
+    public Slice<PostListResponseDto> postListByDistrict(@RequestParam(name = "district") String district,
+                                                         @RequestParam(name = "page") int page) {
+        return postService.postListByDistrict(district, page);
+    }
+
+    @GetMapping("/api/post/category/district")
+    public Slice<PostListResponseDto> postListByCategoryAndDistrict(@RequestParam(name = "category") String category,
+                                                                    @RequestParam(name = "district") String district,
+                                                                    @RequestParam(name = "page") int page) {
+        return postService.postListByCategoryAndDistrict(category, district, page);
+    }
+
+    @GetMapping("/api/post/stadium")
+    public Slice<PostListResponseDto> postListByCategoryAndDistrictAndStadium(@RequestParam(name = "category") String category,
+                                                                              @RequestParam(name = "district") String district,
+                                                                              @RequestParam(name = "stadiumName") String stadiumName,
+                                                                              @RequestParam(name = "page") int page) {
+        return postService.postListByCategoryAndDistrictAndStadium(category, district, stadiumName, page);
     }
 }
