@@ -16,6 +16,13 @@ public class PostController {
 
     @GetMapping("/api/post")
     public Slice<PostListResponseDto> postList(@RequestParam(name = "page") int page) {
-        return postService.PostList(page);
+        return postService.postList(page);
+    }
+
+    // 구장 종류별 조회
+    @GetMapping("/api/post/category")
+    public Slice<PostListResponseDto> postListByCategory(@RequestParam(name = "category") String category,
+                                                      @RequestParam(name = "page") int page) {
+        return postService.postListByCategory(category, page);
     }
 }

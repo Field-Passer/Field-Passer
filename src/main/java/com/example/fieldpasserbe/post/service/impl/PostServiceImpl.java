@@ -21,10 +21,18 @@ public class PostServiceImpl implements PostService {
     }
 
     @Override
-    public Slice<PostListResponseDto> PostList(int page) {
-        PageRequest pageRequest = PageRequest.of(page - 1, 4, Sort.by(Sort.Direction.DESC, "registerDate"));
+    public Slice<PostListResponseDto> postList(int page) {
+        PageRequest pageRequest = PageRequest.of(page - 1, 10, Sort.by(Sort.Direction.DESC, "registerDate"));
 
         return postRepository.findDefaultAll(pageRequest)
+                .map(post -> new PostListResponseDto(post));
+    }
+
+    @Override
+    public Slice<PostListResponseDto> postListByCategory(String category, int page) {
+        PageRequest pageRequest = PageRequest.of(page - 1, 10, Sort.by(Sort.Direction.DESC, "registerDate"));
+
+        return postRepository.findByCategory_CategoryName(category, pageRequest)
                 .map(post -> new PostListResponseDto(post));
     }
 }

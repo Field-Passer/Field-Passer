@@ -16,4 +16,7 @@ public interface PostRepositoryJPA extends JpaRepository<Post, Integer> {
     @EntityGraph(attributePaths = {"member","category","district","stadium"})
     @Query("select p from Post p")
     Slice<Post> findDefaultAll(PageRequest pageRequest);
+
+    @EntityGraph(attributePaths = {"member","category","district","stadium"})
+    Slice<Post> findByCategory_CategoryName(String category, PageRequest pageRequest);
 }
