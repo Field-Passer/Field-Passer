@@ -36,6 +36,14 @@ public class PostController {
     public Slice<PostListResponseDto> postListByCategoryAndDistrict(@RequestParam(name = "category") String category,
                                                                     @RequestParam(name = "district") String district,
                                                                     @RequestParam(name = "page") int page) {
-        return postService.PostListByCategoryAndDistrict(category, district, page);
+        return postService.postListByCategoryAndDistrict(category, district, page);
+    }
+
+    @GetMapping("/api/post/stadium")
+    public Slice<PostListResponseDto> postListByCategoryAndDistrictAndStadium(@RequestParam(name = "category") String category,
+                                                                              @RequestParam(name = "district") String district,
+                                                                              @RequestParam(name = "stadiumName") String stadiumName,
+                                                                              @RequestParam(name = "page") int page) {
+        return postService.postListByCategoryAndDistrictAndStadium(category, district, stadiumName, page);
     }
 }

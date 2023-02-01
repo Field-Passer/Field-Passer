@@ -13,6 +13,8 @@ public interface PostService {
 
     Slice<PostListResponseDto> postListByDistrict(String district, int page);
 
-    Slice<PostListResponseDto> PostListByCategoryAndDistrict(String category, String district, int page);
+    Slice<PostListResponseDto> postListByCategoryAndDistrict(String category, String district, int page);
+
+    Slice<PostListResponseDto> postListByCategoryAndDistrictAndStadium(String category, String district, String stadiumName, int page);
 
 }

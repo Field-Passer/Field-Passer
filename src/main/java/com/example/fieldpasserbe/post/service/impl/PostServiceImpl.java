@@ -38,17 +38,25 @@ public class PostServiceImpl implements PostService {
 
     @Override
     public Slice<PostListResponseDto> postListByDistrict(String district, int page) {
-        PageRequest pageRequest = PageRequest.of(0, 10, Sort.by(Sort.Direction.DESC, "registerDate"));
+        PageRequest pageRequest = PageRequest.of(page - 1, 10, Sort.by(Sort.Direction.DESC, "registerDate"));
 
         return postRepository.findByDistrict_DistrictName(district, pageRequest)
                 .map(post -> new PostListResponseDto(post));
     }
 
     @Override
-    public Slice<PostListResponseDto> PostListByCategoryAndDistrict(String category, String district, int page) {
-        PageRequest pageRequest = PageRequest.of(page - 1, 2, Sort.by(Sort.Direction.DESC, "registerDate"));
+    public Slice<PostListResponseDto> postListByCategoryAndDistrict(String category, String district, int page) {
+        PageRequest pageRequest = PageRequest.of(page - 1, 10, Sort.by(Sort.Direction.DESC, "registerDate"));
 
         return postRepository.findByCategory_CategoryNameAndDistrict_DistrictName(category, district, pageRequest)
+                .map(post -> new PostListResponseDto(post));
+    }
+
+    @Override
+    public Slice<PostListResponseDto> postListByCategoryAndDistrictAndStadium(String category, String district, String stadiumName, int page) {
+        PageRequest pageRequest = PageRequest.of(page - 1, 10, Sort.by(Sort.Direction.DESC, "registerDate"));
+
+        return postRepository.findByCategory_CategoryNameAndDistrict_DistrictNameAndStadium_StadiumName(category, district, stadiumName, pageRequest)
                 .map(post -> new PostListResponseDto(post));
     }
 }
