@@ -35,4 +35,12 @@ public class PostServiceImpl implements PostService {
         return postRepository.findByCategory_CategoryName(category, pageRequest)
                 .map(post -> new PostListResponseDto(post));
     }
+
+    @Override
+    public Slice<PostListResponseDto> postListByDistrict(String district, int page) {
+        PageRequest pageRequest = PageRequest.of(0, 10, Sort.by(Sort.Direction.DESC, "registerDate"));
+
+        return postRepository.findByDistrict_DistrictName(district, pageRequest)
+                .map(post -> new PostListResponseDto(post));
+    }
 }

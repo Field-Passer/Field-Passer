@@ -10,4 +10,6 @@ public interface PostService {
     Slice<PostListResponseDto> postList(int page);
 
     Slice<PostListResponseDto> postListByCategory(String category, int page);
+
+    Slice<PostListResponseDto> postListByDistrict(String district, int page);
 }
