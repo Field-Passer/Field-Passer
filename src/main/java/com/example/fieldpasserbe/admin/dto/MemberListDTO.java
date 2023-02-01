@@ -10,6 +10,7 @@ import java.time.LocalDateTime;
 @Builder
 @ToString
 public class MemberListDTO {
+    private int memberId;
     private String email;
     private String memberName;
     private LocalDateTime signupDate;
