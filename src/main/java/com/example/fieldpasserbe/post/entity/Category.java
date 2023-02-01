@@ -23,7 +23,7 @@ public class Category {
     private int categoryId;
 
     @Column(name = "CATEGORY")
-    private String category;
+    private String categoryName;
 
     @OneToMany(mappedBy = "category")
     private List<Post> postList = new ArrayList<>();
