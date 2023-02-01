@@ -1,4 +1,7 @@
 package com.example.fieldpasserbe.post.repository;
 
-public interface CategoryRepositoryJPA {
+import com.example.fieldpasserbe.post.entity.Category;
+import org.springframework.data.jpa.repository.JpaRepository;
+
+public interface CategoryRepositoryJPA extends JpaRepository<Category, Integer> {
 }
