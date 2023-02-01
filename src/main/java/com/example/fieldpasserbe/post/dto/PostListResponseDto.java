@@ -15,8 +15,8 @@ public class PostListResponseDto {
     private int postId;
     private int memberId;
     private String memberName;
-    private String category;
-    private String district;
+    private String categoryName;
+    private String districtName;
     private String stadiumName;
     private String title;
     private LocalDateTime registerDate;
@@ -36,8 +36,8 @@ public class PostListResponseDto {
         this.postId = post.getPostId();
         this.memberId = post.getMember().getId();
         this.memberName = post.getMember().getMemberName();
-        this.category = post.getCategory().getCategoryName();
-        this.district = post.getDistrict().getDistrictName();
+        this.categoryName = post.getCategory().getCategoryName();
+        this.districtName = post.getDistrict().getDistrictName();
         this.stadiumName = post.getStadium().getStadiumName();
         this.title = post.getTitle();
         this.registerDate = post.getRegisterDate();
