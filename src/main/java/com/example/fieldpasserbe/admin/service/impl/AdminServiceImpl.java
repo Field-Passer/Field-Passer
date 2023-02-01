@@ -52,7 +52,7 @@ public class AdminServiceImpl implements AdminService {
             Member member = memberService.findAdminByEmail(admin.getEmail()).get();
             if (isValidPassword(admin, member)) {
                 session.setAttribute("email", member.getEmail());
-                memberService.updateVisitCount(member.getId());
+                memberService.updateVisitCount(member.getMemberId());
                 return AdminLoginVO.builder()
                         .resultCode("success")
                         .resultData(AdminLoginResponceDTO.builder()
@@ -116,10 +116,10 @@ public class AdminServiceImpl implements AdminService {
                                 .email(member.getEmail())
                                 .memberName(member.getMemberName())
                                 .signupDate(member.getSignUpDate())
-                                .postCount(postService.countPostById(member.getId()))  //글 개수
+                                .postCount(postService.countPostById(member.getMemberId()))  //글 개수
                                 .visitCount(member.getVisitCount())
                                 .privilege(member.convertPrivilege(member.getPrivilege()))
-                                .reportNum(punishService.countBytargetId(member.getId()))  //신고 수
+                                .reportNum(punishService.countBytargetId(member.getMemberId()))  //신고 수
                                 .authority(member.convertAuthority(member.getAuthority()))
                         .build());
             }

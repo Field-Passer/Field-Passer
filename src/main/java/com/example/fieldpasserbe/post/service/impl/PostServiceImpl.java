@@ -1,5 +1,6 @@
 package com.example.fieldpasserbe.post.service.impl;
 
+import com.example.fieldpasserbe.post.dto.PostResponseDto;
 import com.example.fieldpasserbe.post.service.PostService;
 import com.example.fieldpasserbe.post.repository.PostRepositoryJPA;
 import com.example.fieldpasserbe.post.dto.PostListResponseDto;
@@ -8,6 +9,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Slice;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
 @RequiredArgsConstructor
@@ -18,6 +20,17 @@ public class PostServiceImpl implements PostService {
     @Override
     public Long countPostById(int id) {
         return postRepository.countPostById(id);
+    }
+
+    @Transactional
+    @Override
+    public void updateViewCount(int postId) {
+        postRepository.updateViewCount(postId);
+    }
+
+    @Override
+    public PostResponseDto postDetailByPostId(int postId) {
+        return postRepository.findByPostId(postId).map(post -> new PostResponseDto(post)).get();
     }
 
     @Override
