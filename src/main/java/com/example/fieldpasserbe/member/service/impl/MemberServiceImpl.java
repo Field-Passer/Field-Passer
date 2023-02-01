@@ -23,6 +23,12 @@ public class MemberServiceImpl implements MemberService {
         return memberRepository.findMemberById(id);
     }
 
+    /**
+     * 이메일로 회원 조회
+     * @param email
+     * @return
+     * @throws NullPointerException
+     */
     @Override
     public Optional<Member> findMemberByEmail(String email) throws NullPointerException{
         if (!memberRepository.findMemberByEmail(email).isPresent()) {
@@ -32,6 +38,12 @@ public class MemberServiceImpl implements MemberService {
         }
     }
 
+    /**
+     * 이메일로 관리자 조회
+     * @param email
+     * @return
+     * @throws NullPointerException
+     */
     @Override
     public Optional<Member> findAdminByEmail(String email) throws NullPointerException{
         if (!memberRepository.findAdminByEmail(email).isPresent()) {
@@ -41,6 +53,11 @@ public class MemberServiceImpl implements MemberService {
         }
     }
 
+    /**
+     * 회원의 방문 횟수 증가
+     * @param id
+     * @return
+     */
     @Override
     public boolean updateVisitCount(int id) {
         try {
@@ -53,6 +70,12 @@ public class MemberServiceImpl implements MemberService {
         }
     }
 
+    /**
+     * 전체 회원 조회(페이징)
+     * @param page
+     * @return
+     * @throws NullPointerException
+     */
     @Override
     public Page<Member> findAllMembers(int page) throws NullPointerException{
         PageRequest pageRequest = PageRequest.of(page - 1, contentsSize, Sort.by(Sort.Direction.ASC, "id"));
