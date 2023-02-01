@@ -34,7 +34,7 @@ public class PostListResponseDto {
 
     public PostListResponseDto(Post post) {
         this.postId = post.getPostId();
-        this.memberId = post.getMember().getId();
+        this.memberId = post.getMember().getMemberId();
         this.memberName = post.getMember().getMemberName();
         this.categoryName = post.getCategory().getCategoryName();
         this.districtName = post.getDistrict().getDistrictName();
