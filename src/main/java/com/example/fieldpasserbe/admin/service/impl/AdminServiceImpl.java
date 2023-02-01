@@ -35,7 +35,7 @@ public class AdminServiceImpl implements AdminService {
     private final AdminRepositoryJPA adminRepository;
 
     /**
-     * 로그인
+     * 관리자 로그인
      * @param admin
      * @param session
      * @return
@@ -138,6 +138,11 @@ public class AdminServiceImpl implements AdminService {
         }
     }
 
+    /**
+     * 일반 회원을 관리자로 등업
+     * @param email
+     * @return
+     */
     @Override
     public SimpleVO promoteAdmin(String email) {
         try {
@@ -157,4 +162,6 @@ public class AdminServiceImpl implements AdminService {
                     .build();
         }
     }
+
+
 }
