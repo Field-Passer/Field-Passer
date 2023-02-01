@@ -23,7 +23,7 @@ public class District {
     private int districtId;
 
     @Column(name = "DISTRICT")
-    private String district;
+    private String districtName;
 
     @OneToMany(mappedBy = "district")
     private List<Post> postList = new ArrayList<>();
