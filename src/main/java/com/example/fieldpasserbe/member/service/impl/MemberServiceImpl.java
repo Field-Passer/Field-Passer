@@ -20,7 +20,7 @@ public class MemberServiceImpl implements MemberService {
 
     @Override
     public Optional<Member> findMemberById(int id) {
-        return memberRepository.findMemberById(id);
+        return memberRepository.findMemberByMemberId(id);
     }
 
     /**
