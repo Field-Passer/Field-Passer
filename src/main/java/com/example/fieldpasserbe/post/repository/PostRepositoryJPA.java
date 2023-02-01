@@ -8,10 +8,15 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
+import java.util.Optional;
+
 public interface PostRepositoryJPA extends JpaRepository<Post, Integer> {
 
     @Query("select count(p) from Post p where p.postId = :id and p.deleteCheck = 0")
     Long countPostById(@Param("id") int id);
+
+    @EntityGraph(attributePaths = {"member","category","district","stadium"})
+    Optional<Post> findByPostId(int postId);
 
     @EntityGraph(attributePaths = {"member","category","district","stadium"})
     @Query("select p from Post p")
