@@ -9,9 +9,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Slice;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
-
-import java.io.IOException;
-import java.util.NoSuchElementException;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
 @RequiredArgsConstructor
@@ -22,6 +20,12 @@ public class PostServiceImpl implements PostService {
     @Override
     public Long countPostById(int id) {
         return postRepository.countPostById(id);
+    }
+
+    @Transactional
+    @Override
+    public void updateViewCount(int postId) {
+        postRepository.updateViewCount(postId);
     }
 
     @Override

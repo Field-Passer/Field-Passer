@@ -8,6 +8,8 @@ public interface PostService {
 
     Long countPostById(int id);
 
+    void updateViewCount(int postId);
+
     PostResponseDto postDetailByPostId(int postId);
 
     Slice<PostListResponseDto> postList(int page);

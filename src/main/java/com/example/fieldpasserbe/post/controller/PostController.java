@@ -18,6 +18,7 @@ public class PostController {
 
     @GetMapping("/api/post/{postId}")
     public PostResponseDto postDetail(@PathVariable int postId) {
+        postService.updateViewCount(postId);
         return postService.postDetailByPostId(postId);
     }
 
