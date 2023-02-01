@@ -24,7 +24,7 @@ public class PostListResponseDto {
     private LocalDateTime deleteDate;
     private LocalDateTime startTime;
     private LocalDateTime endTime;
-    private String imageUrl;
+    private String defaultImageUrl;
     private TransactionStatus transactionStatus;
     private int price;
     private int viewCount;
@@ -45,7 +45,7 @@ public class PostListResponseDto {
         this.deleteDate = post.getDeleteDate();
         this.startTime = post.getStartTime();
         this.endTime = post.getEndTime();
-        this.imageUrl = post.getImageUrl();
+        this.defaultImageUrl = post.getStadium().getDefaultImageUrl();
         this.transactionStatus = post.getTransactionStatus();
         this.price = post.getPrice();
         this.viewCount = post.getViewCount();
