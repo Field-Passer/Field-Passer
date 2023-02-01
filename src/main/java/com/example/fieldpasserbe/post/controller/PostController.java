@@ -28,7 +28,14 @@ public class PostController {
 
     @GetMapping("/api/post/district")
     public Slice<PostListResponseDto> postListByDistrict(@RequestParam(name = "district") String district,
-                                                      @RequestParam(name = "page") int page) {
+                                                         @RequestParam(name = "page") int page) {
         return postService.postListByDistrict(district, page);
+    }
+
+    @GetMapping("/api/post/category/district")
+    public Slice<PostListResponseDto> postListByCategoryAndDistrict(@RequestParam(name = "category") String category,
+                                                                    @RequestParam(name = "district") String district,
+                                                                    @RequestParam(name = "page") int page) {
+        return postService.PostListByCategoryAndDistrict(category, district, page);
     }
 }

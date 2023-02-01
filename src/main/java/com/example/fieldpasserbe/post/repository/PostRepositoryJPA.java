@@ -22,4 +22,7 @@ public interface PostRepositoryJPA extends JpaRepository<Post, Integer> {
 
     @EntityGraph(attributePaths = {"member","category","district","stadium"})
     Slice<Post> findByDistrict_DistrictName(String district, PageRequest pageRequest);
+
+    @EntityGraph(attributePaths = {"member","category","district","stadium"})
+    Slice<Post> findByCategory_CategoryNameAndDistrict_DistrictName(String category, String district, PageRequest pageRequest);
 }
