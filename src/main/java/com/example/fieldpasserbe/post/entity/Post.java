@@ -4,6 +4,7 @@ import com.example.fieldpasserbe.member.entity.Member;
 import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
+import org.hibernate.annotations.Where;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
@@ -14,6 +15,7 @@ import java.time.LocalDateTime;
 @Builder
 @Entity
 @Table(name = "POST")
+@Where(clause = "DELETE_CHECK = 0 AND BLIND = 0")
 public class Post {
     @Id
     @Column(name = "POST_ID")
