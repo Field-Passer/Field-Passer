@@ -7,7 +7,7 @@ import java.util.Optional;
 
 public interface MemberService {
 
-    Optional<Member> findMemberById(int id);
+    Optional<Member> findMemberById(int id) throws NullPointerException;
 
     Optional<Member> findMemberByEmail(String email) throws NullPointerException;
 

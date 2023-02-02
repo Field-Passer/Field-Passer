@@ -18,9 +18,20 @@ public class MemberServiceImpl implements MemberService {
     private final int contentsSize = 10;
     private final MemberRepositoryJPA memberRepository;
 
+    /**
+     * 회원 id로 회원 정보 조회
+     * @param id
+     * @return
+     * @throws NullPointerException
+     */
     @Override
-    public Optional<Member> findMemberById(int id) {
-        return memberRepository.findMemberByMemberId(id);
+    public Optional<Member> findMemberById(int id) throws NullPointerException{
+        Optional<Member> member = memberRepository.findMemberByMemberId(id);
+        if (member.isPresent()) {
+            return member;
+        } else {
+            throw new NullPointerException("존재하지 않는 회원입니다.");
+        }
     }
 
     /**
@@ -31,10 +42,11 @@ public class MemberServiceImpl implements MemberService {
      */
     @Override
     public Optional<Member> findMemberByEmail(String email) throws NullPointerException{
-        if (!memberRepository.findMemberByEmail(email).isPresent()) {
+        Optional<Member> member = memberRepository.findMemberByEmail(email);
+        if (!member.isPresent()) {
             throw new NullPointerException("존재하지 않는 회원입니다.");
         } else {
-            return memberRepository.findMemberByEmail(email);
+            return member;
         }
     }
 
@@ -79,10 +91,11 @@ public class MemberServiceImpl implements MemberService {
     @Override
     public Page<Member> findAllMembers(int page) throws NullPointerException{
         PageRequest pageRequest = PageRequest.of(page - 1, contentsSize, Sort.by(Sort.Direction.ASC, "id"));
-        if (memberRepository.findAllMembers(pageRequest).getContent().isEmpty()) {
+        Page<Member> allMembers = memberRepository.findAllMembers(pageRequest);
+        if (allMembers.getContent().isEmpty()) {
             throw new NullPointerException("조회할 수 있는 회원이 없습니다.");
         } else {
-            return memberRepository.findAllMembers(pageRequest);
+            return allMembers;
         }
     }
 }
