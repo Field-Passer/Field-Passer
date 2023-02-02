@@ -4,6 +4,7 @@ import com.example.fieldpasserbe.admin.service.AdminService;
 import com.example.fieldpasserbe.admin.dto.AdminLoginRequestDTO;
 import com.example.fieldpasserbe.admin.vo.AdminLoginVO;
 import com.example.fieldpasserbe.admin.vo.MemberListVO;
+import com.example.fieldpasserbe.admin.vo.MemberVO;
 import com.example.fieldpasserbe.admin.vo.SimpleVO;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
@@ -42,5 +43,10 @@ public class AdminController {
     @PutMapping("/admin/promote")
     public SimpleVO promoteAdmin(@RequestBody Map<String, String> map) {
         return adminService.promoteAdmin(map.get("email"));
+    }
+
+    @GetMapping("/admin/members/{memberId}")
+    public MemberVO memberDetail(@PathVariable int memberId) {
+        return adminService.memberDetail(memberId);
     }
 }
