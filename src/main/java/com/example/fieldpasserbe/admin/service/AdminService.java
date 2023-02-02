@@ -9,9 +9,7 @@ import com.example.fieldpasserbe.admin.vo.SimpleVO;
 import javax.servlet.http.HttpSession;
 
 public interface AdminService {
-    AdminLoginVO adminLogin(AdminLoginRequestDTO admin, HttpSession session) throws Exception;
-    MemberListVO lookUpmembers(int page) throws Exception;
-    SimpleVO promoteAdmin(String email);
 
+    MemberListVO lookUpmembers(int page) throws Exception;
     MemberVO memberDetail(int memberId);
 }
