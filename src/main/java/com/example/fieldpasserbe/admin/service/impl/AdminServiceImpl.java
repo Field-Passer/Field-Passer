@@ -175,9 +175,7 @@ public class AdminServiceImpl implements AdminService {
     public MemberVO memberDetail(int memberId) {
         try {
             Member member = memberService.findMemberById(memberId).get();
-            System.out.println("=======================================================================");
             PunishDTO punishDTO = punishService.checkPunish(member.getMemberId());
-            System.out.println("=======================================================================");
             return MemberVO.builder()
                     .resultCode("success")
                     .resultData(MemberDTO.builder()
