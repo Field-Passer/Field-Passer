@@ -88,4 +88,29 @@ public class Post {
         this.viewCount = this.viewCount == null ? 0 : this.viewCount;
         this.wishCount = this.wishCount == null ? 0 : this.wishCount;
     }
+
+    public void updatePost(Category category, District district, Stadium stadium,
+                           String title, String content, LocalDateTime startTime, LocalDateTime endTime,
+                           String imageUrl, TransactionStatus transactionStatus, int price) {
+        this.category = category;
+        this.district = district;
+        this.stadium = stadium;
+        this.title = title;
+        this.content = content;
+        this.startTime = startTime;
+        this.endTime = endTime;
+        this.imageUrl = imageUrl;
+        this.transactionStatus = transactionStatus;
+        this.price = price;
+    }
+
+    public void deletePost() {
+        this.deleteDate = LocalDateTime.now();
+        this.deleteCheck = 1;
+    }
+
+    public void blindPost() {
+        this.deleteDate = LocalDateTime.now();
+        this.blind = 1;
+    }
 }
