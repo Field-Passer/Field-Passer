@@ -48,16 +48,16 @@ public class Member {
     private Admin admin;
 
 
-    public String convertPrivilege(int p) {
-        if (p == 0) {
+    public String convertPrivilege() {
+        if (this.privilege == 0) {
             return "일반 회원";
         } else {
             return "관리자";
         }
     }
 
-    public String convertAuthority(int a) {
-        if (a == 0) {
+    public String convertAuthority() {
+        if (this.authority == 0) {
             return "이메일 인증 전";
         } else {
             return "인증 완료";
