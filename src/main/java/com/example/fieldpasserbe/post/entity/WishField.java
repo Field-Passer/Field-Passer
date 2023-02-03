@@ -1,6 +1,6 @@
 package com.example.fieldpasserbe.post.entity;
 
-import com.example.macpractice.dto.WishFieldId;
+import com.example.fieldpasserbe.post.dto.WishFieldId;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
