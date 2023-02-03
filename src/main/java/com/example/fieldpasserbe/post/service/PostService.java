@@ -7,4 +7,5 @@ public interface PostService {
     String insertPost(MultipartFile file, PostRequestDto postRequestDto);
     String editPost(int postId, MultipartFile file, PostRequestDto postRequestDto);
     String deletePost(int postId);
+    void deleteOverTime();
 }
