@@ -1,5 +1,6 @@
 package com.example.fieldpasserbe.post.entity;
 
+import com.example.fieldpasserbe.member.entity.Member;
 import com.example.fieldpasserbe.post.dto.WishFieldId;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -25,5 +26,5 @@ public class WishField {
     @Id
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "STADIUM_ID")
-    private StadiumList stadiumList;
+    private Stadium stadium;
 }
