@@ -13,5 +13,5 @@ import java.io.Serializable;
 @EqualsAndHashCode
 public class WishFieldId implements Serializable {
     private Integer member;
-    private Integer stadiumList;
+    private Integer stadium;
 }
