@@ -2,9 +2,11 @@ package com.example.fieldpasserbe.post.controller;
 
 import com.example.fieldpasserbe.post.dto.PostRequestDto;
 import com.example.fieldpasserbe.post.dto.PostResponseDto;
+import com.example.fieldpasserbe.post.dto.WishPostRequest;
 import com.example.fieldpasserbe.post.service.PostSearchService;
 import com.example.fieldpasserbe.post.dto.PostListResponseDto;
 import com.example.fieldpasserbe.post.service.PostService;
+import com.example.fieldpasserbe.post.service.WishPostService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Slice;
 import org.springframework.web.bind.annotation.*;
@@ -16,6 +18,7 @@ public class PostController {
 
     private final PostSearchService postSearchService;
     private final PostService postService;
+    private final WishPostService wishPostService;
 
     @GetMapping("/api/post/{postId}")
     public PostResponseDto postDetail(@PathVariable int postId) {
@@ -69,5 +72,10 @@ public class PostController {
     @PutMapping("/api/post/delete/{postId}")
     public String deletePost(@PathVariable int postId) {
         return postService.deletePost(postId);
+    }
+
+    @PostMapping("/api/like/post")
+    public String likePost(WishPostRequest wishPostRequest) {
+        return wishPostService.likePost(wishPostRequest);
     }
 }
