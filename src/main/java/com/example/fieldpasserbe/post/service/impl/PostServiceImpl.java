@@ -105,7 +105,7 @@ public class PostServiceImpl implements PostService {
      */
     @Transactional
     @Override
-    @Scheduled(cron = "0 0/1 * * * *")
+    @Scheduled(cron = "0 0/10 * * * *")
     public void deleteOverTime() {
 
         LocalDateTime nowDateTime = LocalDateTime.now();
