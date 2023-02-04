@@ -12,6 +12,7 @@ import com.example.fieldpasserbe.post.repository.StadiumRepositoryJPA;
 import com.example.fieldpasserbe.post.service.PostService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
@@ -21,6 +22,8 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.time.LocalDateTime;
+import java.util.List;
 import java.util.UUID;
 
 @RequiredArgsConstructor
@@ -34,6 +37,10 @@ public class PostServiceImpl implements PostService {
 
     @Value("${site-file.upload-dir}")
     private String uploadDir;
+
+    /*
+    게시글 작성
+     */
     @Transactional
     @Override
     public String insertPost(MultipartFile file, PostRequestDto postRequestDto) {
@@ -52,6 +59,9 @@ public class PostServiceImpl implements PostService {
 
         return "success";
     }
+    /*
+    게시글 수정
+     */
     @Transactional
     @Override
     public String editPost(int postId, MultipartFile file, PostRequestDto postRequestDto) {
@@ -75,6 +85,9 @@ public class PostServiceImpl implements PostService {
 
         return "success";
     }
+    /*
+    게시글 삭제
+     */
     @Transactional
     @Override
     public String deletePost(int postId) {
@@ -87,7 +100,29 @@ public class PostServiceImpl implements PostService {
 
         return "success";
     }
+    /*
+    10분마다 양도시간이 지난 게시글들을 확인하여 블라인드 처리함
+     */
+    @Transactional
+    @Override
+    @Scheduled(cron = "0 0/10 * * * *")
+    public void deleteOverTime() {
 
+        LocalDateTime nowDateTime = LocalDateTime.now();
+        List<Post> timeOverPost = postRepository.findByStartTimeBefore(nowDateTime);
+        if (timeOverPost.isEmpty()) {
+            return;
+        }
+        for (Post p : timeOverPost) {
+            if (p.getBlind() == 1) {
+                continue;
+            }
+            p.blindPost();
+        }
+    }
+    /*
+    파일 업로드 관련 메서드
+     */
     public String uploadPic(MultipartFile file) throws IOException {
         Path uploadPath = Paths.get(uploadDir);
         if (!Files.isDirectory(uploadPath)) {
