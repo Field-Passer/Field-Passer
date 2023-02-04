@@ -124,7 +124,7 @@ public class MemberServiceImpl implements MemberService {
             if (end.getTime() - start.getTime() < 0) {
                 throw new IllegalStateException("날짜를 잘못 입력했습니다.");
             }
-            List<PeriodResponceDTO> newMember = memberRepository.findNewMember("2023-01-13", "2023-01-30");
+            List<PeriodResponceDTO> newMember = memberRepository.findNewMember(startDate, endDate);
             if (newMember.size() == 0) {
                 throw new NullPointerException("조회할 수 있는 데이터가 없습니다");
             } else {
