@@ -42,6 +42,7 @@ public interface MemberRepositoryJPA extends JpaRepository<Member, Integer> {
     @Query("select m from Member m where m.delete = 0")
     Page<Member> findAllMembers(Pageable pageable);
 
+    //신규 회원 기간 조회
     @Query(value = "select Date_Format(m.signUp_Date, '%Y-%m-%d') as date, count(m.id) as memberNum from field_passer.Member as m where Date_Format(m.signUp_Date, '%Y-%m-%d') between :startDate AND :endDate AND m.DELETE_CHECK = 0 GROUP BY Date_Format(m.signUp_Date, '%Y-%m-%d')", nativeQuery = true)
     List<PeriodResponceDTO> findNewMember(@Param("startDate") String startDate, @Param("endDate") String endDate);
 }
