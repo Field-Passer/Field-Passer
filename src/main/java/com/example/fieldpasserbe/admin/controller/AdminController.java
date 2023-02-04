@@ -1,13 +1,11 @@
 package com.example.fieldpasserbe.admin.controller;
 
+import com.example.fieldpasserbe.admin.dto.PeriodRequestDTO;
 import com.example.fieldpasserbe.admin.service.AdminLoginService;
 import com.example.fieldpasserbe.admin.service.AdminManageService;
 import com.example.fieldpasserbe.admin.service.AdminService;
 import com.example.fieldpasserbe.admin.dto.AdminLoginRequestDTO;
-import com.example.fieldpasserbe.admin.vo.AdminLoginVO;
-import com.example.fieldpasserbe.admin.vo.MemberListVO;
-import com.example.fieldpasserbe.admin.vo.MemberVO;
-import com.example.fieldpasserbe.admin.vo.SimpleVO;
+import com.example.fieldpasserbe.admin.vo.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
@@ -54,5 +52,12 @@ public class AdminController {
     public MemberVO memberDetail(@PathVariable int memberId) {
 
         return adminService.memberDetail(memberId);
+    }
+
+    @GetMapping("/admin/membes/new")
+    public PeriodMemberVO checknewMember(PeriodRequestDTO period) {
+        System.out.println("period.getStartDate() = " + period.getStartDate());
+        System.out.println("period.getEndDate() = " + period.getEndDate());
+        return adminService.checkNewMember(period);
     }
 }
