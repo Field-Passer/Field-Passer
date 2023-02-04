@@ -56,8 +56,6 @@ public class AdminController {
 
     @GetMapping("/admin/membes/new")
     public PeriodMemberVO checknewMember(PeriodRequestDTO period) {
-        System.out.println("period.getStartDate() = " + period.getStartDate());
-        System.out.println("period.getEndDate() = " + period.getEndDate());
         return adminService.checkNewMember(period);
     }
 }
