@@ -1,75 +1,139 @@
 package com.example.fieldpasserbe.post.service.impl;
 
-import com.example.fieldpasserbe.post.dto.PostResponseDto;
-import com.example.fieldpasserbe.post.service.PostService;
+import com.example.fieldpasserbe.post.dto.PostRequestDto;
+import com.example.fieldpasserbe.post.entity.Category;
+import com.example.fieldpasserbe.post.entity.District;
+import com.example.fieldpasserbe.post.entity.Post;
+import com.example.fieldpasserbe.post.entity.Stadium;
+import com.example.fieldpasserbe.post.repository.CategoryRepositoryJPA;
+import com.example.fieldpasserbe.post.repository.DistrictRepositoryJPA;
 import com.example.fieldpasserbe.post.repository.PostRepositoryJPA;
-import com.example.fieldpasserbe.post.dto.PostListResponseDto;
+import com.example.fieldpasserbe.post.repository.StadiumRepositoryJPA;
+import com.example.fieldpasserbe.post.service.PostService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Slice;
-import org.springframework.data.domain.Sort;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.multipart.MultipartFile;
 
-@Service
+import java.io.File;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.time.LocalDateTime;
+import java.util.List;
+import java.util.UUID;
+
 @RequiredArgsConstructor
+@Service
 public class PostServiceImpl implements PostService {
 
     private final PostRepositoryJPA postRepository;
+    private final CategoryRepositoryJPA categoryRepository;
+    private final DistrictRepositoryJPA districtRepository;
+    private final StadiumRepositoryJPA stadiumRepository;
 
-    @Override
-    public Long countPostById(int id) {
-        return postRepository.countPostById(id);
-    }
+    @Value("${site-file.upload-dir}")
+    private String uploadDir;
 
+    /*
+    게시글 작성
+     */
     @Transactional
     @Override
-    public void updateViewCount(int postId) {
-        postRepository.updateViewCount(postId);
+    public String insertPost(MultipartFile file, PostRequestDto postRequestDto) {
+        try {
+            String image = uploadPic(file);
+            postRequestDto.setImageUrl(image);
+
+            Category category = categoryRepository.findByCategoryName(postRequestDto.getCategoryName()).get();
+            District district = districtRepository.findByDistrictName(postRequestDto.getDistrictName()).get();
+            Stadium stadium = stadiumRepository.findByStadiumName(postRequestDto.getStadiumName()).get();
+
+            postRepository.save(postRequestDto.toEntity(category, district, stadium));
+        } catch (Exception e) {
+            return "failed";
+        }
+
+        return "success";
     }
-
+    /*
+    게시글 수정
+     */
+    @Transactional
     @Override
-    public PostResponseDto postDetailByPostId(int postId) {
-        return postRepository.findByPostId(postId).map(post -> new PostResponseDto(post)).get();
+    public String editPost(int postId, MultipartFile file, PostRequestDto postRequestDto) {
+        try {
+            String image = uploadPic(file); //수정된 파일 저장
+            postRequestDto.setImageUrl(image); //이미지명 변경
+
+            Post findPost = postRepository.findByPostId(postId).get();
+            Category category = categoryRepository.findByCategoryName(postRequestDto.getCategoryName()).get();
+            District districtList = districtRepository.findByDistrictName(postRequestDto.getDistrictName()).get();
+            Stadium stadiumList = stadiumRepository.findByStadiumName(postRequestDto.getStadiumName()).get();
+
+            findPost.updatePost(category, districtList, stadiumList,
+                    postRequestDto.getTitle(), postRequestDto.getContent(), postRequestDto.getStartTime(),
+                    postRequestDto.getEndTime(), postRequestDto.getImageUrl(),
+                    postRequestDto.getTransactionStatus(), postRequestDto.getPrice());
+
+        } catch (Exception e) {
+            return "failed";
+        }
+
+        return "success";
     }
-
+    /*
+    게시글 삭제
+     */
+    @Transactional
     @Override
-    public Slice<PostListResponseDto> postList(int page) {
-        PageRequest pageRequest = PageRequest.of(page - 1, 10, Sort.by(Sort.Direction.DESC, "registerDate"));
+    public String deletePost(int postId) {
+        try {
+            Post findPost = postRepository.findByPostId(postId).get();
+            findPost.deletePost();
+        } catch (Exception e) {
+            return "failed";
+        }
 
-        return postRepository.findDefaultAll(pageRequest)
-                .map(post -> new PostListResponseDto(post));
+        return "success";
     }
-
+    /*
+    10분마다 양도시간이 지난 게시글들을 확인하여 블라인드 처리함
+     */
+    @Transactional
     @Override
-    public Slice<PostListResponseDto> postListByCategory(String category, int page) {
-        PageRequest pageRequest = PageRequest.of(page - 1, 10, Sort.by(Sort.Direction.DESC, "registerDate"));
+    @Scheduled(cron = "0 0/10 * * * *")
+    public void deleteOverTime() {
 
-        return postRepository.findByCategory_CategoryName(category, pageRequest)
-                .map(post -> new PostListResponseDto(post));
+        LocalDateTime nowDateTime = LocalDateTime.now();
+        List<Post> timeOverPost = postRepository.findByStartTimeBefore(nowDateTime);
+        if (timeOverPost.isEmpty()) {
+            return;
+        }
+        for (Post p : timeOverPost) {
+            if (p.getBlind() == 1) {
+                continue;
+            }
+            p.blindPost();
+        }
     }
+    /*
+    파일 업로드 관련 메서드
+     */
+    public String uploadPic(MultipartFile file) throws IOException {
+        Path uploadPath = Paths.get(uploadDir);
+        if (!Files.isDirectory(uploadPath)) {
+            Files.createDirectories(uploadPath);
+        }
 
-    @Override
-    public Slice<PostListResponseDto> postListByDistrict(String district, int page) {
-        PageRequest pageRequest = PageRequest.of(page - 1, 10, Sort.by(Sort.Direction.DESC, "registerDate"));
+        UUID uuid = UUID.randomUUID(); // 중복 방지를 위한 랜덤 값
+        String originFileName = file.getOriginalFilename(); //파일 원래 이름
+        String fullPath = uploadDir + uuid.toString() + "_" + originFileName;
+        file.transferTo(new File(fullPath));
 
-        return postRepository.findByDistrict_DistrictName(district, pageRequest)
-                .map(post -> new PostListResponseDto(post));
-    }
-
-    @Override
-    public Slice<PostListResponseDto> postListByCategoryAndDistrict(String category, String district, int page) {
-        PageRequest pageRequest = PageRequest.of(page - 1, 10, Sort.by(Sort.Direction.DESC, "registerDate"));
-
-        return postRepository.findByCategory_CategoryNameAndDistrict_DistrictName(category, district, pageRequest)
-                .map(post -> new PostListResponseDto(post));
-    }
-
-    @Override
-    public Slice<PostListResponseDto> postListByCategoryAndDistrictAndStadium(String category, String district, String stadiumName, int page) {
-        PageRequest pageRequest = PageRequest.of(page - 1, 10, Sort.by(Sort.Direction.DESC, "registerDate"));
-
-        return postRepository.findByCategory_CategoryNameAndDistrict_DistrictNameAndStadium_StadiumName(category, district, stadiumName, pageRequest)
-                .map(post -> new PostListResponseDto(post));
+        return fullPath;
     }
 }
