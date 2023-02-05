@@ -63,4 +63,11 @@ public class AdminController {
     public PunishVO lookupPunishment(int page) {
         return adminService.lookUpPunishment(page);
     }
+
+    @GetMapping("/admin/board/members/{memberId}")
+    public PostVO postByID(@PathVariable int memberId, @RequestParam(name = "page") int page) {
+        System.out.println("memberId = " + memberId);
+        System.out.println("page = " + page);
+        return adminService.findPostsById(page, memberId);
+    }
 }
