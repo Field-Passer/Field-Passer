@@ -1,6 +1,6 @@
 package com.example.fieldpasserbe.admin.vo;
 
-import com.example.fieldpasserbe.admin.dto.PunishResponceDTO;
+import com.example.fieldpasserbe.support.dto.PunishResponceDTO;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -14,6 +14,6 @@ import java.util.List;
 @Builder
 public class PunishVO {
     private String resultCode;
-    private int resultDataNum;
+    private Long resultDataNum;
     private List<PunishResponceDTO> resultData;
 }
