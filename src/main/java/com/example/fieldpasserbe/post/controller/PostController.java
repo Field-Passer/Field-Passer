@@ -3,6 +3,7 @@ package com.example.fieldpasserbe.post.controller;
 import com.example.fieldpasserbe.post.dto.PostRequestDto;
 import com.example.fieldpasserbe.post.dto.PostResponseDto;
 import com.example.fieldpasserbe.post.dto.WishPostRequest;
+import com.example.fieldpasserbe.post.entity.Post;
 import com.example.fieldpasserbe.post.service.PostSearchService;
 import com.example.fieldpasserbe.post.dto.PostListResponseDto;
 import com.example.fieldpasserbe.post.service.PostService;
@@ -11,6 +12,8 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Slice;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
+
+import java.util.List;
 
 @RequiredArgsConstructor
 @RestController
@@ -77,5 +80,10 @@ public class PostController {
     @PostMapping("/api/like/post")
     public String likePost(WishPostRequest wishPostRequest) {
         return wishPostService.likePost(wishPostRequest);
+    }
+
+    @GetMapping("/api/imminent")
+    public List<PostListResponseDto> findImminent(@RequestParam(name = "category") String category) {
+        return postSearchService.findImminent(category);
     }
 }

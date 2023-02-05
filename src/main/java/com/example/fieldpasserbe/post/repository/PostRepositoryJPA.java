@@ -49,4 +49,5 @@ public interface PostRepositoryJPA extends JpaRepository<Post, Integer> {
                                                                                               PageRequest pageRequest);
 
     List<Post> findByStartTimeBefore(LocalDateTime dateTime);
+    List<Post> findTop20ByCategory_CategoryNameAndStartTimeAfterOrderByStartTimeAsc(String category, LocalDateTime dateTime);
 }
