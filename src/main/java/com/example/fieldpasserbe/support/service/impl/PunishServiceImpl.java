@@ -1,7 +1,6 @@
 package com.example.fieldpasserbe.support.service.impl;
 
 import com.example.fieldpasserbe.support.dto.PunishDTO;
-import com.example.fieldpasserbe.support.dto.PunishResponceDTO;
 import com.example.fieldpasserbe.support.entity.Punish;
 import com.example.fieldpasserbe.support.repository.PunishRepositoryJPA;
 import com.example.fieldpasserbe.support.service.PunishService;
