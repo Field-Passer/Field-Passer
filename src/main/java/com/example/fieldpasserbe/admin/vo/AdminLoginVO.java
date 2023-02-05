@@ -1,6 +1,6 @@
 package com.example.fieldpasserbe.admin.vo;
 
-import com.example.fieldpasserbe.admin.dto.AdminLoginResponceDTO;
+import com.example.fieldpasserbe.admin.dto.AdminLoginResponseDTO;
 import lombok.*;
 
 @EqualsAndHashCode
@@ -11,5 +11,5 @@ import lombok.*;
 public class AdminLoginVO {
 
     private String resultCode;
-    private AdminLoginResponceDTO resultData;
+    private AdminLoginResponseDTO resultData;
 }
