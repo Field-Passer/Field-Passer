@@ -8,7 +8,7 @@ import com.example.fieldpasserbe.post.service.PostSearchService;
 import com.example.fieldpasserbe.member.entity.Member;
 import com.example.fieldpasserbe.member.service.MemberService;
 import com.example.fieldpasserbe.support.dto.PunishDTO;
-import com.example.fieldpasserbe.support.dto.PunishResponceDTO;
+import com.example.fieldpasserbe.support.dto.PunishResponseDTO;
 import com.example.fieldpasserbe.support.entity.Punish;
 import com.example.fieldpasserbe.support.service.PunishService;
 import lombok.RequiredArgsConstructor;
@@ -59,7 +59,7 @@ public class AdminServiceImpl implements AdminService {
                     .resultCode("success")
                     .resultDataNum(members.getTotalElements())
                     .resultData(resultData)
-                    .currentPage(members.getNumber())
+                    .currentPage(members.getNumber() + 1)
                     .totalPage(members.getTotalPages())
                     .sort(members.getSort())
                     .build();
@@ -108,7 +108,7 @@ public class AdminServiceImpl implements AdminService {
     @Override
     public PeriodMemberVO checkNewMember(PeriodRequestDTO period) {
         try {
-            List<PeriodResponceDTO> newMember = memberService.checkNewMember(period.getStartDate(), period.getEndDate());
+            List<PeriodResponseDTO> newMember = memberService.checkNewMember(period.getStartDate(), period.getEndDate());
             return PeriodMemberVO.builder()
                     .resultCode("success")
                     .resultDataNum(newMember.size())
@@ -138,12 +138,12 @@ public class AdminServiceImpl implements AdminService {
     public PunishVO lookUpPunishment(int page) {
         try {
             Page<Punish> punishment = punishService.findPunishment(page);
-            List<PunishResponceDTO> resultData = new ArrayList<>();
+            List<PunishResponseDTO> resultData = new ArrayList<>();
             DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
             for (Punish punish : punishment.getContent()) {
                 String releaseDate = dateFormat.format(punish.getPunishPeriod().getReleaseDate());
                 String judgeDate = dateFormat.format(punish.getPunishPeriod().getJudgeDate());
-                resultData.add(PunishResponceDTO.builder()
+                resultData.add(PunishResponseDTO.builder()
                         .punishId(punish.getPunishId())
                         .adminName(punish.getAdmin().getMemberName())
                         .memberName(punish.getTarget().getMemberName())
@@ -156,9 +156,32 @@ public class AdminServiceImpl implements AdminService {
                     .resultCode("success")
                     .resultDataNum(punishment.getTotalElements())
                     .resultData(resultData)
+                    .currentPage(punishment.getNumber() + 1)
+                    .totalPage(punishment.getTotalPages())
+                    .sort(punishment.getSort())
                     .build();
         } catch (NullPointerException e) {
             return PunishVO.builder()
+                    .resultCode("failed: 조회할 수 있는 데이터가 없습니다.")
+                    .build();
+        }
+    }
+
+    @Override
+    public PostVO findPostsById(int page, int memberId) {
+        try {
+            Page<PostResponseDTO> postsById = postSearchService.findPostsById(page, memberId);
+            List<PostResponseDTO> content = postsById.getContent();
+            return PostVO.builder()
+                    .resultCode("success")
+                    .resultDataNum(postsById.getTotalElements())
+                    .resultData(content)
+                    .currentPage(postsById.getNumber() + 1)
+                    .totalPage(postsById.getTotalPages())
+                    .sort(postsById.getSort())
+                    .build();
+        } catch (NullPointerException e) {
+            return PostVO.builder()
                     .resultCode("failed: 조회할 수 있는 데이터가 없습니다.")
                     .build();
         }
