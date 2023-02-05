@@ -58,4 +58,9 @@ public class AdminController {
     public PeriodMemberVO checknewMember(PeriodRequestDTO period) {
         return adminService.checkNewMember(period);
     }
+
+    @GetMapping("/admin/punishment")
+    public PunishVO lookupPunishment(int page) {
+        return null;
+    }
 }
