@@ -12,7 +12,10 @@ import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalDateTime;
+import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -73,5 +76,14 @@ public class PostSearchServiceImpl implements PostSearchService {
 
         return postRepository.findByCategory_CategoryNameAndDistrict_DistrictNameAndStadium_StadiumName(category, district, stadiumName, pageRequest)
                 .map(post -> new PostListResponseDto(post));
+    }
+
+    @Override
+    public List<PostListResponseDto> findImminent(String category) {
+        LocalDateTime nowDateTime = LocalDateTime.now();
+        return postRepository.findTop20ByCategory_CategoryNameAndStartTimeAfterOrderByStartTimeAsc(category, nowDateTime)
+                .stream()
+                .map(post -> new PostListResponseDto(post))
+                .collect(Collectors.toList());
     }
 }
