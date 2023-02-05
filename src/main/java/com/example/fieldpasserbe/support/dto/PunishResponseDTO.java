@@ -5,13 +5,11 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
-import java.util.Date;
-
 @AllArgsConstructor
 @NoArgsConstructor
 @Getter
 @Builder
-public class PunishResponceDTO {
+public class PunishResponseDTO {
     private int punishId;
     private String adminName;
     private String memberName;
