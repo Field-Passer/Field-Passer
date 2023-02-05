@@ -1,5 +1,7 @@
 package com.example.fieldpasserbe.member.repository;
 
+import com.example.fieldpasserbe.admin.dto.PeriodRequestDTO;
+import com.example.fieldpasserbe.admin.dto.PeriodResponceDTO;
 import com.example.fieldpasserbe.member.entity.Member;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -10,6 +12,10 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
 import javax.persistence.Entity;
+import java.time.LocalDateTime;
+import java.util.Date;
+import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 public interface MemberRepositoryJPA extends JpaRepository<Member, Integer> {
@@ -35,4 +41,8 @@ public interface MemberRepositoryJPA extends JpaRepository<Member, Integer> {
     @EntityGraph(attributePaths = {"admin"})
     @Query("select m from Member m where m.delete = 0")
     Page<Member> findAllMembers(Pageable pageable);
+
+    //신규 회원 기간 조회
+    @Query(value = "select Date_Format(m.signUp_Date, '%Y-%m-%d') as date, count(m.id) as memberNum from field_passer.Member as m where Date_Format(m.signUp_Date, '%Y-%m-%d') between :startDate AND :endDate AND m.DELETE_CHECK = 0 GROUP BY Date_Format(m.signUp_Date, '%Y-%m-%d')", nativeQuery = true)
+    List<PeriodResponceDTO> findNewMember(@Param("startDate") String startDate, @Param("endDate") String endDate);
 }

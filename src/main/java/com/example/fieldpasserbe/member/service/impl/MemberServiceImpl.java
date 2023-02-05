@@ -1,14 +1,21 @@
 package com.example.fieldpasserbe.member.service.impl;
 
+import com.example.fieldpasserbe.admin.dto.PeriodResponceDTO;
 import com.example.fieldpasserbe.member.entity.Member;
 import com.example.fieldpasserbe.member.repository.MemberRepositoryJPA;
 import com.example.fieldpasserbe.member.service.MemberService;
 import lombok.RequiredArgsConstructor;
+import net.bytebuddy.build.Plugin;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -58,10 +65,11 @@ public class MemberServiceImpl implements MemberService {
      */
     @Override
     public Optional<Member> findAdminByEmail(String email) throws NullPointerException{
-        if (!memberRepository.findAdminByEmail(email).isPresent()) {
+        Optional<Member> adminByEmail = memberRepository.findAdminByEmail(email);
+        if (!adminByEmail.isPresent()) {
             throw new NullPointerException("존재하지 않는 회원입니다.");
         } else {
-            return memberRepository.findAdminByEmail(email);
+            return adminByEmail;
         }
     }
 
@@ -71,6 +79,7 @@ public class MemberServiceImpl implements MemberService {
      * @return
      */
     @Override
+    @Transactional
     public boolean updateVisitCount(int id) {
         try {
             if (memberRepository.updateVisitCount(id) != 1) {
@@ -96,6 +105,33 @@ public class MemberServiceImpl implements MemberService {
             throw new NullPointerException("조회할 수 있는 회원이 없습니다.");
         } else {
             return allMembers;
+        }
+    }
+
+    /**
+     * 신규 회원 검색
+     * @param startDate
+     * @param endDate
+     * @return
+     * @throws Exception
+     */
+    @Override
+    public List<PeriodResponceDTO> checkNewMember(String startDate, String endDate) throws Exception{
+        try {
+            SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+            Date start = format.parse(startDate);
+            Date end = format.parse(endDate);
+            if (end.getTime() - start.getTime() < 0) {
+                throw new IllegalStateException("날짜를 잘못 입력했습니다.");
+            }
+            List<PeriodResponceDTO> newMember = memberRepository.findNewMember(startDate, endDate);
+            if (newMember.size() == 0) {
+                throw new NullPointerException("조회할 수 있는 데이터가 없습니다");
+            } else {
+                return newMember;
+            }
+        } catch (IllegalStateException e) {
+            throw new IllegalStateException("날짜를 잘못 입력했습니다.");
         }
     }
 }

@@ -1,11 +1,11 @@
 package com.example.fieldpasserbe.admin.controller;
 
+import com.example.fieldpasserbe.admin.dto.PeriodRequestDTO;
+import com.example.fieldpasserbe.admin.service.AdminLoginService;
+import com.example.fieldpasserbe.admin.service.AdminManageService;
 import com.example.fieldpasserbe.admin.service.AdminService;
 import com.example.fieldpasserbe.admin.dto.AdminLoginRequestDTO;
-import com.example.fieldpasserbe.admin.vo.AdminLoginVO;
-import com.example.fieldpasserbe.admin.vo.MemberListVO;
-import com.example.fieldpasserbe.admin.vo.MemberVO;
-import com.example.fieldpasserbe.admin.vo.SimpleVO;
+import com.example.fieldpasserbe.admin.vo.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
@@ -16,12 +16,14 @@ import java.util.Map;
 @RequiredArgsConstructor
 public class AdminController {
 
+    private final AdminLoginService adminLoginService;
     private final AdminService adminService;
+    private final AdminManageService adminManageService;
 
     @PostMapping("/admin/auth/login")
     public AdminLoginVO adminLogin(@RequestBody AdminLoginRequestDTO adminLoginRequest, HttpSession session) {
         try {
-            return adminService.adminLogin(adminLoginRequest, session);
+            return adminLoginService.adminLogin(adminLoginRequest, session);
         } catch (Exception e) {
             return AdminLoginVO.builder()
                     .resultCode(e.getMessage())
@@ -42,11 +44,20 @@ public class AdminController {
 
     @PutMapping("/admin/promote")
     public SimpleVO promoteAdmin(@RequestBody Map<String, String> map) {
-        return adminService.promoteAdmin(map.get("email"));
+
+        return adminManageService.promoteAdmin(map.get("email"));
     }
 
     @GetMapping("/admin/members/{memberId}")
     public MemberVO memberDetail(@PathVariable int memberId) {
+
         return adminService.memberDetail(memberId);
+    }
+
+    @GetMapping("/admin/membes/new")
+    public PeriodMemberVO checknewMember(PeriodRequestDTO period) {
+        System.out.println("period.getStartDate() = " + period.getStartDate());
+        System.out.println("period.getEndDate() = " + period.getEndDate());
+        return adminService.checkNewMember(period);
     }
 }
