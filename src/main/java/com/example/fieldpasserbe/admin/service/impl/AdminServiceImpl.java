@@ -8,11 +8,15 @@ import com.example.fieldpasserbe.post.service.PostSearchService;
 import com.example.fieldpasserbe.member.entity.Member;
 import com.example.fieldpasserbe.member.service.MemberService;
 import com.example.fieldpasserbe.support.dto.PunishDTO;
+import com.example.fieldpasserbe.support.dto.PunishResponceDTO;
+import com.example.fieldpasserbe.support.entity.Punish;
 import com.example.fieldpasserbe.support.service.PunishService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Service;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -125,5 +129,38 @@ public class AdminServiceImpl implements AdminService {
         }
     }
 
-
+    /**
+     * 징계 중인 회원 목록 출력
+     * @param page
+     * @return
+     */
+    @Override
+    public PunishVO lookUpPunishment(int page) {
+        try {
+            Page<Punish> punishment = punishService.findPunishment(page);
+            List<PunishResponceDTO> resultData = new ArrayList<>();
+            DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+            for (Punish punish : punishment.getContent()) {
+                String releaseDate = dateFormat.format(punish.getPunishPeriod().getReleaseDate());
+                String judgeDate = dateFormat.format(punish.getPunishPeriod().getJudgeDate());
+                resultData.add(PunishResponceDTO.builder()
+                        .punishId(punish.getPunishId())
+                        .adminName(punish.getAdmin().getMemberName())
+                        .memberName(punish.getTarget().getMemberName())
+                        .reason(punish.getReport().getReportCategory().toString())
+                        .judgeDate(judgeDate)
+                        .releaseDate(releaseDate)
+                        .build());
+            }
+            return PunishVO.builder()
+                    .resultCode("success")
+                    .resultDataNum(punishment.getTotalElements())
+                    .resultData(resultData)
+                    .build();
+        } catch (NullPointerException e) {
+            return PunishVO.builder()
+                    .resultCode("failed: 조회할 수 있는 데이터가 없습니다.")
+                    .build();
+        }
+    }
 }

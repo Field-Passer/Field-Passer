@@ -59,8 +59,8 @@ public class AdminController {
         return adminService.checkNewMember(period);
     }
 
-    @GetMapping("/admin/punishment")
+    @GetMapping("/admin/members/punishment")
     public PunishVO lookupPunishment(int page) {
-        return null;
+        return adminService.lookUpPunishment(page);
     }
 }
