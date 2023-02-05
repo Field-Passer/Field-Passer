@@ -1,7 +1,9 @@
 package com.example.fieldpasserbe.post.service;
 
+import com.example.fieldpasserbe.admin.dto.PostResponseDTO;
 import com.example.fieldpasserbe.post.dto.PostListResponseDto;
 import com.example.fieldpasserbe.post.dto.PostResponseDto;
+import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Slice;
 
 import java.util.List;
@@ -25,5 +27,7 @@ public interface PostSearchService {
     Slice<PostListResponseDto> postListByCategoryAndDistrictAndStadium(String category, String district, String stadiumName, int page);
 
     List<PostListResponseDto> findImminent(String category);
+
+    Page<PostResponseDTO> findPostsById(int page, int memberId) throws NullPointerException;
 
 }
