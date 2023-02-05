@@ -1,18 +1,16 @@
 package com.example.fieldpasserbe.member.service.impl;
 
-import com.example.fieldpasserbe.admin.dto.PeriodResponceDTO;
+import com.example.fieldpasserbe.admin.dto.PeriodResponseDTO;
 import com.example.fieldpasserbe.member.entity.Member;
 import com.example.fieldpasserbe.member.repository.MemberRepositoryJPA;
 import com.example.fieldpasserbe.member.service.MemberService;
 import lombok.RequiredArgsConstructor;
-import net.bytebuddy.build.Plugin;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
@@ -116,7 +114,7 @@ public class MemberServiceImpl implements MemberService {
      * @throws Exception
      */
     @Override
-    public List<PeriodResponceDTO> checkNewMember(String startDate, String endDate) throws Exception{
+    public List<PeriodResponseDTO> checkNewMember(String startDate, String endDate) throws Exception{
         try {
             SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
             Date start = format.parse(startDate);
@@ -124,7 +122,7 @@ public class MemberServiceImpl implements MemberService {
             if (end.getTime() - start.getTime() < 0) {
                 throw new IllegalStateException("날짜를 잘못 입력했습니다.");
             }
-            List<PeriodResponceDTO> newMember = memberRepository.findNewMember(startDate, endDate);
+            List<PeriodResponseDTO> newMember = memberRepository.findNewMember(startDate, endDate);
             if (newMember.size() == 0) {
                 throw new NullPointerException("조회할 수 있는 데이터가 없습니다");
             } else {
