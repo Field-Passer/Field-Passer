@@ -1,4 +1,4 @@
-package com.example.fieldpasserbe.admin.dto;
+package com.example.fieldpasserbe.support.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -12,10 +12,10 @@ import java.util.Date;
 @Getter
 @Builder
 public class PunishResponceDTO {
-    private String punishId;
+    private int punishId;
     private String adminName;
     private String memberName;
     private String reason;
-    private Date judgeDate;
-    private Date releaseDate;
+    private String judgeDate;
+    private String releaseDate;
 }
