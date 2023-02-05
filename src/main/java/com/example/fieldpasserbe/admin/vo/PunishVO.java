@@ -1,10 +1,11 @@
 package com.example.fieldpasserbe.admin.vo;
 
-import com.example.fieldpasserbe.support.dto.PunishResponceDTO;
+import com.example.fieldpasserbe.support.dto.PunishResponseDTO;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import org.springframework.data.domain.Sort;
 
 import java.util.List;
 
@@ -15,5 +16,8 @@ import java.util.List;
 public class PunishVO {
     private String resultCode;
     private Long resultDataNum;
-    private List<PunishResponceDTO> resultData;
+    private List<PunishResponseDTO> resultData;
+    private int currentPage;
+    private int totalPage;
+    private Sort sort;
 }
