@@ -1,6 +1,8 @@
 package com.example.fieldpasserbe.post.repository;
 
+import com.example.fieldpasserbe.admin.dto.PostResponseDTO;
 import com.example.fieldpasserbe.post.entity.Post;
+import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Slice;
 import org.springframework.data.jpa.repository.EntityGraph;
@@ -50,4 +52,31 @@ public interface PostRepositoryJPA extends JpaRepository<Post, Integer> {
 
     List<Post> findByStartTimeBefore(LocalDateTime dateTime);
     List<Post> findTop20ByCategory_CategoryNameAndStartTimeAfterOrderByStartTimeAsc(String category, LocalDateTime dateTime);
+
+    //@EntityGraph(attributePaths = {"member","category","district","stadium"})
+    @Query(value = "SELECT p.post_id as postId," +
+            "p.id as memberId," +
+            "m.membername as memberName," +
+            "c.category as category," +
+            "d.district as district," +
+            "s.stadium_name as stadiumName," +
+            "p.REGISTER_DATE as registerDate," +
+            "p.START_TIME as startTime," +
+            "p.END_TIME as endTime," +
+            "p.TITLE as title," +
+            "p.PRICE as price," +
+            "p.TRANSACTION_STATUS as transactionStatus," +
+            "p.blind as blind " +
+            "FROM field_passer.post as p " +
+            "left join field_passer.stadium_list as s " +
+            "on s.stadium_id = p.stadium_id " +
+            "left join field_passer.district_list as d " +
+            "on d.district_id = p.district_id " +
+            "left join field_passer.category_list as c " +
+            "on c.category_id = p.category_id " +
+            "left join field_passer.member as m " +
+            "on m.id = p.id " +
+            "where p.id = :memberId " +
+            "and p.DELETE_CHECK = 0", nativeQuery = true)
+    Page<PostResponseDTO> findPostsByMemberId(@Param("memberId") int memberId, PageRequest pageRequest);
 }
