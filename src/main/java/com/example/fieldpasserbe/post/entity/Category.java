@@ -26,8 +26,8 @@ public class Category {
     private String categoryName;
 
     @OneToMany(mappedBy = "category")
-    private List<Post> postList = new ArrayList<>();
+    private List<Post> postList;/* = new ArrayList<>();*/
 
     @OneToMany(mappedBy = "category")
-    private List<Stadium> stadiumList = new ArrayList<>();
+    private List<Stadium> stadiumList;/* = new ArrayList<>();*/
 }

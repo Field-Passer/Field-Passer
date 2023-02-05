@@ -2,11 +2,11 @@ package com.example.fieldpasserbe.post.entity;
 
 import com.example.fieldpasserbe.member.entity.Member;
 import lombok.*;
-import org.hibernate.annotations.CreationTimestamp;
-import org.hibernate.annotations.UpdateTimestamp;
-import org.hibernate.annotations.Where;
+import org.hibernate.annotations.*;
 
 import javax.persistence.*;
+import javax.persistence.Entity;
+import javax.persistence.Table;
 import java.time.LocalDateTime;
 
 @AllArgsConstructor
