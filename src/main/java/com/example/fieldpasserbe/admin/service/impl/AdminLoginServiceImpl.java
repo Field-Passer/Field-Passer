@@ -1,14 +1,11 @@
 package com.example.fieldpasserbe.admin.service.impl;
 
 import com.example.fieldpasserbe.admin.dto.AdminLoginRequestDTO;
-import com.example.fieldpasserbe.admin.dto.AdminLoginResponceDTO;
-import com.example.fieldpasserbe.admin.repository.AdminRepositoryJPA;
+import com.example.fieldpasserbe.admin.dto.AdminLoginResponseDTO;
 import com.example.fieldpasserbe.admin.service.AdminLoginService;
 import com.example.fieldpasserbe.admin.vo.AdminLoginVO;
 import com.example.fieldpasserbe.member.entity.Member;
 import com.example.fieldpasserbe.member.service.MemberService;
-import com.example.fieldpasserbe.post.service.PostService;
-import com.example.fieldpasserbe.support.service.PunishService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -44,7 +41,7 @@ public class AdminLoginServiceImpl implements AdminLoginService {
                 memberService.updateVisitCount(member.getMemberId());
                 return AdminLoginVO.builder()
                         .resultCode("success")
-                        .resultData(AdminLoginResponceDTO.builder()
+                        .resultData(AdminLoginResponseDTO.builder()
                                 .email(member.getEmail())
                                 .profileImg(member.getProfileImg())
                                 .memberName(member.getMemberName())

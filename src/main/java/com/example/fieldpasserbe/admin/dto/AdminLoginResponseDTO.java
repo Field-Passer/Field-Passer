@@ -9,7 +9,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @Getter
 @Builder
-public class AdminLoginResponceDTO {
+public class AdminLoginResponseDTO {
 
     private String email;
     private String profileImg;

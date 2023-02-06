@@ -1,6 +1,6 @@
 package com.example.fieldpasserbe.admin.vo;
 
-import com.example.fieldpasserbe.admin.dto.PeriodResponceDTO;
+import com.example.fieldpasserbe.admin.dto.PeriodResponseDTO;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -15,5 +15,5 @@ import java.util.List;
 public class PeriodMemberVO {
     private String resultCode;
     private int resultDataNum;
-    private List<PeriodResponceDTO> resultData;
+    private List<PeriodResponseDTO> resultData;
 }

@@ -46,5 +46,5 @@ public class Stadium {
     private String defaultImageUrl;
 
     @OneToMany(mappedBy = "stadium")
-    private List<Post> postList = new ArrayList<>();
+    private List<Post> postList;/* = new ArrayList<>();*/
 }

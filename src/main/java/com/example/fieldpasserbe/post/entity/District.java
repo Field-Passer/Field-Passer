@@ -26,8 +26,8 @@ public class District {
     private String districtName;
 
     @OneToMany(mappedBy = "district")
-    private List<Post> postList = new ArrayList<>();
+    private List<Post> postList;/* = new ArrayList<>();*/
 
     @OneToMany(mappedBy = "district")
-    private List<Stadium> stadiumList = new ArrayList<>();
+    private List<Stadium> stadiumList;/* = new ArrayList<>();*/
 }
