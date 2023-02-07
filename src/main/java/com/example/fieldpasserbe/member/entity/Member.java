@@ -35,10 +35,10 @@ public class Member {
 
     @Column(name = "PROFILE_IMG")
     private String profileImg;
-    @Column(name = "PRIVILEGE")
+    @Column(name = "PRIVILEGE",columnDefinition = "TINYINT(1) DEFAULT 0",length = 1)
     private byte privilege;
 
-    @Column(name = "AUTHORITY")
+    @Column(name = "AUTHORITY",columnDefinition = "TINYINT(1) DEFAULT 0",length = 1)
     private byte authority;
 
     @Column(name = "SIGNUP_DATE")
@@ -47,7 +47,7 @@ public class Member {
     @Column(name = "VISIT_COUNT")
     private Integer visitCount;
 
-    @Column(name = "DELETE_CHECK")
+    @Column(name = "DELETE_CHECK",columnDefinition = "TINYINT(1) DEFAULT 0",length = 1)
     private byte delete;
 
     @OneToOne(mappedBy = "member", fetch = FetchType.LAZY)
@@ -62,6 +62,10 @@ public class Member {
     @OneToMany(mappedBy = "member")
     private List<ChatMessage> chatMessages;
 
+    @PrePersist
+    public void prePersist(){
+        this.visitCount = this.visitCount == null ? 0: this.visitCount;
+    }
 
     public String convertPrivilege() {
         if (this.privilege == 0) {
@@ -83,8 +87,25 @@ public class Member {
         this.privilege = 1;
     }
 
+
+    /**
+     * 비밀번호를 암호화
+     * @param passwordEncoder 암호화 할 인코더 클래스
+     * @return 변경된 유저 Entity
+     */
     public Member hashPassword(PasswordEncoder passwordEncoder){
         this.password = passwordEncoder.encode(this.password);
         return this;
     }
+
+    /**
+     * 비밀번호 확인
+     * @param plainPassword 암호화 이전의 비밀번호
+     * @param passwordEncoder 암호화에 사용된 클래스
+     * @return true | false
+     */
+    public boolean checkPasword(String plainPassword , PasswordEncoder passwordEncoder) {
+        return passwordEncoder.matches(plainPassword, this.password);
+    }
+
 }
