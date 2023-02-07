@@ -88,9 +88,13 @@ public class PostSearchServiceImpl implements PostSearchService {
                 .collect(Collectors.toList());
     }
 
-    /* TODO
-    *   - 주석 달기
-    */
+    /**
+     * 회원 아이디로 게시글 조회
+     * @param page
+     * @param memberId
+     * @return
+     * @throws NullPointerException
+     */
     @Override
     public Page<PostResponseDTO> findPostsById(int page, int memberId) throws NullPointerException{
         PageRequest pageRequest = PageRequest.of(page - 1, contentsSize, Sort.by(Sort.Direction.DESC, "registerDate"));
@@ -102,6 +106,15 @@ public class PostSearchServiceImpl implements PostSearchService {
         }
     }
 
+    /**
+     * 전체 게시글 조회(관리자)
+     * 블라인드된 게시글도 보임
+     * @param startDate
+     * @param endDate
+     * @param page
+     * @return
+     * @throws NullPointerException
+     */
     @Override
     public Page<PostResponseDTO> lookupAllPosts(String startDate, String endDate, int page) throws NullPointerException{
         PageRequest pageRequest = PageRequest.of(page - 1, contentsSize, Sort.by(Sort.Direction.DESC, "registerDate"));
