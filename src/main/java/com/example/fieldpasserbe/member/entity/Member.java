@@ -3,7 +3,6 @@ package com.example.fieldpasserbe.member.entity;
 import com.example.fieldpasserbe.admin.entity.Admin;
 import com.example.fieldpasserbe.chat.entity.ChatMessage;
 import com.example.fieldpasserbe.chat.entity.ChatRoom;
-import com.example.fieldpasserbe.entity.MemberEntity;
 import lombok.*;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
