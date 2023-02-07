@@ -3,7 +3,7 @@ package com.example.fieldpasserbe.member.service.impl;
 import com.example.fieldpasserbe.admin.dto.PeriodResponseDTO;
 
 
-
+import com.example.fieldpasserbe.entity.MemberEntity;
 import com.example.fieldpasserbe.member.dto.MemberDTO;
 import com.example.fieldpasserbe.member.dto.MemberInfo;
 import com.example.fieldpasserbe.member.dto.MemberUpdate;
@@ -219,7 +219,7 @@ public class MemberServiceImpl implements MemberService {
 
         if(member != null){
 
-            member.updateMeber(memberUpdate.getEmail(),memberUpdate.getPassword(),
+            member.updateMeber(memberUpdate.getEmail(),
                     memberUpdate.getProfileImg(),memberUpdate.getMemberName());
             return "success";
         }
@@ -240,6 +240,19 @@ public class MemberServiceImpl implements MemberService {
         }else{
             return "failed";
         }
+    }
+
+    // 비밀번호 변경
+    @Override
+    public String updatePassword(MemberDTO memberDTO) {
+        Integer id = (int)session.getAttribute("id");
+        Member member =memberRepository.findById(id).get();
+
+        if(member != null){
+            member.updatePassword();
+            return "success";
+        }
+        return "failed";
     }
 
 }

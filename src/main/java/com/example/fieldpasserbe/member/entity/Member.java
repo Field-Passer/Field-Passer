@@ -36,10 +36,10 @@ public class Member {
     @Column(name = "PROFILE_IMG")
     private String profileImg;
     @Column(name = "PRIVILEGE",columnDefinition = "TINYINT(1) DEFAULT 0",length = 1)
-    private byte privilege;
+    private int privilege;
 
     @Column(name = "AUTHORITY",columnDefinition = "TINYINT(1) DEFAULT 0",length = 1)
-    private byte authority;
+    private int authority;
 
     @Column(name = "SIGNUP_DATE")
     private LocalDateTime signUpDate;
@@ -48,7 +48,7 @@ public class Member {
     private Integer visitCount;
 
     @Column(name = "DELETE_CHECK",columnDefinition = "TINYINT(1) DEFAULT 0",length = 1)
-    private byte delete;
+    private int delete;
 
     @OneToOne(mappedBy = "member", fetch = FetchType.LAZY)
     private Admin admin;
@@ -108,14 +108,17 @@ public class Member {
         return passwordEncoder.matches(plainPassword, this.password);
     }
 
-    public void updateMeber(String email, String memberName, String password,String profileImg){
+    public void updateMeber(String email, String memberName,String profileImg){
         this.email = email;
         this.memberName = memberName;
-        this.password= password;
         this.profileImg = profileImg;
+
     }
 
     public void delteMember(){
         this.delete = 1;
     }
+
+
+
 }
