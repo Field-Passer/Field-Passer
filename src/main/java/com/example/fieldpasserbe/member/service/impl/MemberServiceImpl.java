@@ -1,6 +1,7 @@
 package com.example.fieldpasserbe.member.service.impl;
 
 import com.example.fieldpasserbe.admin.dto.PeriodResponseDTO;
+import com.example.fieldpasserbe.entity.MemberEntity;
 import com.example.fieldpasserbe.member.entity.Member;
 import com.example.fieldpasserbe.member.repository.MemberRepositoryJPA;
 import com.example.fieldpasserbe.member.service.MemberService;
@@ -8,6 +9,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -18,10 +20,13 @@ import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
+@Transactional
 public class MemberServiceImpl implements MemberService {
 
     private final int contentsSize = 10;
     private final MemberRepositoryJPA memberRepository;
+
+    private final PasswordEncoder bCryptPasswordEncoder;
 
     /**
      * 회원 id로 회원 정보 조회
@@ -131,5 +136,29 @@ public class MemberServiceImpl implements MemberService {
         } catch (IllegalStateException e) {
             throw new IllegalStateException("날짜를 잘못 입력했습니다.");
         }
+    }
+
+    //로그인
+    @Override
+    public String LoginMember(String email,String password) {
+
+        MemberEntity me = memberRepository.findByEmail(email);
+
+        if(me ==null){
+            System.out.println("해당 이메일의 유저가 존재하지 않습니다 ");
+            return "failed";
+        }
+
+        if(!bCryptPasswordEncoder.matches(password, me.getPassword())){
+            System.out.println("비밀번호가 일치하지 않습니다 ");
+            return "failed";
+        }
+        System.out.println(email);
+        System.out.println(password);
+        System.out.println(me.getPassword());
+        return "success";
+
+
+
     }
 }

@@ -20,4 +20,11 @@ public interface MemberService {
     Page<Member> findAllMembers(int page);
 
     List<PeriodResponseDTO> checkNewMember(String startDate, String endDate) throws Exception;
+
+    String LoginMember(String email,String password); // 로그인
+
+
+
+
+
 }
