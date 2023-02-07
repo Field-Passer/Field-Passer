@@ -108,4 +108,10 @@ public class Member {
         return passwordEncoder.matches(plainPassword, this.password);
     }
 
+    public void updateMeber(String email, String memberName, String password,String profileImg){
+        this.email = email;
+        this.memberName = memberName;
+        this.password= password;
+        this.profileImg = profileImg;
+    }
 }

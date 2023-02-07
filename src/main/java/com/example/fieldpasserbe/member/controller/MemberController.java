@@ -1,10 +1,14 @@
 package com.example.fieldpasserbe.member.controller;
 
 
-import com.example.fieldpasserbe.dto.MemberDTO;
-import com.example.fieldpasserbe.dto.MemberInfo;
-import com.example.fieldpasserbe.dto.MemberUpdate;
-import com.example.fieldpasserbe.entity.MemberEntity;
+
+
+
+import com.example.fieldpasserbe.member.dto.MemberDTO;
+import com.example.fieldpasserbe.member.dto.MemberInfo;
+import com.example.fieldpasserbe.member.dto.MemberUpdate;
+import com.example.fieldpasserbe.member.entity.Member;
+import com.example.fieldpasserbe.member.service.MemberService;
 import com.example.fieldpasserbe.service.Memberservice;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -19,7 +23,7 @@ import java.util.Optional;
 @Slf4j
 public class MemberController {
 
-    private final Memberservice memberService;
+    private final MemberService memberService;
 
     //로그인
     @PostMapping("/api/auth/login")
@@ -48,7 +52,7 @@ public class MemberController {
 
     // 회원 정보 조회
     @GetMapping("/api/:memberid")
-    public Optional<MemberEntity> selectMember(MemberInfo memberinfo){
+    public Optional<Member> selectMember(MemberInfo memberinfo){
         return memberService.selectMember(memberinfo);
     }
 

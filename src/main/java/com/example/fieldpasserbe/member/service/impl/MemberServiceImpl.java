@@ -1,9 +1,12 @@
 package com.example.fieldpasserbe.member.service.impl;
 
 import com.example.fieldpasserbe.admin.dto.PeriodResponseDTO;
-import com.example.fieldpasserbe.dto.MemberDTO;
-import com.example.fieldpasserbe.dto.MemberInfo;
+
+
 import com.example.fieldpasserbe.entity.MemberEntity;
+import com.example.fieldpasserbe.member.dto.MemberDTO;
+import com.example.fieldpasserbe.member.dto.MemberInfo;
+import com.example.fieldpasserbe.member.dto.MemberUpdate;
 import com.example.fieldpasserbe.member.entity.Member;
 import com.example.fieldpasserbe.member.repository.MemberRepositoryJPA;
 import com.example.fieldpasserbe.member.service.MemberService;
@@ -147,22 +150,29 @@ public class MemberServiceImpl implements MemberService {
     @Override
     public String LoginMember(String email,String password) {
 
-        MemberEntity me = memberRepository.findByEmail(email);
+        Member member = memberRepository.findByEmail(email);
 
-        if(me ==null){
+        if(member ==null){
             System.out.println("해당 이메일의 유저가 존재하지 않습니다 ");
             return "failed";
         }
 
-        if(!bCryptPasswordEncoder.matches(password, me.getPassword())){
+        if(!bCryptPasswordEncoder.matches(password, member.getPassword())){
             System.out.println("비밀번호가 일치하지 않습니다 ");
             return "failed";
         }
         System.out.println(email);
         System.out.println(password);
-        System.out.println(me.getPassword());
+        System.out.println(member.getPassword());
         return "success";
+    }
 
+
+    @Override
+    public Integer findByEmail(String email) {
+
+        Member memberEmail = memberRepository.findByEmail(email);
+        return memberEmail.getMemberId();
     }
 
     //회원가입
@@ -186,7 +196,7 @@ public class MemberServiceImpl implements MemberService {
     }
 
     // 회원 정보 조회
-    public Optional<Member> selectMember(MemberInfo memberinfo) throws NullPointerException{
+    public Optional<Member> selectMember(MemberInfo memberInfo) throws NullPointerException{
         Integer id = (int)session.getAttribute("id");
 
 
@@ -197,6 +207,29 @@ public class MemberServiceImpl implements MemberService {
         }else{
             throw new NullPointerException(" 존재하지 않는 회원 입니다 ");
         }
+    }
+
+
+    @Override
+    public String updateMember(MemberUpdate memberUpdate) {
+        Integer id = (int)session.getAttribute("id");
+
+        Member member = memberRepository.findById(id).get();
+
+        if(member != null){
+//            me.ifPresent(updatemember ->{
+//                updatemember.setMemberName(memberupdate.getMemberName());
+//                updatemember.setEmail(memberupdate.getEmail());
+//                updatemember.setProfile_img(memberupdate.getProfile_img());
+//                updatemember.setPassword(memberupdate.getPassword());
+//
+//                memberRepository.save(updatemember);
+//            });
+            member.updateMeber(memberUpdate.getEmail(),memberUpdate.getPassword(),memberUpdate.getProfileImg(),memberUpdate.getMemberName());
+            return "success";
+        }
+
+        return "failed";
     }
 
 }
