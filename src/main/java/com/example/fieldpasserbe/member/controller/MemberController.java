@@ -45,6 +45,19 @@ public class MemberController {
         return result;
     }
 
+    // 로그아웃
+    @PostMapping("/api/auth/logout")
+    public String logout(HttpSession session){
+        System.out.println("email"+session.getAttribute("email"));
+
+        if(session.getAttribute("email")!= null){
+            session.setAttribute("email",null);
+            return "success";
+        }else{
+            return " failed";
+        }
+    }
+
     //회원가입
     @PostMapping("/api/auth/register")
     public String Signup(@ModelAttribute @Validated MemberDTO memberdto){
