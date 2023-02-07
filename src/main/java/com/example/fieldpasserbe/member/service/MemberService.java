@@ -2,6 +2,8 @@ package com.example.fieldpasserbe.member.service;
 
 import com.example.fieldpasserbe.admin.dto.PeriodResponseDTO;
 import com.example.fieldpasserbe.dto.MemberDTO;
+import com.example.fieldpasserbe.dto.MemberInfo;
+import com.example.fieldpasserbe.entity.MemberEntity;
 import com.example.fieldpasserbe.member.entity.Member;
 import org.springframework.data.domain.Page;
 
@@ -25,6 +27,8 @@ public interface MemberService {
     String LoginMember(String email,String password); // 로그인
 
     String Signup(MemberDTO memberDTO);// 회원가입
+
+    Optional<Member> selectMember(MemberInfo memberInfo); // 회원정보 조회
 
 
 

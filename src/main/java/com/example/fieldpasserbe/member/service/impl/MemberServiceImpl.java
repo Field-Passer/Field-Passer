@@ -2,6 +2,7 @@ package com.example.fieldpasserbe.member.service.impl;
 
 import com.example.fieldpasserbe.admin.dto.PeriodResponseDTO;
 import com.example.fieldpasserbe.dto.MemberDTO;
+import com.example.fieldpasserbe.dto.MemberInfo;
 import com.example.fieldpasserbe.entity.MemberEntity;
 import com.example.fieldpasserbe.member.entity.Member;
 import com.example.fieldpasserbe.member.repository.MemberRepositoryJPA;
@@ -14,6 +15,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import javax.servlet.http.HttpSession;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
@@ -28,6 +30,8 @@ public class MemberServiceImpl implements MemberService {
     private final MemberRepositoryJPA memberRepository;
 
     private final PasswordEncoder bCryptPasswordEncoder;
+
+    private final HttpSession session;
 
     /**
      * 회원 id로 회원 정보 조회
@@ -180,4 +184,19 @@ public class MemberServiceImpl implements MemberService {
 
         return "success";
     }
+
+    // 회원 정보 조회
+    public Optional<Member> selectMember(MemberInfo memberinfo) throws NullPointerException{
+        Integer id = (int)session.getAttribute("id");
+
+
+        Optional<Member> member =  memberRepository.findById(id);
+
+        if(member.isPresent()){
+            return member;
+        }else{
+            throw new NullPointerException(" 존재하지 않는 회원 입니다 ");
+        }
+    }
+
 }
