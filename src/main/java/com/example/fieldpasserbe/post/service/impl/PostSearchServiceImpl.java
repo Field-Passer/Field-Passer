@@ -108,6 +108,14 @@ public class PostSearchServiceImpl implements PostSearchService {
         }
     }
 
+    @Override
+    public List<PostListResponseDto> findByStadiumName(String stadiumName) {
+        return postRepository.findByStadium_StadiumNameOrderByRegisterDateDesc(stadiumName)
+                .stream()
+                .map(post -> new PostListResponseDto(post))
+                .collect(Collectors.toList());
+    }
+
     /**
      * 전체 게시글 조회(관리자)
      * 블라인드된 게시글도 보임

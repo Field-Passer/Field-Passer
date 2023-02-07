@@ -30,5 +30,7 @@ public interface PostSearchService {
 
     Page<PostResponseDTO> findPostsById(int page, int memberId) throws NullPointerException;
 
+    List<PostListResponseDto> findByStadiumName(String stadiumName);
+
     Page<PostResponseDTO> lookupAllPosts(String startDate, String endDate, int page) throws Exception;
 }
