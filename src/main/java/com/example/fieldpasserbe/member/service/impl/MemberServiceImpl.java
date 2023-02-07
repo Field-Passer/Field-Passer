@@ -195,26 +195,25 @@ public class MemberServiceImpl implements MemberService {
     }
 
     // 회원 정보 조회
-    public Optional<Member> selectMember(MemberInfo memberInfo) throws NullPointerException{
-        Integer id = (int)session.getAttribute("id");
+    public MemberDTO selectMember(int memberId) throws NullPointerException{
+        System.out.println("sessionID ="+ session.getAttribute("id"));
 
 
-        Optional<Member> member =  memberRepository.findById(id);
+        MemberDTO memberDTO = memberRepository.findMemberByMemberId(memberId).
+                map(member -> new MemberDTO(member)).get();
 
-        if(member.isPresent()){
-            return member;
-        }else{
-            throw new NullPointerException(" 존재하지 않는 회원 입니다 ");
-        }
+
+        return memberDTO;
+
     }
 
 
     // 회원 정보 수정
     @Override
-    public String updateMember(MemberUpdate memberUpdate) {
-        Integer id = (int)session.getAttribute("id");
+    public String updateMember(int memberId ,MemberUpdate memberUpdate) {
 
-        Member member = memberRepository.findById(id).get();
+
+        Member member = memberRepository.findById(memberId).get();
 
         if(member != null){
 
@@ -228,10 +227,10 @@ public class MemberServiceImpl implements MemberService {
 
     //회원 삭제
     @Override
-    public String deleteMember(MemberDTO memberDTO) {
-        Integer id = (int)session.getAttribute("id");
+    public String deleteMember(MemberDTO memberDTO,int memberId) {
 
-        Member findMember = memberRepository.findById(id).get();
+
+        Member findMember = memberRepository.findById(memberId).get();
 
         if(findMember != null){
             findMember.delteMember();

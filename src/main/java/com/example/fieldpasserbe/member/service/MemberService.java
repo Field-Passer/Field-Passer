@@ -32,11 +32,11 @@ public interface MemberService {
 
     String Signup(MemberDTO memberDTO);// 회원가입
 
-    Optional<Member> selectMember(MemberInfo memberInfo); // 회원정보 조회
+    MemberDTO selectMember(int memberId); // 회원정보 조회
 
-    String updateMember(MemberUpdate memberUpdate); // 회원 정보 수정
+    String updateMember(int memberId, MemberUpdate memberUpdate); // 회원 정보 수정
 
-    String deleteMember(MemberDTO memberDTO); // 회원 탈퇴
+    String deleteMember(MemberDTO memberDTO,int memberId); // 회원 탈퇴
 
     String updatePassword(MemberDTO memberDTO);
 

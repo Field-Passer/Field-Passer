@@ -27,9 +27,11 @@ public class MemberController {
 
     private final EmailService emailService;
 
+    private final HttpSession session;
+
     //로그인
     @PostMapping("/api/auth/login")
-    public String login(String email, HttpSession session, String password ){
+    public String login(String email, String password ){
 
 
         String result = memberService.LoginMember(email,password);
@@ -47,7 +49,7 @@ public class MemberController {
 
     // 로그아웃
     @PostMapping("/api/auth/logout")
-    public String logout(HttpSession session){
+    public String logout( ){
         System.out.println("email"+session.getAttribute("email"));
 
         if(session.getAttribute("email")!= null){
@@ -61,27 +63,31 @@ public class MemberController {
     //회원가입
     @PostMapping("/api/auth/register")
     public String Signup(@ModelAttribute @Validated MemberDTO memberdto){
-        System.out.println();
+
         return memberService.Signup(memberdto);
     }
 
     // 회원 정보 조회
     @GetMapping("/api/:memberid")
-    public Optional<Member> selectMember(MemberInfo memberinfo){
-        return memberService.selectMember(memberinfo);
+    public MemberDTO selectMember( ){
+       Integer memberId = (int)session.getAttribute("id");
+
+        return memberService.selectMember(memberId);
     }
 
     //회원 정보 수정
     @PatchMapping("/api/:userid/userinfo")
-    public String updateMember(MemberUpdate memberupdate){
-        return memberService.updateMember(memberupdate);
+    public String updateMember(MemberUpdate memberUpdate){
+        Integer memberId = (int)session.getAttribute("id");
+        return memberService.updateMember(memberId,memberUpdate);
     }
 
 
     //회원 탈퇴
     @PatchMapping("/api/:userid/unregister")
     public String deleteMember(MemberDTO memberDTO){
-        return memberService.deleteMember(memberDTO);
+        Integer memberId = (int)session.getAttribute("id");
+        return memberService.deleteMember(memberDTO,memberId);
     }
 
     // 비밀번호 변경
