@@ -40,4 +40,13 @@ public class AdminManageServiceImpl implements AdminManageService {
                     .build();
         }
     }
+
+    /*TODO
+    *  - 주석 작성
+    * */
+    @Override
+    public SimpleVO blind(boolean blind) {
+
+        return null;
+    }
 }

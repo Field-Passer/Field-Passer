@@ -1,5 +1,6 @@
 package com.example.fieldpasserbe.admin.controller;
 
+import com.example.fieldpasserbe.admin.dto.BlindRequestDTO;
 import com.example.fieldpasserbe.admin.dto.PeriodRequestDTO;
 import com.example.fieldpasserbe.admin.dto.PostResponseDTO;
 import com.example.fieldpasserbe.admin.service.AdminLoginService;
@@ -80,5 +81,11 @@ public class AdminController {
     @GetMapping("/admin/board/new")
     public PeriodPostVO checkNewPosts(PeriodRequestDTO period, int page) {
         return adminService.checkNewPosts(period, page);
+    }
+
+    @PutMapping("admin/board/blind")
+    public SimpleVO blindPost(@RequestBody BlindRequestDTO blind) {
+
+        return adminManageService.blind(blind.isBlind());
     }
 }

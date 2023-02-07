@@ -4,4 +4,6 @@ import com.example.fieldpasserbe.admin.vo.SimpleVO;
 
 public interface AdminManageService {
     SimpleVO promoteAdmin(String email);
+
+    SimpleVO blind(boolean blind);
 }
