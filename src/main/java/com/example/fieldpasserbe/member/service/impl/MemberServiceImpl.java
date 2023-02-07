@@ -108,13 +108,16 @@ public class MemberServiceImpl implements MemberService {
 
     /**
      * 신규 회원 검색
+     *
      * @param startDate
      * @param endDate
+     * @param page
      * @return
      * @throws Exception
      */
     @Override
-    public List<PeriodResponseDTO> checkNewMember(String startDate, String endDate) throws Exception{
+    public Page<PeriodResponseDTO> checkNewMember(String startDate, String endDate, int page) throws Exception{
+        PageRequest pageRequest = PageRequest.of(page - 1, contentsSize);
         try {
             SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
             Date start = format.parse(startDate);
@@ -122,8 +125,8 @@ public class MemberServiceImpl implements MemberService {
             if (end.getTime() - start.getTime() < 0) {
                 throw new IllegalStateException("날짜를 잘못 입력했습니다.");
             }
-            List<PeriodResponseDTO> newMember = memberRepository.findNewMember(startDate, endDate);
-            if (newMember.size() == 0) {
+            Page<PeriodResponseDTO> newMember = memberRepository.findNewMember(startDate, endDate, pageRequest);
+            if (newMember.getContent().size() == 0) {
                 throw new NullPointerException("조회할 수 있는 데이터가 없습니다");
             } else {
                 return newMember;
