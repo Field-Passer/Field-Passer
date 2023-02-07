@@ -72,7 +72,7 @@ public class AdminController {
         return adminService.findPostsById(page, memberId);
     }
 
-    @GetMapping("/admin/board/new")
+    @GetMapping("/admin/board")
     public PostVO lookupAllPosts(PeriodRequestDTO period, int page) {
         return adminService.lookupAllPosts(period, page);
     }
