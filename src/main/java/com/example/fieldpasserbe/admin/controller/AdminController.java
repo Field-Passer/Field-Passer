@@ -59,8 +59,8 @@ public class AdminController {
         - 페이징 기능 추가하기
      */
     @GetMapping("/admin/membes/new")
-    public PeriodMemberVO checknewMember(PeriodRequestDTO period) {
-        return adminService.checkNewMember(period);
+    public PeriodMemberVO checknewMember(PeriodRequestDTO period, int page) {
+        return adminService.checkNewMember(period, page);
     }
 
     @GetMapping("/admin/members/punishment")
