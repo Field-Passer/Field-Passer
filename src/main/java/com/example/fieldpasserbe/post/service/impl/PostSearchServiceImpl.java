@@ -13,7 +13,9 @@ import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
+import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -116,13 +118,23 @@ public class PostSearchServiceImpl implements PostSearchService {
      * @throws NullPointerException
      */
     @Override
-    public Page<PostResponseDTO> lookupAllPosts(String startDate, String endDate, int page) throws NullPointerException{
+    public Page<PostResponseDTO> lookupAllPosts(String startDate, String endDate, int page) throws Exception{
         PageRequest pageRequest = PageRequest.of(page - 1, contentsSize, Sort.by(Sort.Direction.DESC, "registerDate"));
-        Page<PostResponseDTO> posts = postRepository.findTotalPosts(startDate, endDate, pageRequest);
-        if (posts.getContent().isEmpty()) {
-            throw new NullPointerException("조회할 수 있는 데이터가 없습니다");
-        } else {
-            return posts;
+        try {
+            SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+            Date start = format.parse(startDate);
+            Date end = format.parse(endDate);
+            if (end.getTime() - start.getTime() < 0) {
+                throw new IllegalStateException("날짜를 잘못 입력했습니다.");
+            }
+            Page<PostResponseDTO> posts = postRepository.findTotalPosts(startDate, endDate, pageRequest);
+            if (posts.getContent().isEmpty()) {
+                throw new NullPointerException("조회할 수 있는 데이터가 없습니다");
+            } else {
+                return posts;
+            }
+        }  catch (IllegalStateException e) {
+            throw new IllegalStateException("날짜를 잘못 입력했습니다.");
         }
     }
 }
