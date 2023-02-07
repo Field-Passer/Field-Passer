@@ -55,9 +55,6 @@ public class AdminController {
         return adminService.memberDetail(memberId);
     }
 
-    /* TODO :
-        - 페이징 기능 추가하기
-     */
     @GetMapping("/admin/membes/new")
     public PeriodMemberVO checkNewMember(PeriodRequestDTO period, int page) {
         return adminService.checkNewMember(period, page);
