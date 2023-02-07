@@ -167,6 +167,8 @@ public class AdminServiceImpl implements AdminService {
         }
     }
 
+    /*TODO
+    *  - 주석 추가하기*/
     @Override
     public PostVO findPostsById(int page, int memberId) {
         try {
@@ -181,6 +183,26 @@ public class AdminServiceImpl implements AdminService {
                     .sort(postsById.getSort())
                     .build();
         } catch (NullPointerException e) {
+            return PostVO.builder()
+                    .resultCode("failed: 조회할 수 있는 데이터가 없습니다.")
+                    .build();
+        }
+    }
+
+    @Override
+    public PostVO lookupAllPosts(PeriodRequestDTO period, int page) {
+        try {
+            Page<PostResponseDTO> posts = postSearchService.lookupAllPosts(period.getStartDate(), period.getEndDate(), page);
+            List<PostResponseDTO> content = posts.getContent();
+            return PostVO.builder()
+                    .resultCode("success")
+                    .resultDataNum(posts.getTotalElements())
+                    .resultData(content)
+                    .currentPage(posts.getNumber() + 1)
+                    .totalPage(posts.getTotalPages())
+                    .sort(posts.getSort())
+                    .build();
+        }catch (NullPointerException e) {
             return PostVO.builder()
                     .resultCode("failed: 조회할 수 있는 데이터가 없습니다.")
                     .build();
