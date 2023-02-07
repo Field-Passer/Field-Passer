@@ -207,8 +207,6 @@ public class AdminServiceImpl implements AdminService {
      */
     @Override
     public PostVO lookupAllPosts(PeriodRequestDTO period, int page) {
-        /*TODO
-        *  - 기간 예외 처리*/
         try {
             Page<PostResponseDTO> posts = postSearchService.lookupAllPosts(period.getStartDate(), period.getEndDate(), page);
             List<PostResponseDTO> content = posts.getContent();
@@ -220,9 +218,17 @@ public class AdminServiceImpl implements AdminService {
                     .totalPage(posts.getTotalPages())
                     .sort(posts.getSort())
                     .build();
-        }catch (NullPointerException e) {
+        } catch (NullPointerException e) {
             return PostVO.builder()
-                    .resultCode("failed: 조회할 수 있는 데이터가 없습니다.")
+                    .resultCode("failed : 조회할 수 있는 데이터가 없습니다.")
+                    .build();
+        } catch (IllegalStateException e) {
+            return PostVO.builder()
+                    .resultCode("failed : 날짜를 잘못 입력했습니다.")
+                    .build();
+        } catch (Exception e) {
+            return PostVO.builder()
+                    .resultCode("failed : 뭔가 잘못됐습니다..")
                     .build();
         }
     }
