@@ -1,6 +1,7 @@
 package com.example.fieldpasserbe.member.service.impl;
 
 import com.example.fieldpasserbe.admin.dto.PeriodResponseDTO;
+import com.example.fieldpasserbe.dto.MemberDTO;
 import com.example.fieldpasserbe.entity.MemberEntity;
 import com.example.fieldpasserbe.member.entity.Member;
 import com.example.fieldpasserbe.member.repository.MemberRepositoryJPA;
@@ -158,7 +159,25 @@ public class MemberServiceImpl implements MemberService {
         System.out.println(me.getPassword());
         return "success";
 
+    }
+
+    //회원가입
+    @Override
+    public String Signup(MemberDTO memberDTO) {
 
 
+        try{
+
+            Member newMember = memberDTO.toEntity();
+            newMember.hashPassword(bCryptPasswordEncoder);
+
+            memberRepository.save(newMember);
+        }catch(Exception e){
+            e.printStackTrace();
+
+            return "failed";
+        }
+
+        return "success";
     }
 }

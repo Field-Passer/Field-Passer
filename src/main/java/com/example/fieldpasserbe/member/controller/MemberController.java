@@ -1,9 +1,12 @@
 package com.example.fieldpasserbe.member.controller;
 
 
+import com.example.fieldpasserbe.dto.MemberDTO;
 import com.example.fieldpasserbe.service.Memberservice;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -32,5 +35,12 @@ public class MemberController {
         }
 
         return result;
+    }
+
+    //회원가입
+    @PostMapping("/api/auth/register")
+    public String Signup(@ModelAttribute @Validated MemberDTO memberdto){
+        System.out.println();
+        return memberService.Signup(memberdto);
     }
 }

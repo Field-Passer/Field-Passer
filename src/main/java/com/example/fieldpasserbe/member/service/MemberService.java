@@ -1,6 +1,7 @@
 package com.example.fieldpasserbe.member.service;
 
 import com.example.fieldpasserbe.admin.dto.PeriodResponseDTO;
+import com.example.fieldpasserbe.dto.MemberDTO;
 import com.example.fieldpasserbe.member.entity.Member;
 import org.springframework.data.domain.Page;
 
@@ -22,6 +23,8 @@ public interface MemberService {
     List<PeriodResponseDTO> checkNewMember(String startDate, String endDate) throws Exception;
 
     String LoginMember(String email,String password); // 로그인
+
+    String Signup(MemberDTO memberDTO);// 회원가입
 
 
 
