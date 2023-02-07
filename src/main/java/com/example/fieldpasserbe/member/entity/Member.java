@@ -1,9 +1,12 @@
 package com.example.fieldpasserbe.member.entity;
 
 import com.example.fieldpasserbe.admin.entity.Admin;
+import com.example.fieldpasserbe.chat.entity.ChatMessage;
+import com.example.fieldpasserbe.chat.entity.ChatRoom;
 import lombok.*;
 import javax.persistence.*;
 import java.time.LocalDateTime;
+import java.util.List;
 
 @AllArgsConstructor
 @NoArgsConstructor
@@ -46,6 +49,15 @@ public class Member {
 
     @OneToOne(mappedBy = "member", fetch = FetchType.LAZY)
     private Admin admin;
+
+    @OneToMany(mappedBy = "seller")
+    private List<ChatRoom> sellerChatRooms;
+
+    @OneToMany(mappedBy = "buyer")
+    private List<ChatRoom> buyerChatRooms;
+
+    @OneToMany(mappedBy = "member")
+    private List<ChatMessage> chatMessages;
 
 
     public String convertPrivilege() {
