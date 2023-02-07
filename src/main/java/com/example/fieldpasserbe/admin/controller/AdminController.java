@@ -79,6 +79,6 @@ public class AdminController {
 
     @GetMapping("/admin/board/new")
     public PeriodPostVO checkNewPosts(PeriodRequestDTO period, int page) {
-        return null;
+        return adminService.checkNewPosts(period, page);
     }
 }
