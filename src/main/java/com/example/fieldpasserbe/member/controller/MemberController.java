@@ -3,15 +3,13 @@ package com.example.fieldpasserbe.member.controller;
 
 import com.example.fieldpasserbe.dto.MemberDTO;
 import com.example.fieldpasserbe.dto.MemberInfo;
+import com.example.fieldpasserbe.dto.MemberUpdate;
 import com.example.fieldpasserbe.entity.MemberEntity;
 import com.example.fieldpasserbe.service.Memberservice;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.validation.annotation.Validated;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpSession;
 import java.util.Optional;
@@ -53,5 +51,12 @@ public class MemberController {
     public Optional<MemberEntity> selectMember(MemberInfo memberinfo){
         return memberService.selectMember(memberinfo);
     }
+
+    //회원 정보 수정
+    @PatchMapping("/api/:userid/userinfo")
+    public String updateMember(MemberUpdate memberupdate){
+        return memberService.updateMember(memberupdate);
+    }
+
 
 }

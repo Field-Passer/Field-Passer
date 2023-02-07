@@ -43,6 +43,6 @@ public interface MemberRepositoryJPA extends JpaRepository<Member, Integer> {
     List<PeriodResponseDTO> findNewMember(@Param("startDate") String startDate, @Param("endDate") String endDate);
 
     //시큐리티 로그인 할 때 사용 (이메일 찾기)
-    MemberEntity findByEmail(String email);
+    Member findByEmail(String email);
 
 }
