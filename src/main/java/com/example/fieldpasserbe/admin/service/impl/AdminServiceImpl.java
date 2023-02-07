@@ -110,7 +110,7 @@ public class AdminServiceImpl implements AdminService {
     @Override
     public PeriodMemberVO checkNewMember(PeriodRequestDTO period, int page) {
         try {
-            Page<PeriodResponseDTO> newMember = memberService.checkNewMember(period.getStartDate(), period.getEndDate(), page);
+            Page<PeriodMemberResponseDTO> newMember = memberService.checkNewMember(period.getStartDate(), period.getEndDate(), page);
             return PeriodMemberVO.builder()
                     .resultCode("success")
                     .resultDataNum(newMember.getContent().size())
@@ -209,11 +209,10 @@ public class AdminServiceImpl implements AdminService {
     public PostVO lookupAllPosts(PeriodRequestDTO period, int page) {
         try {
             Page<PostResponseDTO> posts = postSearchService.lookupAllPosts(period.getStartDate(), period.getEndDate(), page);
-            List<PostResponseDTO> content = posts.getContent();
             return PostVO.builder()
                     .resultCode("success")
                     .resultDataNum(posts.getTotalElements())
-                    .resultData(content)
+                    .resultData(posts.getContent())
                     .currentPage(posts.getNumber() + 1)
                     .totalPage(posts.getTotalPages())
                     .sort(posts.getSort())
@@ -228,6 +227,33 @@ public class AdminServiceImpl implements AdminService {
                     .build();
         } catch (Exception e) {
             return PostVO.builder()
+                    .resultCode("failed : 뭔가 잘못됐습니다..")
+                    .build();
+        }
+    }
+
+    @Override
+    public PeriodPostVO checkNewPosts(PeriodRequestDTO period, int page) {
+        try {
+            Page<PeriodPostResponseDTO> newMember = postSearchService.checkNewposts(period.getStartDate(), period.getEndDate(), page);
+            return PeriodPostVO.builder()
+                    .resultCode("success")
+                    .resultDataNum(newMember.getTotalElements())
+                    .resultData(newMember.getContent())
+                    .currentPage(newMember.getNumber() + 1)
+                    .totalPage(newMember.getTotalPages())
+                    .sort(newMember.getSort())
+                    .build();
+        } catch (NullPointerException e) {
+            return PeriodPostVO.builder()
+                    .resultCode("failed : 조회할 수 있는 데이터가 없습니다.")
+                    .build();
+        } catch (IllegalStateException e) {
+            return PeriodPostVO.builder()
+                    .resultCode("failed : 날짜를 잘못 입력했습니다.")
+                    .build();
+        } catch (Exception e) {
+            return PeriodPostVO.builder()
                     .resultCode("failed : 뭔가 잘못됐습니다..")
                     .build();
         }

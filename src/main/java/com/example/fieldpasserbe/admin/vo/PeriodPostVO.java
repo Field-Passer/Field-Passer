@@ -1,6 +1,7 @@
 package com.example.fieldpasserbe.admin.vo;
 
 import com.example.fieldpasserbe.admin.dto.PeriodMemberResponseDTO;
+import com.example.fieldpasserbe.admin.dto.PeriodPostResponseDTO;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -13,10 +14,10 @@ import java.util.List;
 @NoArgsConstructor
 @Getter
 @Builder
-public class PeriodMemberVO {
+public class PeriodPostVO {
     private String resultCode;
-    private int resultDataNum;
-    private List<PeriodMemberResponseDTO> resultData;
+    private Long resultDataNum;
+    private List<PeriodPostResponseDTO> resultData;
     private int currentPage;
     private int totalPage;
     private Sort sort;
