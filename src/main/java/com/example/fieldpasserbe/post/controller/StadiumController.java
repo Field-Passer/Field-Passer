@@ -1,7 +1,9 @@
 package com.example.fieldpasserbe.post.controller;
 
 import com.example.fieldpasserbe.post.dto.StadiumResponseDto;
-import com.example.fieldpasserbe.post.dto.WishFieldRequest;
+import com.example.fieldpasserbe.post.dto.WishFieldRequestDto;
+import com.example.fieldpasserbe.post.dto.WishFieldResponseDto;
+import com.example.fieldpasserbe.post.dto.WishPostResponseDto;
 import com.example.fieldpasserbe.post.service.StadiumService;
 import com.example.fieldpasserbe.post.service.WishFieldService;
 import lombok.RequiredArgsConstructor;
@@ -26,7 +28,12 @@ public class StadiumController {
     }
 
     @PostMapping("/api/like/stadium")
-    public String likeStadium(WishFieldRequest wishFieldRequest) {
-        return wishFieldService.likeStadium(wishFieldRequest);
+    public String likeStadium(WishFieldRequestDto wishFieldRequestDto) {
+        return wishFieldService.likeStadium(wishFieldRequestDto);
+    }
+
+    @GetMapping("/api/myPage/like/stadium") //추후 세션으로 변경
+    public List<WishFieldResponseDto> myLikePostList(@RequestParam(name = "memberId") int memberId) {
+        return wishFieldService.myLikeStadiums(memberId);
     }
 }

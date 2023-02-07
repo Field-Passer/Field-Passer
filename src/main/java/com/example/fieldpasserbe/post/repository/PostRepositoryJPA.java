@@ -49,9 +49,12 @@ public interface PostRepositoryJPA extends JpaRepository<Post, Integer> {
                                                                                               String district,
                                                                                               String stadiumName,
                                                                                               PageRequest pageRequest);
-
+    @EntityGraph(attributePaths = {"member","category","district","stadium"})
     List<Post> findByStartTimeBefore(LocalDateTime dateTime);
+    @EntityGraph(attributePaths = {"member","category","district","stadium"})
     List<Post> findTop20ByCategory_CategoryNameAndStartTimeAfterOrderByStartTimeAsc(String category, LocalDateTime dateTime);
+    @EntityGraph(attributePaths = {"member","category","district","stadium"})
+    List<Post> findByStadium_StadiumNameOrderByRegisterDateDesc(String stadiumName);
 
     //@EntityGraph(attributePaths = {"member","category","district","stadium"})
     @Query(value = "SELECT p.post_id as postId," +

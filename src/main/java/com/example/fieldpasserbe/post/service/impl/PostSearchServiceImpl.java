@@ -98,4 +98,12 @@ public class PostSearchServiceImpl implements PostSearchService {
             return posts;
         }
     }
+
+    @Override
+    public List<PostListResponseDto> findByStadiumName(String stadiumName) {
+        return postRepository.findByStadium_StadiumNameOrderByRegisterDateDesc(stadiumName)
+                .stream()
+                .map(post -> new PostListResponseDto(post))
+                .collect(Collectors.toList());
+    }
 }
