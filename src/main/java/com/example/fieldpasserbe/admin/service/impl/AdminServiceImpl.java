@@ -102,17 +102,22 @@ public class AdminServiceImpl implements AdminService {
 
     /**
      * 신규 가입자 기간 검색
+     *
      * @param period
+     * @param page
      * @return
      */
     @Override
-    public PeriodMemberVO checkNewMember(PeriodRequestDTO period) {
+    public PeriodMemberVO checkNewMember(PeriodRequestDTO period, int page) {
         try {
-            List<PeriodResponseDTO> newMember = memberService.checkNewMember(period.getStartDate(), period.getEndDate());
+            Page<PeriodResponseDTO> newMember = memberService.checkNewMember(period.getStartDate(), period.getEndDate(), page);
             return PeriodMemberVO.builder()
                     .resultCode("success")
-                    .resultDataNum(newMember.size())
-                    .resultData(newMember)
+                    .resultDataNum(newMember.getContent().size())
+                    .resultData(newMember.getContent())
+                    .currentPage(newMember.getNumber() + 1)
+                    .totalPage(newMember.getTotalPages())
+                    .sort(newMember.getSort())
                     .build();
         } catch (NullPointerException e) {
             return PeriodMemberVO.builder()
@@ -167,6 +172,12 @@ public class AdminServiceImpl implements AdminService {
         }
     }
 
+    /**
+     * 회원 아이디로 게시글 목록 조회
+     * @param page
+     * @param memberId
+     * @return
+     */
     @Override
     public PostVO findPostsById(int page, int memberId) {
         try {
@@ -183,6 +194,41 @@ public class AdminServiceImpl implements AdminService {
         } catch (NullPointerException e) {
             return PostVO.builder()
                     .resultCode("failed: 조회할 수 있는 데이터가 없습니다.")
+                    .build();
+        }
+    }
+
+    /**
+     * 전체 게시글 조회(관리자)
+     * 블라인드된 글도 보임
+     * @param period
+     * @param page
+     * @return
+     */
+    @Override
+    public PostVO lookupAllPosts(PeriodRequestDTO period, int page) {
+        try {
+            Page<PostResponseDTO> posts = postSearchService.lookupAllPosts(period.getStartDate(), period.getEndDate(), page);
+            List<PostResponseDTO> content = posts.getContent();
+            return PostVO.builder()
+                    .resultCode("success")
+                    .resultDataNum(posts.getTotalElements())
+                    .resultData(content)
+                    .currentPage(posts.getNumber() + 1)
+                    .totalPage(posts.getTotalPages())
+                    .sort(posts.getSort())
+                    .build();
+        } catch (NullPointerException e) {
+            return PostVO.builder()
+                    .resultCode("failed : 조회할 수 있는 데이터가 없습니다.")
+                    .build();
+        } catch (IllegalStateException e) {
+            return PostVO.builder()
+                    .resultCode("failed : 날짜를 잘못 입력했습니다.")
+                    .build();
+        } catch (Exception e) {
+            return PostVO.builder()
+                    .resultCode("failed : 뭔가 잘못됐습니다..")
                     .build();
         }
     }

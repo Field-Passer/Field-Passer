@@ -3,6 +3,7 @@ package com.example.fieldpasserbe.member.repository;
 import com.example.fieldpasserbe.admin.dto.PeriodResponseDTO;
 import com.example.fieldpasserbe.member.entity.Member;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.EntityGraph;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -38,6 +39,10 @@ public interface MemberRepositoryJPA extends JpaRepository<Member, Integer> {
     Page<Member> findAllMembers(Pageable pageable);
 
     //신규 회원 기간 조회
-    @Query(value = "select Date_Format(m.signUp_Date, '%Y-%m-%d') as date, count(m.id) as memberNum from field_passer.Member as m where Date_Format(m.signUp_Date, '%Y-%m-%d') between :startDate AND :endDate AND m.DELETE_CHECK = 0 GROUP BY Date_Format(m.signUp_Date, '%Y-%m-%d')", nativeQuery = true)
-    List<PeriodResponseDTO> findNewMember(@Param("startDate") String startDate, @Param("endDate") String endDate);
+    @Query(value = "select Date_Format(m.signUp_Date, '%Y-%m-%d') as date, count(m.id) as memberNum from field_passer.Member as m where Date_Format(m.signUp_Date, '%Y-%m-%d') between :startDate AND :endDate AND m.DELETE_CHECK = 0 GROUP BY Date_Format(m.signUp_Date, '%Y-%m-%d') order by date asc",
+             countQuery = "select count(*) as count " +
+                     "from(" +
+                     "select Date_Format(m.signUp_Date, '%Y-%m-%d') as date, count(m.id) as count from field_passer.Member as m where Date_Format(m.signUp_Date, '%Y-%m-%d') between :startDate AND :endDate AND m.DELETE_CHECK = 0 GROUP BY Date_Format(m.signUp_Date, '%Y-%m-%d')" +
+                     ") as c", nativeQuery = true)
+    Page<PeriodResponseDTO> findNewMember(@Param("startDate") String startDate, @Param("endDate") String endDate, PageRequest pageRequest);
 }

@@ -32,4 +32,5 @@ public interface PostSearchService {
 
     List<PostListResponseDto> findByStadiumName(String stadiumName);
 
+    Page<PostResponseDTO> lookupAllPosts(String startDate, String endDate, int page) throws Exception;
 }
