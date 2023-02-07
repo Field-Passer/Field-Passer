@@ -119,6 +119,9 @@ public class Member {
         this.delete = 1;
     }
 
+    public void updatePassword(String password){
+        this.password= password;
+    }
 
 
 }

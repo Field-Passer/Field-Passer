@@ -9,7 +9,6 @@ import com.example.fieldpasserbe.member.dto.MemberInfo;
 import com.example.fieldpasserbe.member.dto.MemberUpdate;
 import com.example.fieldpasserbe.member.entity.Member;
 import com.example.fieldpasserbe.member.service.MemberService;
-import com.example.fieldpasserbe.service.Memberservice;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.validation.annotation.Validated;
@@ -67,6 +66,12 @@ public class MemberController {
     @PatchMapping("/api/:userid/unregister")
     public String deleteMember(MemberDTO memberDTO){
         return memberService.deleteMember(memberDTO);
+    }
+
+    // 비밀번호 변경
+    @PatchMapping("/api/:userid/userpwd")
+    public String updatePassword(MemberDTO memberDTO){
+        return memberService.updatePassword(memberDTO);
     }
 
 

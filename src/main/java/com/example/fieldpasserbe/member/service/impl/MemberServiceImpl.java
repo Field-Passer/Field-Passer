@@ -249,7 +249,7 @@ public class MemberServiceImpl implements MemberService {
         Member member =memberRepository.findById(id).get();
 
         if(member != null){
-            member.updatePassword();
+            member.updatePassword(memberDTO.getPassword());
             return "success";
         }
         return "failed";
