@@ -1,12 +1,7 @@
-package com.example.fieldpasserbe.dto;
+package com.example.fieldpasserbe.member.dto;
 
-import com.example.fieldpasserbe.entity.MemberEntity;
 import com.example.fieldpasserbe.member.entity.Member;
 import lombok.*;
-import org.springframework.format.annotation.DateTimeFormat;
-
-import java.time.LocalDateTime;
-import java.util.Date;
 
 @AllArgsConstructor
 @NoArgsConstructor
