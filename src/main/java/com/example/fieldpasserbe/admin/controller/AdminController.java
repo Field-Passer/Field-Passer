@@ -76,4 +76,9 @@ public class AdminController {
     public PostVO lookupAllPosts(PeriodRequestDTO period, int page) {
         return adminService.lookupAllPosts(period, page);
     }
+
+    @GetMapping("/admin/board/new")
+    public PeriodPostVO checkNewPosts(PeriodRequestDTO period, int page) {
+        return adminService.checkNewPosts(period, page);
+    }
 }

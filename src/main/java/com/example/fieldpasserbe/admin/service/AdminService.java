@@ -11,4 +11,5 @@ public interface AdminService {
     PunishVO lookUpPunishment(int page);
     PostVO findPostsById(int page, int memberId);
     PostVO lookupAllPosts(PeriodRequestDTO period, int page);
+    PeriodPostVO checkNewPosts(PeriodRequestDTO period, int page);
 }

@@ -1,6 +1,6 @@
 package com.example.fieldpasserbe.member.service.impl;
 
-import com.example.fieldpasserbe.admin.dto.PeriodResponseDTO;
+import com.example.fieldpasserbe.admin.dto.PeriodMemberResponseDTO;
 import com.example.fieldpasserbe.member.entity.Member;
 import com.example.fieldpasserbe.member.repository.MemberRepositoryJPA;
 import com.example.fieldpasserbe.member.service.MemberService;
@@ -13,7 +13,6 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
-import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -116,7 +115,7 @@ public class MemberServiceImpl implements MemberService {
      * @throws Exception
      */
     @Override
-    public Page<PeriodResponseDTO> checkNewMember(String startDate, String endDate, int page) throws Exception{
+    public Page<PeriodMemberResponseDTO> checkNewMember(String startDate, String endDate, int page) throws Exception{
         PageRequest pageRequest = PageRequest.of(page - 1, contentsSize);
         try {
             SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
@@ -125,7 +124,7 @@ public class MemberServiceImpl implements MemberService {
             if (end.getTime() - start.getTime() < 0) {
                 throw new IllegalStateException("날짜를 잘못 입력했습니다.");
             }
-            Page<PeriodResponseDTO> newMember = memberRepository.findNewMember(startDate, endDate, pageRequest);
+            Page<PeriodMemberResponseDTO> newMember = memberRepository.findNewMember(startDate, endDate, pageRequest);
             if (newMember.getContent().size() == 0) {
                 throw new NullPointerException("조회할 수 있는 데이터가 없습니다");
             } else {

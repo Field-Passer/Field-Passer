@@ -1,6 +1,6 @@
 package com.example.fieldpasserbe.member.repository;
 
-import com.example.fieldpasserbe.admin.dto.PeriodResponseDTO;
+import com.example.fieldpasserbe.admin.dto.PeriodMemberResponseDTO;
 import com.example.fieldpasserbe.member.entity.Member;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -11,7 +11,6 @@ import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
-import java.util.List;
 import java.util.Optional;
 
 public interface MemberRepositoryJPA extends JpaRepository<Member, Integer> {
@@ -44,5 +43,5 @@ public interface MemberRepositoryJPA extends JpaRepository<Member, Integer> {
                      "from(" +
                      "select Date_Format(m.signUp_Date, '%Y-%m-%d') as date, count(m.id) as count from field_passer.Member as m where Date_Format(m.signUp_Date, '%Y-%m-%d') between :startDate AND :endDate AND m.DELETE_CHECK = 0 GROUP BY Date_Format(m.signUp_Date, '%Y-%m-%d')" +
                      ") as c", nativeQuery = true)
-    Page<PeriodResponseDTO> findNewMember(@Param("startDate") String startDate, @Param("endDate") String endDate, PageRequest pageRequest);
+    Page<PeriodMemberResponseDTO> findNewMember(@Param("startDate") String startDate, @Param("endDate") String endDate, PageRequest pageRequest);
 }

@@ -1,5 +1,6 @@
 package com.example.fieldpasserbe.post.repository;
 
+import com.example.fieldpasserbe.admin.dto.PeriodPostResponseDTO;
 import com.example.fieldpasserbe.admin.dto.PostResponseDTO;
 import com.example.fieldpasserbe.post.entity.Post;
 import org.springframework.data.domain.Page;
@@ -120,4 +121,11 @@ public interface PostRepositoryJPA extends JpaRepository<Post, Integer> {
             "where p.DELETE_CHECK = 0 " +
             "AND Date_Format(p.register_Date, '%Y-%m-%d') between :startDate AND :endDate", nativeQuery = true)
     Page<PostResponseDTO> findTotalPosts(@Param("startDate") String startDate, @Param("endDate") String endDate, PageRequest pageRequest);
+
+    @Query(value = "select Date_Format(p.register_Date, '%Y-%m-%d') as date, count(p.post_id) as postNum from field_passer.post as p where Date_Format(p.register_Date, '%Y-%m-%d') between :startDate AND :endDate AND p.DELETE_CHECK = 0 GROUP BY Date_Format(p.register_Date, '%Y-%m-%d') order by date asc",
+            countQuery = "select count(*) as count " +
+                    "from(" +
+                    "select Date_Format(p.register_Date, '%Y-%m-%d') as date, count(p.post_id) as postNum from field_passer.post as p where Date_Format(p.register_Date, '%Y-%m-%d') between :startDate AND :endDate AND p.DELETE_CHECK = 0 GROUP BY Date_Format(p.register_Date, '%Y-%m-%d')" +
+                    ") as c", nativeQuery = true)
+    Page<PeriodPostResponseDTO> findNewPosts(String startDate, String endDate, PageRequest pageRequest);
 }

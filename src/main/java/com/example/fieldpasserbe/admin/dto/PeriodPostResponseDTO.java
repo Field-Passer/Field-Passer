@@ -1,6 +1,6 @@
 package com.example.fieldpasserbe.admin.dto;
 
-public interface PeriodResponseDTO {
+public interface PeriodPostResponseDTO {
     String getDate();
-    Long getMemberNum();
+    Long getPostNum();
 }
