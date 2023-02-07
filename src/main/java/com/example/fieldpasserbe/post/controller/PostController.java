@@ -87,4 +87,9 @@ public class PostController {
     public List<WishPostResponseDto> myLikePostList(@RequestParam(name = "memberId") int memberId) {
         return wishPostService.myLikePostList(memberId);
     }
+
+    @GetMapping("/api/post/stadium/{stadiumName}")
+    public List<PostListResponseDto> myLikeStadiums(@PathVariable String stadiumName) {
+        return postSearchService.findByStadiumName(stadiumName);
+    }
 }
