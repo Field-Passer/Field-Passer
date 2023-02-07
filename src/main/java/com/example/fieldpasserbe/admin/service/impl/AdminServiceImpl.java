@@ -110,7 +110,7 @@ public class AdminServiceImpl implements AdminService {
     @Override
     public PeriodMemberVO checkNewMember(PeriodRequestDTO period, int page) {
         try {
-            Page<PeriodResponseDTO> newMember = memberService.checkNewMember(period.getStartDate(), period.getEndDate(), page);
+            Page<PeriodMemberResponseDTO> newMember = memberService.checkNewMember(period.getStartDate(), period.getEndDate(), page);
             return PeriodMemberVO.builder()
                     .resultCode("success")
                     .resultDataNum(newMember.getContent().size())
