@@ -114,4 +114,8 @@ public class Member {
         this.password= password;
         this.profileImg = profileImg;
     }
+
+    public void delteMember(){
+        this.delete = 1;
+    }
 }

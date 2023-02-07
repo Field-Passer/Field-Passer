@@ -63,4 +63,13 @@ public class MemberController {
     }
 
 
+    //회원 탈퇴
+    @PatchMapping("/api/:userid/unregister")
+    public String deleteMember(MemberDTO memberDTO){
+        return memberService.deleteMember(memberDTO);
+    }
+
+
+
+
 }

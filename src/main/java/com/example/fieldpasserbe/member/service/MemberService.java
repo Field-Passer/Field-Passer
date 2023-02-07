@@ -36,6 +36,10 @@ public interface MemberService {
 
     String updateMember(MemberUpdate memberUpdate); // 회원 정보 수정
 
+    String deleteMember(MemberDTO memberDTO); // 회원 탈퇴
+
+
+
 
 
 

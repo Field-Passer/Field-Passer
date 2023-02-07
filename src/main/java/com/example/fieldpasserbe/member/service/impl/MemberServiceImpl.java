@@ -3,7 +3,7 @@ package com.example.fieldpasserbe.member.service.impl;
 import com.example.fieldpasserbe.admin.dto.PeriodResponseDTO;
 
 
-import com.example.fieldpasserbe.entity.MemberEntity;
+
 import com.example.fieldpasserbe.member.dto.MemberDTO;
 import com.example.fieldpasserbe.member.dto.MemberInfo;
 import com.example.fieldpasserbe.member.dto.MemberUpdate;
@@ -210,6 +210,7 @@ public class MemberServiceImpl implements MemberService {
     }
 
 
+    // 회원 정보 수정
     @Override
     public String updateMember(MemberUpdate memberUpdate) {
         Integer id = (int)session.getAttribute("id");
@@ -217,19 +218,28 @@ public class MemberServiceImpl implements MemberService {
         Member member = memberRepository.findById(id).get();
 
         if(member != null){
-//            me.ifPresent(updatemember ->{
-//                updatemember.setMemberName(memberupdate.getMemberName());
-//                updatemember.setEmail(memberupdate.getEmail());
-//                updatemember.setProfile_img(memberupdate.getProfile_img());
-//                updatemember.setPassword(memberupdate.getPassword());
-//
-//                memberRepository.save(updatemember);
-//            });
-            member.updateMeber(memberUpdate.getEmail(),memberUpdate.getPassword(),memberUpdate.getProfileImg(),memberUpdate.getMemberName());
+
+            member.updateMeber(memberUpdate.getEmail(),memberUpdate.getPassword(),
+                    memberUpdate.getProfileImg(),memberUpdate.getMemberName());
             return "success";
         }
 
         return "failed";
+    }
+
+    //회원 삭제
+    @Override
+    public String deleteMember(MemberDTO memberDTO) {
+        Integer id = (int)session.getAttribute("id");
+
+        Member findMember = memberRepository.findById(id).get();
+
+        if(findMember != null){
+            findMember.delteMember();
+            return "success";
+        }else{
+            return "failed";
+        }
     }
 
 }
