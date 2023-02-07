@@ -3,7 +3,6 @@ package com.example.fieldpasserbe.member.service.impl;
 import com.example.fieldpasserbe.admin.dto.PeriodResponseDTO;
 
 
-import com.example.fieldpasserbe.entity.MemberEntity;
 import com.example.fieldpasserbe.member.dto.MemberDTO;
 import com.example.fieldpasserbe.member.dto.MemberInfo;
 import com.example.fieldpasserbe.member.dto.MemberUpdate;

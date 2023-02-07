@@ -1,6 +1,6 @@
 package com.example.fieldpasserbe.member.dto;
 
-import com.example.fieldpasserbe.entity.MemberEntity;
+
 import com.example.fieldpasserbe.member.entity.Member;
 import lombok.*;
 

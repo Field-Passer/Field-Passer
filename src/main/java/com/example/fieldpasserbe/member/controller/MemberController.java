@@ -8,6 +8,7 @@ import com.example.fieldpasserbe.member.dto.MemberDTO;
 import com.example.fieldpasserbe.member.dto.MemberInfo;
 import com.example.fieldpasserbe.member.dto.MemberUpdate;
 import com.example.fieldpasserbe.member.entity.Member;
+import com.example.fieldpasserbe.member.service.EmailService;
 import com.example.fieldpasserbe.member.service.MemberService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -23,6 +24,8 @@ import java.util.Optional;
 public class MemberController {
 
     private final MemberService memberService;
+
+    private final EmailService emailService;
 
     //로그인
     @PostMapping("/api/auth/login")
@@ -74,6 +77,16 @@ public class MemberController {
         return memberService.updatePassword(memberDTO);
     }
 
+
+    // 이메일 인증
+    @PostMapping("/emailConfirm")
+    @ResponseBody
+    public String emailConfirm(@RequestParam String email) throws Exception {
+
+        String confirm = emailService.sendSimpleMessage(email);
+
+        return confirm;
+    }
 
 
 
