@@ -88,10 +88,37 @@ public class PostSearchServiceImpl implements PostSearchService {
                 .collect(Collectors.toList());
     }
 
+    /**
+     * 회원 아이디로 게시글 조회
+     * @param page
+     * @param memberId
+     * @return
+     * @throws NullPointerException
+     */
     @Override
     public Page<PostResponseDTO> findPostsById(int page, int memberId) throws NullPointerException{
         PageRequest pageRequest = PageRequest.of(page - 1, contentsSize, Sort.by(Sort.Direction.DESC, "registerDate"));
         Page<PostResponseDTO> posts = postRepository.findPostsByMemberId(memberId, pageRequest);
+        if (posts.getContent().isEmpty()) {
+            throw new NullPointerException("조회할 수 있는 데이터가 없습니다");
+        } else {
+            return posts;
+        }
+    }
+
+    /**
+     * 전체 게시글 조회(관리자)
+     * 블라인드된 게시글도 보임
+     * @param startDate
+     * @param endDate
+     * @param page
+     * @return
+     * @throws NullPointerException
+     */
+    @Override
+    public Page<PostResponseDTO> lookupAllPosts(String startDate, String endDate, int page) throws NullPointerException{
+        PageRequest pageRequest = PageRequest.of(page - 1, contentsSize, Sort.by(Sort.Direction.DESC, "registerDate"));
+        Page<PostResponseDTO> posts = postRepository.findTotalPosts(startDate, endDate, pageRequest);
         if (posts.getContent().isEmpty()) {
             throw new NullPointerException("조회할 수 있는 데이터가 없습니다");
         } else {

@@ -19,5 +19,5 @@ public interface MemberService {
 
     Page<Member> findAllMembers(int page);
 
-    List<PeriodResponseDTO> checkNewMember(String startDate, String endDate) throws Exception;
+    Page<PeriodResponseDTO> checkNewMember(String startDate, String endDate, int page) throws Exception;
 }
