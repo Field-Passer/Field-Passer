@@ -56,8 +56,18 @@ public class AdminController {
 
     @GetMapping("/admin/membes/new")
     public PeriodMemberVO checknewMember(PeriodRequestDTO period) {
-        System.out.println("period.getStartDate() = " + period.getStartDate());
-        System.out.println("period.getEndDate() = " + period.getEndDate());
         return adminService.checkNewMember(period);
+    }
+
+    @GetMapping("/admin/members/punishment")
+    public PunishVO lookupPunishment(int page) {
+        return adminService.lookUpPunishment(page);
+    }
+
+    @GetMapping("/admin/board/members/{memberId}")
+    public PostVO postByID(@PathVariable int memberId, @RequestParam(name = "page") int page) {
+        System.out.println("memberId = " + memberId);
+        System.out.println("page = " + page);
+        return adminService.findPostsById(page, memberId);
     }
 }

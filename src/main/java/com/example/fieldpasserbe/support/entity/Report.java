@@ -23,11 +23,11 @@ public class Report {
     private int reportId;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(referencedColumnName = "ID")
+    @JoinColumn(name = "USER_ID", referencedColumnName = "ID")
     private Member reporterMember;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(referencedColumnName = "ID")
+    @JoinColumn(name = "TARGET_ID", referencedColumnName = "ID")
     private Member targetMember;
 
     @Column(name = "CATEGORY")
@@ -41,7 +41,7 @@ public class Report {
     @Temporal(TemporalType.TIMESTAMP)
     private Date reportDate;
 
-    @Column(name = "PROCCESS")
+    @Column(name = "PROCESS")
     @Enumerated(EnumType.STRING)
     private ReportProcess reportProcess;
 }

@@ -1,11 +1,12 @@
 package com.example.fieldpasserbe.post.service.impl;
 
-import com.example.fieldpasserbe.member.entity.Member;
+import com.example.fieldpasserbe.admin.dto.PostResponseDTO;
 import com.example.fieldpasserbe.post.dto.PostResponseDto;
 import com.example.fieldpasserbe.post.service.PostSearchService;
 import com.example.fieldpasserbe.post.repository.PostRepositoryJPA;
 import com.example.fieldpasserbe.post.dto.PostListResponseDto;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Slice;
 import org.springframework.data.domain.Sort;
@@ -14,7 +15,6 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
 import java.util.List;
-import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -22,6 +22,7 @@ import java.util.stream.Collectors;
 public class PostSearchServiceImpl implements PostSearchService {
 
     private final PostRepositoryJPA postRepository;
+    private final int contentsSize = 10;
 
     @Override
     public Long countPostById(int id) {
@@ -85,5 +86,16 @@ public class PostSearchServiceImpl implements PostSearchService {
                 .stream()
                 .map(post -> new PostListResponseDto(post))
                 .collect(Collectors.toList());
+    }
+
+    @Override
+    public Page<PostResponseDTO> findPostsById(int page, int memberId) throws NullPointerException{
+        PageRequest pageRequest = PageRequest.of(page - 1, contentsSize, Sort.by(Sort.Direction.DESC, "registerDate"));
+        Page<PostResponseDTO> posts = postRepository.findPostsByMemberId(memberId, pageRequest);
+        if (posts.getContent().isEmpty()) {
+            throw new NullPointerException("조회할 수 있는 데이터가 없습니다");
+        } else {
+            return posts;
+        }
     }
 }
