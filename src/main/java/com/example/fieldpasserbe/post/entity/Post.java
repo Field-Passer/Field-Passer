@@ -1,5 +1,6 @@
 package com.example.fieldpasserbe.post.entity;
 
+import com.example.fieldpasserbe.chat.entity.ChatRoom;
 import com.example.fieldpasserbe.member.entity.Member;
 import lombok.*;
 import org.hibernate.annotations.*;
@@ -8,6 +9,7 @@ import javax.persistence.*;
 import javax.persistence.Entity;
 import javax.persistence.Table;
 import java.time.LocalDateTime;
+import java.util.List;
 
 @AllArgsConstructor
 @NoArgsConstructor
@@ -82,6 +84,9 @@ public class Post {
 
     @Column(name = "DELETE_CHECK", columnDefinition = "TINYINT(1) DEFAULT 0", length = 1)
     private int deleteCheck;
+
+    @OneToMany(mappedBy = "post")
+    private List<ChatRoom> chatRooms;
 
     @PrePersist
     public void prePersist() {
