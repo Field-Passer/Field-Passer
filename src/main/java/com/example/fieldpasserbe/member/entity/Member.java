@@ -3,7 +3,10 @@ package com.example.fieldpasserbe.member.entity;
 import com.example.fieldpasserbe.admin.entity.Admin;
 import com.example.fieldpasserbe.chat.entity.ChatMessage;
 import com.example.fieldpasserbe.chat.entity.ChatRoom;
+import com.example.fieldpasserbe.entity.MemberEntity;
 import lombok.*;
+import org.springframework.security.crypto.password.PasswordEncoder;
+
 import javax.persistence.*;
 import java.time.LocalDateTime;
 import java.util.List;
@@ -78,5 +81,10 @@ public class Member {
 
     public void promote() {
         this.privilege = 1;
+    }
+
+    public Member hashPassword(PasswordEncoder passwordEncoder){
+        this.password = passwordEncoder.encode(this.password);
+        return this;
     }
 }
