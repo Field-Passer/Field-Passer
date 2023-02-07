@@ -1,6 +1,6 @@
 package com.example.fieldpasserbe.post.service.impl;
 
-import com.example.fieldpasserbe.post.dto.WishFieldRequest;
+import com.example.fieldpasserbe.post.dto.WishFieldRequestDto;
 import com.example.fieldpasserbe.post.repository.WishFieldRepository;
 import com.example.fieldpasserbe.post.service.WishFieldService;
 import lombok.RequiredArgsConstructor;
@@ -13,9 +13,9 @@ public class WishFieldServiceImpl implements WishFieldService {
     private final WishFieldRepository wishFieldRepository;
 
     @Override
-    public String likeStadium(WishFieldRequest wishFieldRequest) {
+    public String likeStadium(WishFieldRequestDto wishFieldRequestDto) {
         try {
-            wishFieldRepository.save(wishFieldRequest.toEntity());
+            wishFieldRepository.save(wishFieldRequestDto.toEntity());
         } catch (Exception e) {
             return "failed";
         }
