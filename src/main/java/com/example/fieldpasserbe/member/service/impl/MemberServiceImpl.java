@@ -35,6 +35,8 @@ public class MemberServiceImpl implements MemberService {
 
     private final HttpSession session;
 
+    private final PasswordEncoder passwordEncoder;
+
     /**
      * 회원 id로 회원 정보 조회
      * @param id
@@ -242,12 +244,13 @@ public class MemberServiceImpl implements MemberService {
 
     // 비밀번호 변경
     @Override
-    public String updatePassword(MemberDTO memberDTO) {
-        Integer id = (int)session.getAttribute("id");
-        Member member =memberRepository.findById(id).get();
+    public String updatePassword(MemberDTO memberDTO,int memberId ) {
+
+        Member member =memberRepository.findById(memberId).get();
 
         if(member != null){
-            member.updatePassword(memberDTO.getPassword());
+            member.updatePassword(passwordEncoder.encode(memberDTO.getPassword()));
+         
             return "success";
         }
         return "failed";

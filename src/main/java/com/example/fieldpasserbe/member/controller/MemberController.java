@@ -93,7 +93,8 @@ public class MemberController {
     // 비밀번호 변경
     @PatchMapping("/api/:userid/userpwd")
     public String updatePassword(MemberDTO memberDTO){
-        return memberService.updatePassword(memberDTO);
+        Integer memberId = (int)session.getAttribute("id");
+        return memberService.updatePassword(memberDTO,memberId);
     }
 
 

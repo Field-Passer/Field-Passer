@@ -38,7 +38,7 @@ public interface MemberService {
 
     String deleteMember(MemberDTO memberDTO,int memberId); // 회원 탈퇴
 
-    String updatePassword(MemberDTO memberDTO);
+    String updatePassword(MemberDTO memberDTO,int memberId);
 
 
 
