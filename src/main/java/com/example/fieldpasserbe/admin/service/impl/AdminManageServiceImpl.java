@@ -1,10 +1,12 @@
 package com.example.fieldpasserbe.admin.service.impl;
 
+import com.example.fieldpasserbe.admin.dto.BlindRequestDTO;
 import com.example.fieldpasserbe.admin.entity.Admin;
 import com.example.fieldpasserbe.admin.repository.AdminRepositoryJPA;
 import com.example.fieldpasserbe.admin.service.AdminManageService;
 import com.example.fieldpasserbe.admin.vo.SimpleVO;
 import com.example.fieldpasserbe.member.service.MemberService;
+import com.example.fieldpasserbe.post.service.PostSearchService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -15,6 +17,7 @@ import java.time.LocalDateTime;
 public class AdminManageServiceImpl implements AdminManageService {
 
     private final MemberService memberService;
+    private final PostSearchService postSearchService;
     private final AdminRepositoryJPA adminRepository;
 
     /**
@@ -39,5 +42,13 @@ public class AdminManageServiceImpl implements AdminManageService {
                     .resultCode("failed : 승격에 실패했습니다.")
                     .build();
         }
+    }
+
+    /*TODO
+    *  - 주석 작성
+    * */
+    @Override
+    public SimpleVO blind(BlindRequestDTO blind) {
+        return null;
     }
 }
