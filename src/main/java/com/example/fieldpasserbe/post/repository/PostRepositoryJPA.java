@@ -29,6 +29,10 @@ public interface PostRepositoryJPA extends JpaRepository<Post, Integer> {
     @Query("update Post p set p.wishCount = p.wishCount + 1 where p.postId = :postId")
     void updateWishCount(@Param("postId") int postId);
 
+    @Modifying
+    @Query("update Post p set p.blind = 1 where p.startTime < :dateTime")
+    void updateTimeOverPost(@Param("dateTime") LocalDateTime dateTime);
+
     @EntityGraph(attributePaths = {"member","category","district","stadium"})
     Optional<Post> findByPostId(int postId);
 
