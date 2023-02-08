@@ -128,4 +128,8 @@ public interface PostRepositoryJPA extends JpaRepository<Post, Integer> {
                     "select Date_Format(p.register_Date, '%Y-%m-%d') as date, count(p.post_id) as postNum from field_passer.post as p where Date_Format(p.register_Date, '%Y-%m-%d') between :startDate AND :endDate AND p.DELETE_CHECK = 0 GROUP BY Date_Format(p.register_Date, '%Y-%m-%d')" +
                     ") as c", nativeQuery = true)
     Page<PeriodPostResponseDTO> findNewPosts(String startDate, String endDate, PageRequest pageRequest);
+
+    @Query(value = "select * from field_passer.post as p where p.post_id = :postId", nativeQuery = true)
+    Optional<Post> findByPostIdIncludeBlind(@Param("postId") int postId);
+
 }
