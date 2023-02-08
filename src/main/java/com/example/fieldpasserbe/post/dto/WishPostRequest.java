@@ -10,7 +10,7 @@ import lombok.*;
 @Getter
 @Setter
 @ToString
-public class WishPostRequestDto {
+public class WishPostRequest {
     private int memberId;
     private int postId;
 

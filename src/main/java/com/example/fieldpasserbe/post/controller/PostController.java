@@ -1,7 +1,11 @@
 package com.example.fieldpasserbe.post.controller;
 
-import com.example.fieldpasserbe.post.dto.*;
+import com.example.fieldpasserbe.post.dto.PostRequestDto;
+import com.example.fieldpasserbe.post.dto.PostResponseDto;
+import com.example.fieldpasserbe.post.dto.WishPostRequest;
+import com.example.fieldpasserbe.post.entity.Post;
 import com.example.fieldpasserbe.post.service.PostSearchService;
+import com.example.fieldpasserbe.post.dto.PostListResponseDto;
 import com.example.fieldpasserbe.post.service.PostService;
 import com.example.fieldpasserbe.post.service.WishPostService;
 import lombok.RequiredArgsConstructor;
@@ -74,22 +78,12 @@ public class PostController {
     }
 
     @PostMapping("/api/like/post")
-    public String likePost(WishPostRequestDto wishPostRequestDto) {
-        return wishPostService.likePost(wishPostRequestDto);
+    public String likePost(WishPostRequest wishPostRequest) {
+        return wishPostService.likePost(wishPostRequest);
     }
 
     @GetMapping("/api/imminent")
     public List<PostListResponseDto> findImminent(@RequestParam(name = "category") String category) {
         return postSearchService.findImminent(category);
-    }
-
-    @GetMapping("/api/myPage/like/post") //추후 세션으로 변경
-    public List<WishPostResponseDto> myLikePostList(@RequestParam(name = "memberId") int memberId) {
-        return wishPostService.myLikePostList(memberId);
-    }
-
-    @GetMapping("/api/post/stadium/{stadiumName}")
-    public List<PostListResponseDto> myLikeStadiums(@PathVariable String stadiumName) {
-        return postSearchService.findByStadiumName(stadiumName);
     }
 }

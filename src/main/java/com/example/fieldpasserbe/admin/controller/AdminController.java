@@ -1,7 +1,6 @@
 package com.example.fieldpasserbe.admin.controller;
 
 import com.example.fieldpasserbe.admin.dto.PeriodRequestDTO;
-import com.example.fieldpasserbe.admin.dto.PostResponseDTO;
 import com.example.fieldpasserbe.admin.service.AdminLoginService;
 import com.example.fieldpasserbe.admin.service.AdminManageService;
 import com.example.fieldpasserbe.admin.service.AdminService;
@@ -56,8 +55,8 @@ public class AdminController {
     }
 
     @GetMapping("/admin/membes/new")
-    public PeriodMemberVO checkNewMember(PeriodRequestDTO period, int page) {
-        return adminService.checkNewMember(period, page);
+    public PeriodMemberVO checknewMember(PeriodRequestDTO period) {
+        return adminService.checkNewMember(period);
     }
 
     @GetMapping("/admin/members/punishment")
@@ -70,15 +69,5 @@ public class AdminController {
         System.out.println("memberId = " + memberId);
         System.out.println("page = " + page);
         return adminService.findPostsById(page, memberId);
-    }
-
-    @GetMapping("/admin/board")
-    public PostVO lookupAllPosts(PeriodRequestDTO period, int page) {
-        return adminService.lookupAllPosts(period, page);
-    }
-
-    @GetMapping("/admin/board/new")
-    public PeriodPostVO checkNewPosts(PeriodRequestDTO period, int page) {
-        return adminService.checkNewPosts(period, page);
     }
 }

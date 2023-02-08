@@ -1,11 +1,11 @@
 package com.example.fieldpasserbe.member.service.impl;
 
-
+import com.example.fieldpasserbe.admin.dto.PeriodResponseDTO;
 
 
 import com.example.fieldpasserbe.member.dto.MemberDTO;
+import com.example.fieldpasserbe.member.dto.MemberInfo;
 import com.example.fieldpasserbe.member.dto.MemberUpdate;
-import com.example.fieldpasserbe.admin.dto.PeriodMemberResponseDTO;
 import com.example.fieldpasserbe.member.entity.Member;
 import com.example.fieldpasserbe.member.repository.MemberRepositoryJPA;
 import com.example.fieldpasserbe.member.service.MemberService;
@@ -20,6 +20,7 @@ import org.springframework.transaction.annotation.Transactional;
 import javax.servlet.http.HttpSession;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -121,16 +122,13 @@ public class MemberServiceImpl implements MemberService {
 
     /**
      * 신규 회원 검색
-     *
      * @param startDate
      * @param endDate
-     * @param page
      * @return
      * @throws Exception
      */
     @Override
-    public Page<PeriodMemberResponseDTO> checkNewMember(String startDate, String endDate, int page) throws Exception{
-        PageRequest pageRequest = PageRequest.of(page - 1, contentsSize);
+    public List<PeriodResponseDTO> checkNewMember(String startDate, String endDate) throws Exception{
         try {
             SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
             Date start = format.parse(startDate);
@@ -138,8 +136,8 @@ public class MemberServiceImpl implements MemberService {
             if (end.getTime() - start.getTime() < 0) {
                 throw new IllegalStateException("날짜를 잘못 입력했습니다.");
             }
-            Page<PeriodMemberResponseDTO> newMember = memberRepository.findNewMember(startDate, endDate, pageRequest);
-            if (newMember.getContent().size() == 0) {
+            List<PeriodResponseDTO> newMember = memberRepository.findNewMember(startDate, endDate);
+            if (newMember.size() == 0) {
                 throw new NullPointerException("조회할 수 있는 데이터가 없습니다");
             } else {
                 return newMember;

@@ -10,7 +10,7 @@ import lombok.*;
 @Getter
 @Setter
 @ToString
-public class WishFieldRequestDto {
+public class WishFieldRequest {
     private int memberId;
     private int stadiumId;
 

@@ -1,17 +1,15 @@
 package com.example.fieldpasserbe.member.service;
 
-
+import com.example.fieldpasserbe.admin.dto.PeriodResponseDTO;
 
 
 import com.example.fieldpasserbe.member.dto.MemberDTO;
-
+import com.example.fieldpasserbe.member.dto.MemberInfo;
 import com.example.fieldpasserbe.member.dto.MemberUpdate;
-
-import com.example.fieldpasserbe.admin.dto.PeriodMemberResponseDTO;
-
 import com.example.fieldpasserbe.member.entity.Member;
 import org.springframework.data.domain.Page;
 
+import java.util.List;
 import java.util.Optional;
 
 public interface MemberService {
@@ -26,6 +24,7 @@ public interface MemberService {
 
     Page<Member> findAllMembers(int page);
 
+    List<PeriodResponseDTO> checkNewMember(String startDate, String endDate) throws Exception;
 
     String LoginMember(String email,String password); // 로그인
 
@@ -41,5 +40,8 @@ public interface MemberService {
 
     String updatePassword(MemberDTO memberDTO,int memberId);
 
-    Page<PeriodMemberResponseDTO> checkNewMember(String startDate, String endDate, int page) throws Exception;
+
+
+
+
 }
