@@ -1,6 +1,7 @@
-package com.example.fieldpasserbe.service.impl;
+package com.example.fieldpasserbe.member.service.impl;
 
-import com.example.fieldpasserbe.service.EmailService;
+
+import com.example.fieldpasserbe.member.service.EmailService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.stereotype.Service;
@@ -85,4 +86,5 @@ public class EmailServiceImpl implements EmailService {
         }
         return ePw;
     }
+
 }

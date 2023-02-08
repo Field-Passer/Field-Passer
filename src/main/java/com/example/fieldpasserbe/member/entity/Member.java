@@ -4,6 +4,8 @@ import com.example.fieldpasserbe.admin.entity.Admin;
 import com.example.fieldpasserbe.chat.entity.ChatMessage;
 import com.example.fieldpasserbe.chat.entity.ChatRoom;
 import lombok.*;
+import org.springframework.security.crypto.password.PasswordEncoder;
+
 import javax.persistence.*;
 import java.time.LocalDateTime;
 import java.util.List;
@@ -17,7 +19,7 @@ import java.util.List;
 public class Member {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "ID")
     private Integer memberId;
 
@@ -32,11 +34,11 @@ public class Member {
 
     @Column(name = "PROFILE_IMG")
     private String profileImg;
-    @Column(name = "PRIVILEGE")
-    private byte privilege;
+    @Column(name = "PRIVILEGE",columnDefinition = "TINYINT(1) DEFAULT 0",length = 1)
+    private int privilege;
 
-    @Column(name = "AUTHORITY")
-    private byte authority;
+    @Column(name = "AUTHORITY",columnDefinition = "TINYINT(1) DEFAULT 0",length = 1)
+    private int authority;
 
     @Column(name = "SIGNUP_DATE")
     private LocalDateTime signUpDate;
@@ -44,8 +46,8 @@ public class Member {
     @Column(name = "VISIT_COUNT")
     private Integer visitCount;
 
-    @Column(name = "DELETE_CHECK")
-    private byte delete;
+    @Column(name = "DELETE_CHECK",columnDefinition = "TINYINT(1) DEFAULT 0",length = 1)
+    private int delete;
 
     @OneToOne(mappedBy = "member", fetch = FetchType.LAZY)
     private Admin admin;
@@ -59,6 +61,10 @@ public class Member {
     @OneToMany(mappedBy = "member")
     private List<ChatMessage> chatMessages;
 
+    @PrePersist
+    public void prePersist(){
+        this.visitCount = this.visitCount == null ? 0: this.visitCount;
+    }
 
     public String convertPrivilege() {
         if (this.privilege == 0) {
@@ -78,5 +84,45 @@ public class Member {
 
     public void promote() {
         this.privilege = 1;
+    }
+
+
+    /**
+     * 비밀번호를 암호화
+     * @param passwordEncoder 암호화 할 인코더 클래스
+     * @return 변경된 유저 Entity
+     */
+    public Member hashPassword(PasswordEncoder passwordEncoder){
+        this.password = passwordEncoder.encode(this.password);
+        return this;
+    }
+
+    /**
+     * 비밀번호 확인
+     * @param plainPassword 암호화 이전의 비밀번호
+     * @param passwordEncoder 암호화에 사용된 클래스
+     * @return true | false
+     */
+    public boolean checkPasword(String plainPassword , PasswordEncoder passwordEncoder) {
+        return passwordEncoder.matches(plainPassword, this.password);
+    }
+
+    public void updateMeber(String email, String memberName,String profileImg){
+        this.email = email;
+        this.memberName = memberName;
+        this.profileImg = profileImg;
+
+    }
+
+    public void delteMember(){
+        this.delete = 1;
+    }
+
+    public void updatePassword(String password){
+        this.password= password;
+    }
+
+    public void Authority (){
+        this.authority=1;
     }
 }

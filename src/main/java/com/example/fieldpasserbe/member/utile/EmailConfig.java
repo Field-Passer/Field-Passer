@@ -1,4 +1,4 @@
-package com.example.fieldpasserbe.utile;
+package com.example.fieldpasserbe.member.utile;
 
 
 import org.springframework.beans.factory.annotation.Value;
@@ -13,6 +13,7 @@ import java.util.Properties;
 @Configuration
 @PropertySource("classpath:email.properties")
 public class EmailConfig {
+
 
     @Value("${mail.smtp.port}")
     private int port;
@@ -55,7 +56,4 @@ public class EmailConfig {
         pt.put("mail.smtp.socketFactory.class", "javax.net.ssl.SSLSocketFactory");
         return pt;
     }
-
-
-
 }

@@ -1,6 +1,11 @@
 package com.example.fieldpasserbe.member.service.impl;
 
 import com.example.fieldpasserbe.admin.dto.PeriodResponseDTO;
+
+
+import com.example.fieldpasserbe.member.dto.MemberDTO;
+import com.example.fieldpasserbe.member.dto.MemberInfo;
+import com.example.fieldpasserbe.member.dto.MemberUpdate;
 import com.example.fieldpasserbe.member.entity.Member;
 import com.example.fieldpasserbe.member.repository.MemberRepositoryJPA;
 import com.example.fieldpasserbe.member.service.MemberService;
@@ -8,9 +13,11 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import javax.servlet.http.HttpSession;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
@@ -18,10 +25,17 @@ import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
+@Transactional
 public class MemberServiceImpl implements MemberService {
 
     private final int contentsSize = 10;
     private final MemberRepositoryJPA memberRepository;
+
+    private final PasswordEncoder bCryptPasswordEncoder;
+
+    private final HttpSession session;
+
+    private final PasswordEncoder passwordEncoder;
 
     /**
      * 회원 id로 회원 정보 조회
@@ -132,4 +146,114 @@ public class MemberServiceImpl implements MemberService {
             throw new IllegalStateException("날짜를 잘못 입력했습니다.");
         }
     }
+
+    //로그인
+    @Override
+    public String LoginMember(String email,String password) {
+
+        Member member = memberRepository.findByEmail(email);
+
+        if(member ==null){
+            System.out.println("해당 이메일의 유저가 존재하지 않습니다 ");
+            return "failed";
+        }
+
+        if(!bCryptPasswordEncoder.matches(password, member.getPassword())){
+            System.out.println("비밀번호가 일치하지 않습니다 ");
+            return "failed";
+        }
+        System.out.println(email);
+        System.out.println(password);
+        System.out.println(member.getPassword());
+        return "success";
+    }
+
+
+    @Override
+    public Integer findByEmail(String email) {
+
+        Member memberEmail = memberRepository.findByEmail(email);
+        return memberEmail.getMemberId();
+    }
+
+    //회원가입
+    @Override
+    public String Signup(MemberDTO memberDTO) {
+
+
+        try{
+
+            Member newMember = memberDTO.toEntity();
+            newMember.Authority();
+            newMember.hashPassword(bCryptPasswordEncoder);
+
+            memberRepository.save(newMember);
+        }catch(Exception e){
+            e.printStackTrace();
+
+            return "failed";
+        }
+
+        return "success";
+    }
+
+    // 회원 정보 조회
+    public MemberDTO selectMember(int memberId) throws NullPointerException{
+        System.out.println("sessionID ="+ session.getAttribute("id"));
+
+
+        MemberDTO memberDTO = memberRepository.findMemberByMemberId(memberId).
+                map(member -> new MemberDTO(member)).get();
+
+        return memberDTO;
+
+    }
+
+
+    // 회원 정보 수정
+    @Override
+    public String updateMember(int memberId ,MemberUpdate memberUpdate) {
+
+
+        Member member = memberRepository.findById(memberId).get();
+
+        if(member != null){
+
+            member.updateMeber(memberUpdate.getEmail(),
+                    memberUpdate.getProfileImg(),memberUpdate.getMemberName());
+            return "success";
+        }
+
+        return "failed";
+    }
+
+    //회원 삭제
+    @Override
+    public String deleteMember(MemberDTO memberDTO,int memberId) {
+
+
+        Member findMember = memberRepository.findById(memberId).get();
+
+        if(findMember != null){
+            findMember.delteMember();
+            return "success";
+        }else{
+            return "failed";
+        }
+    }
+
+    // 비밀번호 변경
+    @Override
+    public String updatePassword(MemberDTO memberDTO,int memberId ) {
+
+        Member member =memberRepository.findById(memberId).get();
+
+        if(member != null){
+            member.updatePassword(passwordEncoder.encode(memberDTO.getPassword()));
+
+            return "success";
+        }
+        return "failed";
+    }
+
 }

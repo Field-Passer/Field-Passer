@@ -1,4 +1,4 @@
-package com.example.fieldpasserbe.dto;
+package com.example.fieldpasserbe.member.dto;
 
 
 import lombok.*;
@@ -8,7 +8,7 @@ import lombok.*;
 @Getter
 @Setter
 @ToString
-public class MailDto {
+public class MailDTO {
     private String address;
     private String title;
     private String message;

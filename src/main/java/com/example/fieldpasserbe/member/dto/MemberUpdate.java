@@ -1,7 +1,7 @@
-package com.example.fieldpasserbe.dto;
+package com.example.fieldpasserbe.member.dto;
 
 
-import com.example.fieldpasserbe.entity.MemberEntity;
+import com.example.fieldpasserbe.member.entity.Member;
 import lombok.*;
 
 @AllArgsConstructor
@@ -11,21 +11,19 @@ import lombok.*;
 @ToString
 public class MemberUpdate {
 
-    private int id;
+    private int memberId;
     private String email;
     private String password;
     private String memberName;
-    private String profile_img;
+    private String profileImg;
 
-    public MemberEntity toEntity(){
-        return MemberEntity.builder()
-                .id(this.id)
+    public Member toEntity(){
+        return Member.builder()
+                .memberId(this.memberId)
                 .email(this.email)
                 .password(this.password)
-                .profile_img(this.profile_img)
+                .profileImg(this.profileImg)
                 .memberName(this.memberName)
                 .build();
     }
-
-
 }
