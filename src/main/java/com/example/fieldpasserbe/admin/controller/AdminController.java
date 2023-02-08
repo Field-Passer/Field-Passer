@@ -86,6 +86,6 @@ public class AdminController {
     @PutMapping("admin/board/blind")
     public SimpleVO blindPost(@RequestBody BlindRequestDTO blind) {
 
-        return adminManageService.blind(blind.isBlind());
+        return adminManageService.blind(blind);
     }
 }
