@@ -44,4 +44,8 @@ public interface MemberRepositoryJPA extends JpaRepository<Member, Integer> {
                      "select Date_Format(m.signUp_Date, '%Y-%m-%d') as date, count(m.id) as count from field_passer.Member as m where Date_Format(m.signUp_Date, '%Y-%m-%d') between :startDate AND :endDate AND m.DELETE_CHECK = 0 GROUP BY Date_Format(m.signUp_Date, '%Y-%m-%d')" +
                      ") as c", nativeQuery = true)
     Page<PeriodMemberResponseDTO> findNewMember(@Param("startDate") String startDate, @Param("endDate") String endDate, PageRequest pageRequest);
+
+    //시큐리티 로그인 할 때 사용 (이메일 찾기)
+    Member findByEmail(String email);
+
 }
