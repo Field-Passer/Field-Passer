@@ -109,16 +109,17 @@ public class PostServiceImpl implements PostService {
     public void deleteOverTime() {
 
         LocalDateTime nowDateTime = LocalDateTime.now();
-        List<Post> timeOverPost = postRepository.findByStartTimeBefore(nowDateTime);
-        if (timeOverPost.isEmpty()) {
-            return;
-        }
-        for (Post p : timeOverPost) {
-            if (p.getBlind() == 1) {
-                continue;
-            }
-            p.blindPost();
-        }
+//        List<Post> timeOverPost = postRepository.findByStartTimeBefore(nowDateTime);
+//        if (timeOverPost.isEmpty()) {
+//            return;
+//        }
+//        for (Post p : timeOverPost) {
+//            if (p.getBlind() == 1) {
+//                continue;
+//            }
+//            p.blindPost();
+//        }
+        postRepository.updateTimeOverPost(nowDateTime);
     }
     /*
     파일 업로드 관련 메서드
