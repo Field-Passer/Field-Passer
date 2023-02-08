@@ -1,5 +1,7 @@
 package com.example.fieldpasserbe.post.service;
 
+import com.example.fieldpasserbe.admin.dto.PeriodMemberResponseDTO;
+import com.example.fieldpasserbe.admin.dto.PeriodPostResponseDTO;
 import com.example.fieldpasserbe.admin.dto.PostResponseDTO;
 import com.example.fieldpasserbe.post.dto.PostListResponseDto;
 import com.example.fieldpasserbe.post.dto.PostResponseDto;
@@ -30,4 +32,9 @@ public interface PostSearchService {
 
     Page<PostResponseDTO> findPostsById(int page, int memberId) throws NullPointerException;
 
+    List<PostListResponseDto> findByStadiumName(String stadiumName);
+
+    Page<PostResponseDTO> lookupAllPosts(String startDate, String endDate, int page) throws Exception;
+
+    Page<PeriodPostResponseDTO> checkNewposts(String startDate, String endDate, int page) throws Exception;
 }
