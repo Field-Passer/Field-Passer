@@ -120,6 +120,8 @@ public class PostServiceImpl implements PostService {
             p.blindPost();
         }
     }
+
+
     /*
     파일 업로드 관련 메서드
      */
@@ -135,5 +137,14 @@ public class PostServiceImpl implements PostService {
         file.transferTo(new File(fullPath));
 
         return fullPath;
+    }
+
+    /*TODO
+    *  - 글 ID로 글 찾기*/
+    @Override
+    @Transactional
+    public int blindPostByID(int postId, boolean flag) {
+        postRepository.findByPostIdIncludeBlind(postId);
+        return 0;
     }
 }
