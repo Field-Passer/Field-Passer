@@ -122,5 +122,7 @@ public class Member {
         this.password= password;
     }
 
-
+    public void Authority (){
+        this.authority=1;
+    }
 }

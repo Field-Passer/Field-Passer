@@ -184,6 +184,7 @@ public class MemberServiceImpl implements MemberService {
         try{
 
             Member newMember = memberDTO.toEntity();
+            newMember.Authority();
             newMember.hashPassword(bCryptPasswordEncoder);
 
             memberRepository.save(newMember);
@@ -203,7 +204,6 @@ public class MemberServiceImpl implements MemberService {
 
         MemberDTO memberDTO = memberRepository.findMemberByMemberId(memberId).
                 map(member -> new MemberDTO(member)).get();
-
 
         return memberDTO;
 
@@ -250,7 +250,7 @@ public class MemberServiceImpl implements MemberService {
 
         if(member != null){
             member.updatePassword(passwordEncoder.encode(memberDTO.getPassword()));
-         
+
             return "success";
         }
         return "failed";
