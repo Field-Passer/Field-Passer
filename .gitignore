@@ -237,6 +237,8 @@ gradle-app.setting
 # Java heap dump
 *.hprof
 
+src/main/java/com/example/fieldpasserbe/config/
+
 ### resources ###
 src/main/resources/application.properties
 src/main/resources/logback-spring.xml
