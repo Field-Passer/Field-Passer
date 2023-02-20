@@ -27,7 +27,7 @@ public interface MemberService {
 
     Integer findByEmail(String email); // session id 저장용
 
-    String Signup(MemberDTO memberDTO);// 회원가입
+    ResponseDTO<?> signUp(MemberDTO memberDTO);// 회원가입
 
     MemberDTO selectMember(int memberId); // 회원정보 조회
 

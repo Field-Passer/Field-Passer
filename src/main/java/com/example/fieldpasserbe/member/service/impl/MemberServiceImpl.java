@@ -191,7 +191,7 @@ public class MemberServiceImpl implements MemberService {
 
     //회원가입
     @Override
-    public String Signup(MemberDTO memberDTO) {
+    public ResponseDTO<?> signUp(MemberDTO memberDTO) {
 
 
         try{
@@ -200,14 +200,16 @@ public class MemberServiceImpl implements MemberService {
             newMember.Authority();
             newMember.hashPassword(bCryptPasswordEncoder);
 
-            memberRepository.save(newMember);
+
+            MemberDTO memberSign = new MemberDTO(memberRepository.save(newMember));
+            return new ResponseDTO<>(memberSign);
         }catch(Exception e){
             e.printStackTrace();
 
-            return "failed";
+            return new ErrorResponseDTO(500,"회원가입을 실패하였습니다.").toResponse();
         }
 
-        return "success";
+
     }
 
     // 회원 정보 조회

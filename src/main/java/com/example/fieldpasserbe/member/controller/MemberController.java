@@ -65,9 +65,9 @@ public class MemberController {
 
     //회원가입
     @PostMapping("/api/auth/register")
-    public String Signup(@ModelAttribute @Validated MemberDTO memberdto){
+    public ResponseDTO<?> Signup(@ModelAttribute @Validated MemberDTO memberdto){
 
-        return memberService.Signup(memberdto);
+        return memberService.signUp(memberdto);
     }
 
     // 회원 정보 조회
