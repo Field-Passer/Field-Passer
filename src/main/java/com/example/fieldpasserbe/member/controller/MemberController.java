@@ -4,6 +4,7 @@ package com.example.fieldpasserbe.member.controller;
 
 
 
+import com.example.fieldpasserbe.global.response.ResponseDTO;
 import com.example.fieldpasserbe.member.dto.MemberDTO;
 
 import com.example.fieldpasserbe.member.dto.MemberUpdate;
@@ -33,20 +34,20 @@ public class MemberController {
 
     //로그인
     @PostMapping("/api/auth/login")
-    public String login(String email, String password ){
+    public ResponseDTO<?> login(String email, String password ){
 
 
-        String result = memberService.LoginMember(email,password);
-        Integer id = memberService.findByEmail(email);
-        System.out.println("result=" +result);
-        if(result.equals("success")){
-            session.setAttribute("email",email);
-            System.out.println("email" + session.getAttribute("email"));
-            session.setAttribute("id",id);
+//        String result = memberService.LoginMember(email,password);
+//        Integer id = memberService.findByEmail(email);
+//        System.out.println("result=" +result);
+//        if(result.equals("success")){
+//            session.setAttribute("email",email);
+//            System.out.println("email" + session.getAttribute("email"));
+//            session.setAttribute("id",id);
+//
+//        }
 
-        }
-
-        return result;
+        return memberService.LoginMember(email,password);
     }
 
     // 로그아웃

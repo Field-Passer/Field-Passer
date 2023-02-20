@@ -1,6 +1,8 @@
 package com.example.fieldpasserbe.member.service.impl;
 
 import com.example.fieldpasserbe.admin.dto.PeriodMemberResponseDTO;
+import com.example.fieldpasserbe.global.response.ErrorResponseDTO;
+import com.example.fieldpasserbe.global.response.ResponseDTO;
 import com.example.fieldpasserbe.member.dto.MemberDTO;
 import com.example.fieldpasserbe.member.dto.MemberUpdate;
 import com.example.fieldpasserbe.member.entity.Member;
@@ -148,23 +150,35 @@ public class MemberServiceImpl implements MemberService {
 
     //로그인
     @Override
-    public String LoginMember(String email,String password) {
+    public ResponseDTO<?> LoginMember(String email, String password) {
 
         Member member = memberRepository.findByEmail(email);
 
+
+
         if(member ==null){
-            System.out.println("해당 이메일의 유저가 존재하지 않습니다 ");
-            return "failed";
+
+            return new ErrorResponseDTO(500,"해당 이메일의 유저가 존재하지 않습니다").toResponse();
+        }else if(!bCryptPasswordEncoder.matches(password, member.getPassword())){
+            return new ErrorResponseDTO(500,"비밀번호가 일치하지 않습니다").toResponse();
+
+        }else{
+            session.setAttribute("email",member.getEmail());
+            session.setAttribute("id",member.getMemberId());
+            System.out.println("id = "+session.getAttribute("id"));
+            System.out.println("email = "+session.getAttribute("email"));
+
+            MemberDTO memberDTO = new MemberDTO(member);
+
+            return new ResponseDTO<>(memberDTO);
         }
 
-        if(!bCryptPasswordEncoder.matches(password, member.getPassword())){
-            System.out.println("비밀번호가 일치하지 않습니다 ");
-            return "failed";
-        }
-        System.out.println(email);
-        System.out.println(password);
-        System.out.println(member.getPassword());
-        return "success";
+//        if(!bCryptPasswordEncoder.matches(password, member.getPassword())){
+//
+//            return new ErrorResponseDTO(500,"비밀번호가 일치하지 않습니다").toResponse();
+//        }
+
+
     }
 
 
