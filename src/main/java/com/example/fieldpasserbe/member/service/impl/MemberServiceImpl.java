@@ -4,6 +4,7 @@ import com.example.fieldpasserbe.admin.dto.PeriodMemberResponseDTO;
 import com.example.fieldpasserbe.global.response.ErrorResponseDTO;
 import com.example.fieldpasserbe.global.response.ResponseDTO;
 import com.example.fieldpasserbe.member.dto.MemberDTO;
+import com.example.fieldpasserbe.member.dto.MemberInfo;
 import com.example.fieldpasserbe.member.dto.MemberUpdate;
 import com.example.fieldpasserbe.member.entity.Member;
 import com.example.fieldpasserbe.member.repository.MemberRepositoryJPA;
@@ -213,14 +214,23 @@ public class MemberServiceImpl implements MemberService {
     }
 
     // 회원 정보 조회
-    public MemberDTO selectMember(int memberId) throws NullPointerException{
-        System.out.println("sessionID ="+ session.getAttribute("id"));
+    public ResponseDTO<?> selectMember(int memberId)throws NullPointerException {
+        System.out.println("sessionID =" + session.getAttribute("id"));
+
+        try {
 
 
-        MemberDTO memberDTO = memberRepository.findMemberByMemberId(memberId).
-                map(member -> new MemberDTO(member)).get();
 
-        return memberDTO;
+            MemberInfo memberinfo= memberRepository.findMemberByMemberId(memberId).
+                    map(member -> new MemberInfo(member)).get();
+            System.out.println("memberinfo = "+memberinfo);
+            return new ResponseDTO<>(memberinfo);
+        } catch (NullPointerException e) {
+
+
+            return new ErrorResponseDTO(500, "해당 회원을 조회할 수 없습니다").toResponse();
+        }
+
 
     }
 

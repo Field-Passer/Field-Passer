@@ -29,7 +29,7 @@ public interface MemberService {
 
     ResponseDTO<?> signUp(MemberDTO memberDTO);// 회원가입
 
-    MemberDTO selectMember(int memberId); // 회원정보 조회
+    ResponseDTO<?> selectMember(int memberId); // 회원정보 조회
 
     String updateMember(int memberId, MemberUpdate memberUpdate); // 회원 정보 수정
 

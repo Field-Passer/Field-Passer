@@ -72,7 +72,7 @@ public class MemberController {
 
     // 회원 정보 조회
     @GetMapping("/api/:memberid")
-    public MemberDTO selectMember( ){
+    public ResponseDTO<?> selectMember( ){
        Integer memberId = (int)session.getAttribute("id");
 
         return memberService.selectMember(memberId);
