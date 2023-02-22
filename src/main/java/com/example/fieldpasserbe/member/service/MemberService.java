@@ -38,4 +38,10 @@ public interface MemberService {
 
     ResponseDTO<?> updatePassword(MemberUpdatePassword memberUpdatePassword, int memberId);
 
+    boolean checkEmail(String memberEmail);
+
+    String getTmpPassword();
+
+    void updatePasswordMail(String tmpPassword, String memberEmail);
+
 }

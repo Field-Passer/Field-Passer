@@ -48,4 +48,5 @@ public interface MemberRepositoryJPA extends JpaRepository<Member, Integer> {
     //시큐리티 로그인 할 때 사용 (이메일 찾기)
     Member findByEmail(String email);
 
+    boolean existsByEmail(String memberEmail);
 }

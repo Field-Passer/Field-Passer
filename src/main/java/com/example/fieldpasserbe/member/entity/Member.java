@@ -127,4 +127,5 @@ public class Member {
         this.authority=1;
     }
 
+
 }
