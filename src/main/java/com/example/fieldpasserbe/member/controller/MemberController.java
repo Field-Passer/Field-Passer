@@ -9,6 +9,7 @@ import com.example.fieldpasserbe.member.dto.MemberDTO;
 
 import com.example.fieldpasserbe.member.dto.MemberUpdate;
 
+import com.example.fieldpasserbe.member.dto.MemberUpdatePassword;
 import com.example.fieldpasserbe.member.service.MemberService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -93,9 +94,9 @@ public class MemberController {
 
     // 비밀번호 변경
     @PatchMapping("/api/:userid/userpwd")
-    public String updatePassword(MemberDTO memberDTO){
+    public ResponseDTO<?> updatePassword(MemberUpdatePassword memberUpdatePassword){
         Integer memberId = (int)session.getAttribute("id");
-        return memberService.updatePassword(memberDTO,memberId);
+        return memberService.updatePassword(memberUpdatePassword,memberId);
     }
 
 

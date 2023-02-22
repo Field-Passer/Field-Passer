@@ -3,10 +3,7 @@ package com.example.fieldpasserbe.member.service.impl;
 import com.example.fieldpasserbe.admin.dto.PeriodMemberResponseDTO;
 import com.example.fieldpasserbe.global.response.ErrorResponseDTO;
 import com.example.fieldpasserbe.global.response.ResponseDTO;
-import com.example.fieldpasserbe.member.dto.MemberDTO;
-import com.example.fieldpasserbe.member.dto.MemberDelete;
-import com.example.fieldpasserbe.member.dto.MemberInfo;
-import com.example.fieldpasserbe.member.dto.MemberUpdate;
+import com.example.fieldpasserbe.member.dto.*;
 import com.example.fieldpasserbe.member.entity.Member;
 import com.example.fieldpasserbe.member.repository.MemberRepositoryJPA;
 import com.example.fieldpasserbe.member.service.MemberService;
@@ -276,16 +273,17 @@ public class MemberServiceImpl implements MemberService {
 
     // 비밀번호 변경
     @Override
-    public String updatePassword(MemberDTO memberDTO,int memberId ) {
+    public ResponseDTO<?> updatePassword(MemberUpdatePassword memberUpdatePassword, int memberId ) {
 
         Member member =memberRepository.findById(memberId).get();
 
         if(member != null){
-            member.updatePassword(passwordEncoder.encode(memberDTO.getPassword()));
+            member.updatePassword(passwordEncoder.encode(memberUpdatePassword.getPassword()));
 
-            return "success";
+            MemberUpdatePassword updatePassword = new MemberUpdatePassword(member);
+            return new ResponseDTO<>(updatePassword);
         }
-        return "failed";
+        return new ErrorResponseDTO(500,"비밀번호 변경을 할 수 없습니다").toResponse();
     }
 
 }
