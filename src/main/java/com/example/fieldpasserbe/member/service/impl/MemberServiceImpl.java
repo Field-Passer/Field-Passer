@@ -237,7 +237,7 @@ public class MemberServiceImpl implements MemberService {
 
     // 회원 정보 수정
     @Override
-    public String updateMember(int memberId , MemberUpdate memberUpdate) {
+    public ResponseDTO<?> updateMember(int memberId , MemberUpdate memberUpdate) {
 
 
         Member member = memberRepository.findById(memberId).get();
@@ -246,10 +246,14 @@ public class MemberServiceImpl implements MemberService {
 
             member.updateMeber(memberUpdate.getEmail(),
                     memberUpdate.getProfileImg(),memberUpdate.getMemberName());
-            return "success";
+
+            MemberUpdate memberupdate = new MemberUpdate(member);
+
+
+            return new ResponseDTO<>(memberupdate);
         }
 
-        return "failed";
+        return new ErrorResponseDTO(500,"해당 회원을 수정 할 수 없습니다").toResponse();
     }
 
     //회원 삭제

@@ -9,7 +9,6 @@ import com.example.fieldpasserbe.member.dto.MemberDTO;
 
 import com.example.fieldpasserbe.member.dto.MemberUpdate;
 
-import com.example.fieldpasserbe.member.service.EmailService;
 import com.example.fieldpasserbe.member.service.MemberService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -18,7 +17,6 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpSession;
-import java.util.Optional;
 
 @RequiredArgsConstructor
 @RestController
@@ -28,7 +26,7 @@ public class MemberController {
 
     private final MemberService memberService;
 
-    private final EmailService emailService;
+
 
     private final HttpSession session;
 
@@ -80,7 +78,7 @@ public class MemberController {
 
     //회원 정보 수정
     @PatchMapping("/api/:userid/userinfo")
-    public String updateMember(MemberUpdate memberUpdate){
+    public ResponseDTO<?> updateMember(MemberUpdate memberUpdate){
         Integer memberId = (int)session.getAttribute("id");
         return memberService.updateMember(memberId,memberUpdate);
     }
@@ -101,15 +99,7 @@ public class MemberController {
     }
 
 
-    // 이메일 인증
-    @PostMapping("/emailConfirm")
-    @ResponseBody
-    public String emailConfirm(@RequestParam String email) throws Exception {
 
-        String confirm = emailService.sendSimpleMessage(email);
-
-        return confirm;
-    }
 
 
 

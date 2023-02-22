@@ -26,4 +26,12 @@ public class MemberUpdate {
                 .memberName(this.memberName)
                 .build();
     }
+
+    public MemberUpdate(Member member){
+        this.email = member.getEmail();
+        this.memberName = member.getMemberName();
+        this.profileImg = member.getProfileImg();
+
+
+    }
 }

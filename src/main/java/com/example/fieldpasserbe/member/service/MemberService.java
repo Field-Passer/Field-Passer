@@ -31,7 +31,7 @@ public interface MemberService {
 
     ResponseDTO<?> selectMember(int memberId); // 회원정보 조회
 
-    String updateMember(int memberId, MemberUpdate memberUpdate); // 회원 정보 수정
+    ResponseDTO<?> updateMember(int memberId, MemberUpdate memberUpdate); // 회원 정보 수정
 
     String deleteMember(MemberDTO memberDTO,int memberId); // 회원 탈퇴
 
