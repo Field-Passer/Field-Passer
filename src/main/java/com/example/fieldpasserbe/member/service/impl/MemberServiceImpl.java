@@ -1,7 +1,11 @@
 package com.example.fieldpasserbe.member.service.impl;
 
 import com.example.fieldpasserbe.admin.dto.PeriodMemberResponseDTO;
+import com.example.fieldpasserbe.global.response.ErrorResponseDTO;
+import com.example.fieldpasserbe.global.response.ResponseDTO;
 import com.example.fieldpasserbe.member.dto.MemberDTO;
+import com.example.fieldpasserbe.member.dto.MemberDelete;
+import com.example.fieldpasserbe.member.dto.MemberInfo;
 import com.example.fieldpasserbe.member.dto.MemberUpdate;
 import com.example.fieldpasserbe.member.entity.Member;
 import com.example.fieldpasserbe.member.repository.MemberRepositoryJPA;
@@ -148,23 +152,35 @@ public class MemberServiceImpl implements MemberService {
 
     //로그인
     @Override
-    public String LoginMember(String email,String password) {
+    public ResponseDTO<?> LoginMember(String email, String password) {
 
         Member member = memberRepository.findByEmail(email);
 
+
+
         if(member ==null){
-            System.out.println("해당 이메일의 유저가 존재하지 않습니다 ");
-            return "failed";
+
+            return new ErrorResponseDTO(500,"해당 이메일의 유저가 존재하지 않습니다").toResponse();
+        }else if(!bCryptPasswordEncoder.matches(password, member.getPassword())){
+            return new ErrorResponseDTO(500,"비밀번호가 일치하지 않습니다").toResponse();
+
+        }else{
+            session.setAttribute("email",member.getEmail());
+            session.setAttribute("id",member.getMemberId());
+            System.out.println("id = "+session.getAttribute("id"));
+            System.out.println("email = "+session.getAttribute("email"));
+
+            MemberDTO memberDTO = new MemberDTO(member);
+
+            return new ResponseDTO<>(memberDTO);
         }
 
-        if(!bCryptPasswordEncoder.matches(password, member.getPassword())){
-            System.out.println("비밀번호가 일치하지 않습니다 ");
-            return "failed";
-        }
-        System.out.println(email);
-        System.out.println(password);
-        System.out.println(member.getPassword());
-        return "success";
+//        if(!bCryptPasswordEncoder.matches(password, member.getPassword())){
+//
+//            return new ErrorResponseDTO(500,"비밀번호가 일치하지 않습니다").toResponse();
+//        }
+
+
     }
 
 
@@ -177,7 +193,7 @@ public class MemberServiceImpl implements MemberService {
 
     //회원가입
     @Override
-    public String Signup(MemberDTO memberDTO) {
+    public ResponseDTO<?> signUp(MemberDTO memberDTO) {
 
 
         try{
@@ -186,32 +202,43 @@ public class MemberServiceImpl implements MemberService {
             newMember.Authority();
             newMember.hashPassword(bCryptPasswordEncoder);
 
-            memberRepository.save(newMember);
+
+            MemberDTO memberSign = new MemberDTO(memberRepository.save(newMember));
+            return new ResponseDTO<>(memberSign);
         }catch(Exception e){
             e.printStackTrace();
 
-            return "failed";
+            return new ErrorResponseDTO(500,"회원가입을 실패하였습니다.").toResponse();
         }
 
-        return "success";
+
     }
 
     // 회원 정보 조회
-    public MemberDTO selectMember(int memberId) throws NullPointerException{
-        System.out.println("sessionID ="+ session.getAttribute("id"));
+    public ResponseDTO<?> selectMember(int memberId)throws NullPointerException {
+        System.out.println("sessionID =" + session.getAttribute("id"));
+
+        try {
 
 
-        MemberDTO memberDTO = memberRepository.findMemberByMemberId(memberId).
-                map(member -> new MemberDTO(member)).get();
 
-        return memberDTO;
+            MemberInfo memberinfo= memberRepository.findMemberByMemberId(memberId).
+                    map(member -> new MemberInfo(member)).get();
+            System.out.println("memberinfo = "+memberinfo);
+            return new ResponseDTO<>(memberinfo);
+        } catch (NullPointerException e) {
+
+
+            return new ErrorResponseDTO(500, "해당 회원을 조회할 수 없습니다").toResponse();
+        }
+
 
     }
 
 
     // 회원 정보 수정
     @Override
-    public String updateMember(int memberId , MemberUpdate memberUpdate) {
+    public ResponseDTO<?> updateMember(int memberId , MemberUpdate memberUpdate) {
 
 
         Member member = memberRepository.findById(memberId).get();
@@ -220,24 +247,30 @@ public class MemberServiceImpl implements MemberService {
 
             member.updateMeber(memberUpdate.getEmail(),
                     memberUpdate.getProfileImg(),memberUpdate.getMemberName());
-            return "success";
+
+            MemberUpdate memberupdate = new MemberUpdate(member);
+
+
+            return new ResponseDTO<>(memberupdate);
         }
 
-        return "failed";
+        return new ErrorResponseDTO(500,"해당 회원을 수정 할 수 없습니다").toResponse();
     }
 
     //회원 삭제
     @Override
-    public String deleteMember(MemberDTO memberDTO,int memberId) {
+    public ResponseDTO<?> deleteMember(int memberId) {
 
 
         Member findMember = memberRepository.findById(memberId).get();
 
         if(findMember != null){
             findMember.delteMember();
-            return "success";
+
+            MemberDelete memberDelete = new MemberDelete(findMember);
+            return new ResponseDTO<>(memberDelete);
         }else{
-            return "failed";
+            return new ErrorResponseDTO(500,"회원을 삭제 할 수 없습니다").toResponse();
         }
     }
 

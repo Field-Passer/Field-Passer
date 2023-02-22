@@ -1,6 +1,7 @@
 package com.example.fieldpasserbe.member.dto;
 
 import com.example.fieldpasserbe.member.entity.Member;
+import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.*;
 
 @AllArgsConstructor
@@ -21,6 +22,8 @@ public class MemberDTO {
     private int visitCount;
 
     private byte delete;
+
+
 
     public Member toEntity(){
         return Member.builder()

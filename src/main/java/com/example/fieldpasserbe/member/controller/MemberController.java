@@ -4,11 +4,11 @@ package com.example.fieldpasserbe.member.controller;
 
 
 
+import com.example.fieldpasserbe.global.response.ResponseDTO;
 import com.example.fieldpasserbe.member.dto.MemberDTO;
 
 import com.example.fieldpasserbe.member.dto.MemberUpdate;
 
-import com.example.fieldpasserbe.member.service.EmailService;
 import com.example.fieldpasserbe.member.service.MemberService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -17,7 +17,6 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpSession;
-import java.util.Optional;
 
 @RequiredArgsConstructor
 @RestController
@@ -27,26 +26,26 @@ public class MemberController {
 
     private final MemberService memberService;
 
-    private final EmailService emailService;
+
 
     private final HttpSession session;
 
     //로그인
     @PostMapping("/api/auth/login")
-    public String login(String email, String password ){
+    public ResponseDTO<?> login(String email, String password ){
 
 
-        String result = memberService.LoginMember(email,password);
-        Integer id = memberService.findByEmail(email);
-        System.out.println("result=" +result);
-        if(result.equals("success")){
-            session.setAttribute("email",email);
-            System.out.println("email" + session.getAttribute("email"));
-            session.setAttribute("id",id);
+//        String result = memberService.LoginMember(email,password);
+//        Integer id = memberService.findByEmail(email);
+//        System.out.println("result=" +result);
+//        if(result.equals("success")){
+//            session.setAttribute("email",email);
+//            System.out.println("email" + session.getAttribute("email"));
+//            session.setAttribute("id",id);
+//
+//        }
 
-        }
-
-        return result;
+        return memberService.LoginMember(email,password);
     }
 
     // 로그아웃
@@ -64,14 +63,14 @@ public class MemberController {
 
     //회원가입
     @PostMapping("/api/auth/register")
-    public String Signup(@ModelAttribute @Validated MemberDTO memberdto){
+    public ResponseDTO<?> Signup(@ModelAttribute @Validated MemberDTO memberdto){
 
-        return memberService.Signup(memberdto);
+        return memberService.signUp(memberdto);
     }
 
     // 회원 정보 조회
     @GetMapping("/api/:memberid")
-    public MemberDTO selectMember( ){
+    public ResponseDTO<?> selectMember( ){
        Integer memberId = (int)session.getAttribute("id");
 
         return memberService.selectMember(memberId);
@@ -79,7 +78,7 @@ public class MemberController {
 
     //회원 정보 수정
     @PatchMapping("/api/:userid/userinfo")
-    public String updateMember(MemberUpdate memberUpdate){
+    public ResponseDTO<?> updateMember(MemberUpdate memberUpdate){
         Integer memberId = (int)session.getAttribute("id");
         return memberService.updateMember(memberId,memberUpdate);
     }
@@ -87,9 +86,9 @@ public class MemberController {
 
     //회원 탈퇴
     @PatchMapping("/api/:userid/unregister")
-    public String deleteMember(MemberDTO memberDTO){
+    public ResponseDTO<?> deleteMember(){
         Integer memberId = (int)session.getAttribute("id");
-        return memberService.deleteMember(memberDTO,memberId);
+        return memberService.deleteMember(memberId);
     }
 
     // 비밀번호 변경
@@ -100,15 +99,7 @@ public class MemberController {
     }
 
 
-    // 이메일 인증
-    @PostMapping("/emailConfirm")
-    @ResponseBody
-    public String emailConfirm(@RequestParam String email) throws Exception {
 
-        String confirm = emailService.sendSimpleMessage(email);
-
-        return confirm;
-    }
 
 
 
