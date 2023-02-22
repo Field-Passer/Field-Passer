@@ -4,6 +4,7 @@ package com.example.fieldpasserbe.member.controller;
 
 
 
+import com.example.fieldpasserbe.global.response.ErrorResponseDTO;
 import com.example.fieldpasserbe.global.response.ResponseDTO;
 import com.example.fieldpasserbe.member.dto.MemberDTO;
 
@@ -51,14 +52,14 @@ public class MemberController {
 
     // 로그아웃
     @PostMapping("/api/auth/logout")
-    public String logout( ){
+    public ResponseDTO<?> logout( ){
         System.out.println("email"+session.getAttribute("email"));
 
         if(session.getAttribute("email")!= null){
             session.setAttribute("email",null);
-            return "success";
+            return new ResponseDTO<>(null);
         }else{
-            return " failed";
+            return new ErrorResponseDTO(500,"로그아웃을 하지 못 했습니다").toResponse();
         }
     }
 
