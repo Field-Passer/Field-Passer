@@ -86,9 +86,9 @@ public class MemberController {
 
     //회원 탈퇴
     @PatchMapping("/api/:userid/unregister")
-    public String deleteMember(MemberDTO memberDTO){
+    public ResponseDTO<?> deleteMember(){
         Integer memberId = (int)session.getAttribute("id");
-        return memberService.deleteMember(memberDTO,memberId);
+        return memberService.deleteMember(memberId);
     }
 
     // 비밀번호 변경

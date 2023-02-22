@@ -4,6 +4,7 @@ import com.example.fieldpasserbe.admin.dto.PeriodMemberResponseDTO;
 import com.example.fieldpasserbe.global.response.ErrorResponseDTO;
 import com.example.fieldpasserbe.global.response.ResponseDTO;
 import com.example.fieldpasserbe.member.dto.MemberDTO;
+import com.example.fieldpasserbe.member.dto.MemberDelete;
 import com.example.fieldpasserbe.member.dto.MemberInfo;
 import com.example.fieldpasserbe.member.dto.MemberUpdate;
 import com.example.fieldpasserbe.member.entity.Member;
@@ -258,16 +259,18 @@ public class MemberServiceImpl implements MemberService {
 
     //회원 삭제
     @Override
-    public String deleteMember(MemberDTO memberDTO,int memberId) {
+    public ResponseDTO<?> deleteMember(int memberId) {
 
 
         Member findMember = memberRepository.findById(memberId).get();
 
         if(findMember != null){
             findMember.delteMember();
-            return "success";
+
+            MemberDelete memberDelete = new MemberDelete(findMember);
+            return new ResponseDTO<>(memberDelete);
         }else{
-            return "failed";
+            return new ErrorResponseDTO(500,"회원을 삭제 할 수 없습니다").toResponse();
         }
     }
 

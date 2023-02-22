@@ -33,7 +33,7 @@ public interface MemberService {
 
     ResponseDTO<?> updateMember(int memberId, MemberUpdate memberUpdate); // 회원 정보 수정
 
-    String deleteMember(MemberDTO memberDTO,int memberId); // 회원 탈퇴
+    ResponseDTO<?> deleteMember(int memberId); // 회원 탈퇴
 
     String updatePassword(MemberDTO memberDTO,int memberId);
 
