@@ -176,13 +176,7 @@ public class MemberServiceImpl implements MemberService {
 
             return new ResponseDTO<>(memberDTO);
         }
-
-//        if(!bCryptPasswordEncoder.matches(password, member.getPassword())){
-//
-//            return new ErrorResponseDTO(500,"비밀번호가 일치하지 않습니다").toResponse();
-//        }
-
-
+        
     }
 
 
