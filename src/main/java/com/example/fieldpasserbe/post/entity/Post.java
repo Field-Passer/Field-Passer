@@ -118,4 +118,11 @@ public class Post {
         this.deleteDate = LocalDateTime.now();
         this.blind = 1;
     }
+
+    public void BlindPost() {
+        this.blind = 1;
+    }
+    public void unBlindPost() {
+        this.blind = 0;
+    }
 }
