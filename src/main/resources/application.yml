@@ -1,9 +1,0 @@
-spring:
-  mail:
-    host: smtp.gmail.com
-    port: 587
-    username: zan04259@gmail.com
-    password: kkgstpxgbgpczral
-    properties:
-      mail.smtp.auth: true
-      mail.smtp.starttls.enable: true
