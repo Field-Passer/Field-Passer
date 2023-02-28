@@ -1,14 +1,17 @@
 package com.example.fieldpasserbe.post.controller;
 
+import com.example.fieldpasserbe.global.response.ResponseDTO;
 import com.example.fieldpasserbe.post.dto.*;
 import com.example.fieldpasserbe.post.service.PostSearchService;
 import com.example.fieldpasserbe.post.service.PostService;
+import com.example.fieldpasserbe.post.service.ViewMyPostService;
 import com.example.fieldpasserbe.post.service.WishPostService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Slice;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import javax.servlet.http.HttpSession;
 import java.util.List;
 
 @RequiredArgsConstructor
@@ -18,6 +21,8 @@ public class PostController {
     private final PostSearchService postSearchService;
     private final PostService postService;
     private final WishPostService wishPostService;
+
+    private final ViewMyPostService viewMyPostService;
 
     @GetMapping("/api/post/{postId}")
     public PostResponseDto postDetail(@PathVariable int postId) {
@@ -91,5 +96,12 @@ public class PostController {
     @GetMapping("/api/post/stadium/{stadiumName}")
     public List<PostListResponseDto> myLikeStadiums(@PathVariable String stadiumName) {
         return postSearchService.findByStadiumName(stadiumName);
+    }
+
+    @GetMapping("/api/search/post/:memberId")
+    public ResponseDTO<?> selectMyPost(HttpSession session){
+        Integer Id = (int)session.getAttribute("id");
+
+        return viewMyPostService.selectMyPost(Id);
     }
 }
