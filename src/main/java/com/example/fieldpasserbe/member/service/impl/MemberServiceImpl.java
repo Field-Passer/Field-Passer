@@ -176,7 +176,7 @@ public class MemberServiceImpl implements MemberService {
 
             return new ResponseDTO<>(memberDTO);
         }
-        
+
     }
 
 
