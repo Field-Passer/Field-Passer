@@ -6,9 +6,12 @@ import com.example.fieldpasserbe.admin.repository.AdminRepositoryJPA;
 import com.example.fieldpasserbe.admin.service.AdminManageService;
 import com.example.fieldpasserbe.admin.vo.SimpleVO;
 import com.example.fieldpasserbe.member.service.MemberService;
+import com.example.fieldpasserbe.post.entity.Post;
+import com.example.fieldpasserbe.post.repository.PostRepositoryJPA;
 import com.example.fieldpasserbe.post.service.PostSearchService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
 
@@ -17,7 +20,7 @@ import java.time.LocalDateTime;
 public class AdminManageServiceImpl implements AdminManageService {
 
     private final MemberService memberService;
-    private final PostSearchService postSearchService;
+    private final PostRepositoryJPA postRepository;
     private final AdminRepositoryJPA adminRepository;
 
     /**
@@ -48,7 +51,14 @@ public class AdminManageServiceImpl implements AdminManageService {
     *  - 주석 작성
     * */
     @Override
+    @Transactional
     public SimpleVO blind(BlindRequestDTO blind) {
-        return null;
+        Post post = postRepository.findByPostId(blind.getPostId()).get();
+        if (blind.isBlind()) {
+            post.BlindPost();
+        }
+        return SimpleVO.builder()
+                .resultCode("success")
+                .build();
     }
 }
