@@ -107,7 +107,7 @@ public class MemberController {
 
     /**이메일이 DB에 존재하는지 확인 **/
     @GetMapping("/checkEmail")
-    public boolean checkEmail(@RequestParam("memberEmail") String memberEmail){
+    public ResponseDTO<?> checkEmail(@RequestParam("memberEmail") String memberEmail){
 
         log.info("checkEmail 진입");
         return memberService.checkEmail(memberEmail);

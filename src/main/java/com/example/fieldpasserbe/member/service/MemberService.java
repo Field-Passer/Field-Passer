@@ -38,7 +38,7 @@ public interface MemberService {
 
     ResponseDTO<?> updatePassword(MemberUpdatePassword memberUpdatePassword, int memberId);
 
-    boolean checkEmail(String memberEmail);
+    ResponseDTO<?> checkEmail(String memberEmail);
 
     String getTmpPassword();
 

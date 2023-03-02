@@ -287,10 +287,24 @@ public class MemberServiceImpl implements MemberService {
 
     /** 이메일이 존재하는지 확인 **/
     @Override
-    public boolean checkEmail(String memberEmail) {
+    public ResponseDTO<?> checkEmail(String memberEmail) {
 
         /* 이메일이 존재하면 true, 이메일이 없으면 false  */
-        return memberRepository.existsByEmail(memberEmail);
+        Member member = memberRepository.findByEmail(memberEmail);
+
+        if(member.getEmail() == null){
+            return new ErrorResponseDTO(500,"이메일을 찾을 수 없습니다").toResponse();
+        }
+
+        session.setAttribute("email",member.getEmail());
+
+        System.out.println("email" + session.getAttribute("email"));
+
+
+        return new ResponseDTO<>(member.getEmail());
+
+
+
     }
 
     /** 임시 비밀번호 생성 **/
@@ -318,11 +332,21 @@ public class MemberServiceImpl implements MemberService {
     @Override
     public void updatePasswordMail(String tmpPassword, String memberEmail) {
 
-        String encryptPassword = bCryptPasswordEncoder.encode(tmpPassword);
-        Member member = memberRepository.findByEmail(memberEmail);
+        String sessionEmail = (String)session.getAttribute("email");
+        System.out.println("Email = " +sessionEmail );
 
-        member.updatePassword(encryptPassword);
-        log.info("임시 비밀번호 업데이트");
+        if(memberEmail == null){
+            log.info("해당 이메일이 없습니다 ");
+        }else if(memberEmail.equals(sessionEmail)){
+            String encryptPassword = bCryptPasswordEncoder.encode(tmpPassword);
+            Member member = memberRepository.findByEmail(memberEmail);
+
+            System.out.println("memberemail = " + member.getEmail());
+            member.updatePassword(encryptPassword);
+            log.info("임시 비밀번호 업데이트");
+        }
+
+
     }
 
 
