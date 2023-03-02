@@ -39,7 +39,7 @@ public class Question {
     @Column(name = "UPDATE_DATE")
     private LocalDateTime updateDate;
 
-    @Column(name = "PROCCESS")
+    @Column(name = "RESPONSE")
     @Enumerated(EnumType.STRING)
     private QuestionProccess questionProccess;
 }
