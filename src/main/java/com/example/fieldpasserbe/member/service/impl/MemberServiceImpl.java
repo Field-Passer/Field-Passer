@@ -350,10 +350,32 @@ public class MemberServiceImpl implements MemberService {
     }
 
 
+    /** 이메일 중복 검사 **/
+    @Override
+    public ResponseDTO<?> checkEmailDuplicate(String Email) {
+
+        if(memberRepository.existsByEmail(Email)){
+            return new ResponseDTO<>("중복된 이메일이 있습니다");
+        }else{
+
+            return new ResponseDTO<>("이메일 사용 가능합니다! ");
+        }
+
+    }
 
 
+    /** memberName 중복검사 **/
+    @Override
+    public ResponseDTO<?> checkMemberNameDuplicate(String memberName) {
 
+        if(memberRepository.existsByMemberName(memberName)){
+            return new ResponseDTO<>("중복된 닉네임이 있습니다! ");
+        }else{
 
+            return new ResponseDTO<>("닉네임 사용 가능합니다! ");
+
+        }
+    }
 
 
 }
