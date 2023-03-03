@@ -44,4 +44,8 @@ public interface MemberService {
 
     void updatePasswordMail(String tmpPassword, String memberEmail);
 
+    ResponseDTO<?> checkEmailDuplicate(String Email);
+
+    ResponseDTO<?> checkMemberNameDuplicate(String memberName);
+
 }
