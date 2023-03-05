@@ -29,7 +29,7 @@ public class AdminManageServiceImpl implements AdminManageService {
      * @return
      */
     @Override
-    public SimpleVO promoteAdmin(String email) {
+    public SimpleVO promoteAdmin(String email) throws Exception {
         try {
             Admin newAdmin = Admin.builder()
                     .member(memberService.findMemberByEmail(email).get())
@@ -41,15 +41,19 @@ public class AdminManageServiceImpl implements AdminManageService {
                     .resultCode("success")
                     .build();
         } catch (NullPointerException e) {
-            return SimpleVO.builder()
+            throw new Exception("failed : 승격에 실패했습니다.");
+/*            return SimpleVO.builder()
                     .resultCode("failed : 승격에 실패했습니다.")
-                    .build();
+                    .build();*/
         }
     }
 
-    /*TODO
-    *  - 주석 작성
-    * */
+
+    /**
+     * 게시글 블라인드 처리
+     * @param blind
+     * @return
+     */
     @Override
     @Transactional
     public SimpleVO blind(BlindRequestDTO blind) {
