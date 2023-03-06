@@ -3,14 +3,12 @@ package com.example.fieldpasserbe.member.service.impl;
 import com.example.fieldpasserbe.admin.dto.PeriodMemberResponseDTO;
 import com.example.fieldpasserbe.global.response.ErrorResponseDTO;
 import com.example.fieldpasserbe.global.response.ResponseDTO;
-import com.example.fieldpasserbe.member.dto.MemberDTO;
-import com.example.fieldpasserbe.member.dto.MemberDelete;
-import com.example.fieldpasserbe.member.dto.MemberInfo;
-import com.example.fieldpasserbe.member.dto.MemberUpdate;
+import com.example.fieldpasserbe.member.dto.*;
 import com.example.fieldpasserbe.member.entity.Member;
 import com.example.fieldpasserbe.member.repository.MemberRepositoryJPA;
 import com.example.fieldpasserbe.member.service.MemberService;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
@@ -23,8 +21,12 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Optional;
 
+
+
+
 @Service
 @RequiredArgsConstructor
+@Slf4j
 public class MemberServiceImpl implements MemberService {
 
     private final int contentsSize = 10;
@@ -276,16 +278,64 @@ public class MemberServiceImpl implements MemberService {
 
     // 비밀번호 변경
     @Override
-    public String updatePassword(MemberDTO memberDTO,int memberId ) {
+    public ResponseDTO<?> updatePassword(MemberUpdatePassword memberUpdatePassword, int memberId ) {
 
         Member member =memberRepository.findById(memberId).get();
 
         if(member != null){
-            member.updatePassword(passwordEncoder.encode(memberDTO.getPassword()));
+            member.updatePassword(passwordEncoder.encode(memberUpdatePassword.getPassword()));
 
-            return "success";
+            MemberUpdatePassword updatePassword = new MemberUpdatePassword(member);
+            return new ResponseDTO<>(updatePassword);
         }
-        return "failed";
+        return new ErrorResponseDTO(500,"비밀번호 변경을 할 수 없습니다").toResponse();
     }
+
+    /** 이메일이 존재하는지 확인 **/
+    @Override
+    public boolean checkEmail(String memberEmail) {
+
+        /* 이메일이 존재하면 true, 이메일이 없으면 false  */
+        return memberRepository.existsByEmail(memberEmail);
+    }
+
+    /** 임시 비밀번호 생성 **/
+    @Override
+    public String getTmpPassword() {
+        char[] charSet = new char[]{ '0', '1', '2', '3', '4', '5', '6', '7', '8', '9',
+                'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N',
+                'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z'};
+
+        String pwd = "";
+
+        /* 문자 배열 길이의 값을 랜덤으로 10개를 뽑아 조합 */
+        int idx = 0;
+        for(int i = 0; i < 10; i++){
+            idx = (int) (charSet.length * Math.random());
+            pwd += charSet[idx];
+        }
+
+        log.info("임시 비밀번호 생성");
+
+        return pwd;
+    }
+
+    /** 임시 비밀번호로 업데이트 **/
+    @Override
+    public void updatePasswordMail(String tmpPassword, String memberEmail) {
+
+        String encryptPassword = bCryptPasswordEncoder.encode(tmpPassword);
+        Member member = memberRepository.findByEmail(memberEmail);
+
+        member.updatePassword(encryptPassword);
+        log.info("임시 비밀번호 업데이트");
+    }
+
+
+
+
+
+
+
 
 }

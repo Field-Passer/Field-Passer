@@ -4,12 +4,16 @@ package com.example.fieldpasserbe.member.controller;
 
 
 
+import com.example.fieldpasserbe.global.response.ErrorResponseDTO;
 import com.example.fieldpasserbe.global.response.ResponseDTO;
 import com.example.fieldpasserbe.member.dto.MemberDTO;
 
 import com.example.fieldpasserbe.member.dto.MemberUpdate;
 
+import com.example.fieldpasserbe.member.dto.MemberUpdatePassword;
+import com.example.fieldpasserbe.member.service.MailService;
 import com.example.fieldpasserbe.member.service.MemberService;
+import com.example.fieldpasserbe.member.vo.MailVo;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.transaction.annotation.Transactional;
@@ -25,6 +29,8 @@ import javax.servlet.http.HttpSession;
 public class MemberController {
 
     private final MemberService memberService;
+
+    private final MailService mailService;
 
 
 
@@ -50,14 +56,14 @@ public class MemberController {
 
     // 로그아웃
     @PostMapping("/api/auth/logout")
-    public String logout( ){
+    public ResponseDTO<?> logout( ){
         System.out.println("email"+session.getAttribute("email"));
 
         if(session.getAttribute("email")!= null){
             session.setAttribute("email",null);
-            return "success";
+            return new ResponseDTO<>(null);
         }else{
-            return " failed";
+            return new ErrorResponseDTO(500,"로그아웃을 하지 못 했습니다").toResponse();
         }
     }
 
@@ -93,12 +99,48 @@ public class MemberController {
 
     // 비밀번호 변경
     @PatchMapping("/api/:userid/userpwd")
-    public String updatePassword(MemberDTO memberDTO){
+    public ResponseDTO<?> updatePassword(MemberUpdatePassword memberUpdatePassword){
         Integer memberId = (int)session.getAttribute("id");
-        return memberService.updatePassword(memberDTO,memberId);
+        return memberService.updatePassword(memberUpdatePassword,memberId);
     }
 
 
+    /**이메일이 DB에 존재하는지 확인 **/
+    @GetMapping("/checkEmail")
+    public boolean checkEmail(@RequestParam("memberEmail") String memberEmail){
+
+        log.info("checkEmail 진입");
+        return memberService.checkEmail(memberEmail);
+    }
+
+    /** 비밀번호 찾기 - 임시 비밀번호 발급 **/
+
+    @PostMapping("/sendPwd")
+    public String sendPwdEmail(@RequestParam("memberEmail") String memberEmail) {
+
+        //Integer memberId = (int)session.getAttribute("id");
+        try{
+
+            log.info("sendPwdEmail 진입");
+            log.info("이메일 : "+ memberEmail);
+
+            /** 임시 비밀번호 생성 **/
+            String tmpPassword = memberService.getTmpPassword();
+
+            /** 임시 비밀번호 저장 **/
+            memberService.updatePasswordMail(tmpPassword, memberEmail);
+
+            /** 메일 생성 & 전송 **/
+            MailVo mail = mailService.createMail(tmpPassword, memberEmail);
+            mailService.sendMail(mail);
+
+            log.info("임시 비밀번호 전송 완료");
+
+            return "success";
+        }catch (Exception e) {
+            return "failed";
+        }
+    }
 
 
 

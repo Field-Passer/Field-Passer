@@ -4,6 +4,7 @@ import com.example.fieldpasserbe.admin.dto.PeriodMemberResponseDTO;
 import com.example.fieldpasserbe.global.response.ResponseDTO;
 import com.example.fieldpasserbe.member.dto.MemberDTO;
 import com.example.fieldpasserbe.member.dto.MemberUpdate;
+import com.example.fieldpasserbe.member.dto.MemberUpdatePassword;
 import com.example.fieldpasserbe.member.entity.Member;
 import org.springframework.data.domain.Page;
 
@@ -35,6 +36,12 @@ public interface MemberService {
 
     ResponseDTO<?> deleteMember(int memberId); // 회원 탈퇴
 
-    String updatePassword(MemberDTO memberDTO,int memberId);
+    ResponseDTO<?> updatePassword(MemberUpdatePassword memberUpdatePassword, int memberId);
+
+    boolean checkEmail(String memberEmail);
+
+    String getTmpPassword();
+
+    void updatePasswordMail(String tmpPassword, String memberEmail);
 
 }
