@@ -4,7 +4,7 @@ import com.example.fieldpasserbe.admin.dto.BlindRequestDTO;
 import com.example.fieldpasserbe.admin.vo.SimpleVO;
 
 public interface AdminManageService {
-    SimpleVO promoteAdmin(String email);
+    SimpleVO promoteAdmin(String email) throws Exception;
 
     SimpleVO blind(BlindRequestDTO blind);
 }

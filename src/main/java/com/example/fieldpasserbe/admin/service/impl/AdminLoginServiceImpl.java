@@ -7,6 +7,7 @@ import com.example.fieldpasserbe.admin.vo.AdminLoginVO;
 import com.example.fieldpasserbe.member.entity.Member;
 import com.example.fieldpasserbe.member.service.MemberService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import javax.servlet.http.HttpSession;
@@ -18,7 +19,7 @@ import java.util.regex.Pattern;
 public class AdminLoginServiceImpl implements AdminLoginService {
 
     private final MemberService memberService;
-
+    private final PasswordEncoder bCryptPasswordEncoder;
     /**
      * 관리자 로그인
      * @param admin
@@ -62,7 +63,7 @@ public class AdminLoginServiceImpl implements AdminLoginService {
      * @return
      */
     private boolean isValidPassword(AdminLoginRequestDTO admin, Member member) {
-        if (member.getPassword().equals(admin.getPassword())) {
+        if (bCryptPasswordEncoder.matches(admin.getPassword(), member.getPassword())) {
             return true;
         } else {
             return false;

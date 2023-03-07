@@ -2,7 +2,6 @@ package com.example.fieldpasserbe.admin.service.impl;
 
 import com.example.fieldpasserbe.admin.dto.*;
 import com.example.fieldpasserbe.admin.service.AdminService;
-import com.example.fieldpasserbe.admin.repository.AdminRepositoryJPA;
 import com.example.fieldpasserbe.admin.vo.*;
 import com.example.fieldpasserbe.post.service.PostSearchService;
 import com.example.fieldpasserbe.member.entity.Member;
@@ -27,7 +26,6 @@ public class AdminServiceImpl implements AdminService {
     private final MemberService memberService;
     private final PostSearchService postSearchService;
     private final PunishService punishService;
-    private final AdminRepositoryJPA adminRepository;
 
 
     /**
@@ -74,7 +72,7 @@ public class AdminServiceImpl implements AdminService {
      * @return
      */
     @Override
-    public MemberVO memberDetail(int memberId) {
+    public MemberVO memberDetail(int memberId) throws Exception {
         try {
             Member member = memberService.findMemberById(memberId).get();
             PunishDTO punishDTO = punishService.checkPunish(member.getMemberId());
@@ -94,9 +92,7 @@ public class AdminServiceImpl implements AdminService {
                             .build())
                     .build();
         } catch (NullPointerException e) {
-            return MemberVO.builder()
-                    .resultCode("failed : 조회할 수 있는 회원이 없습니다.")
-                    .build();
+            throw new Exception("failed : 조회할 수 있는 회원이 없습니다.");
         }
     }
 
@@ -108,7 +104,7 @@ public class AdminServiceImpl implements AdminService {
      * @return
      */
     @Override
-    public PeriodMemberVO checkNewMember(PeriodRequestDTO period, int page) {
+    public PeriodMemberVO checkNewMember(PeriodRequestDTO period, int page) throws Exception {
         try {
             Page<PeriodMemberResponseDTO> newMember = memberService.checkNewMember(period.getStartDate(), period.getEndDate(), page);
             return PeriodMemberVO.builder()
@@ -120,17 +116,11 @@ public class AdminServiceImpl implements AdminService {
                     .sort(newMember.getSort())
                     .build();
         } catch (NullPointerException e) {
-            return PeriodMemberVO.builder()
-                    .resultCode("failed : 조회할 수 있는 데이터가 없습니다.")
-                    .build();
+            throw new Exception("failed : 조회할 수 있는 데이터가 없습니다.");
         } catch (IllegalStateException e) {
-            return PeriodMemberVO.builder()
-                    .resultCode("failed : 날짜를 잘못 입력했습니다.")
-                    .build();
+            throw new Exception("failed : 날짜를 잘못 입력했습니다.");
         } catch (Exception e) {
-            return PeriodMemberVO.builder()
-                    .resultCode("failed : 뭔가 잘못됐습니다..")
-                    .build();
+            throw new Exception("failed : 뭔가 잘못됐습니다..");
         }
     }
 
@@ -140,7 +130,7 @@ public class AdminServiceImpl implements AdminService {
      * @return
      */
     @Override
-    public PunishVO lookUpPunishment(int page) {
+    public PunishVO lookUpPunishment(int page) throws Exception {
         try {
             Page<Punish> punishment = punishService.findPunishment(page);
             List<PunishResponseDTO> resultData = new ArrayList<>();
@@ -166,9 +156,7 @@ public class AdminServiceImpl implements AdminService {
                     .sort(punishment.getSort())
                     .build();
         } catch (NullPointerException e) {
-            return PunishVO.builder()
-                    .resultCode("failed: 조회할 수 있는 데이터가 없습니다.")
-                    .build();
+            throw new Exception("failed: 조회할 수 있는 데이터가 없습니다.");
         }
     }
 
@@ -179,7 +167,7 @@ public class AdminServiceImpl implements AdminService {
      * @return
      */
     @Override
-    public PostVO findPostsById(int page, int memberId) {
+    public PostVO findPostsById(int page, int memberId) throws Exception {
         try {
             Page<PostResponseDTO> postsById = postSearchService.findPostsById(page, memberId);
             List<PostResponseDTO> content = postsById.getContent();
@@ -192,9 +180,7 @@ public class AdminServiceImpl implements AdminService {
                     .sort(postsById.getSort())
                     .build();
         } catch (NullPointerException e) {
-            return PostVO.builder()
-                    .resultCode("failed: 조회할 수 있는 데이터가 없습니다.")
-                    .build();
+            throw new Exception("failed: 조회할 수 있는 데이터가 없습니다.");
         }
     }
 
@@ -206,7 +192,7 @@ public class AdminServiceImpl implements AdminService {
      * @return
      */
     @Override
-    public PostVO lookupAllPosts(PeriodRequestDTO period, int page) {
+    public PostVO lookupAllPosts(PeriodRequestDTO period, int page) throws Exception {
         try {
             Page<PostResponseDTO> posts = postSearchService.lookupAllPosts(period.getStartDate(), period.getEndDate(), page);
             return PostVO.builder()
@@ -218,22 +204,16 @@ public class AdminServiceImpl implements AdminService {
                     .sort(posts.getSort())
                     .build();
         } catch (NullPointerException e) {
-            return PostVO.builder()
-                    .resultCode("failed : 조회할 수 있는 데이터가 없습니다.")
-                    .build();
+            throw new Exception("failed : 조회할 수 있는 데이터가 없습니다.");
         } catch (IllegalStateException e) {
-            return PostVO.builder()
-                    .resultCode("failed : 날짜를 잘못 입력했습니다.")
-                    .build();
+            throw new Exception("failed : 날짜를 잘못 입력했습니다.");
         } catch (Exception e) {
-            return PostVO.builder()
-                    .resultCode("failed : 뭔가 잘못됐습니다..")
-                    .build();
+            throw new Exception("failed : 뭔가 잘못됐습니다..");
         }
     }
 
     @Override
-    public PeriodPostVO checkNewPosts(PeriodRequestDTO period, int page) {
+    public PeriodPostVO checkNewPosts(PeriodRequestDTO period, int page) throws Exception {
         try {
             Page<PeriodPostResponseDTO> newMember = postSearchService.checkNewposts(period.getStartDate(), period.getEndDate(), page);
             return PeriodPostVO.builder()
@@ -245,17 +225,11 @@ public class AdminServiceImpl implements AdminService {
                     .sort(newMember.getSort())
                     .build();
         } catch (NullPointerException e) {
-            return PeriodPostVO.builder()
-                    .resultCode("failed : 조회할 수 있는 데이터가 없습니다.")
-                    .build();
+            throw new Exception("failed : 조회할 수 있는 데이터가 없습니다.");
         } catch (IllegalStateException e) {
-            return PeriodPostVO.builder()
-                    .resultCode("failed : 날짜를 잘못 입력했습니다.")
-                    .build();
+            throw new Exception("failed : 날짜를 잘못 입력했습니다.");
         } catch (Exception e) {
-            return PeriodPostVO.builder()
-                    .resultCode("failed : 뭔가 잘못됐습니다..")
-                    .build();
+            throw new Exception("failed : 뭔가 잘못됐습니다..");
         }
     }
 }
