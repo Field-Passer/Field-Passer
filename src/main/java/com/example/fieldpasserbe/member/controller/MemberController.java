@@ -14,6 +14,7 @@ import com.example.fieldpasserbe.member.dto.MemberUpdatePassword;
 import com.example.fieldpasserbe.member.service.MailService;
 import com.example.fieldpasserbe.member.service.MemberService;
 import com.example.fieldpasserbe.member.vo.MailVo;
+import io.swagger.models.Response;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.transaction.annotation.Transactional;
@@ -39,17 +40,6 @@ public class MemberController {
     //로그인
     @PostMapping("/api/auth/login")
     public ResponseDTO<?> login(String email, String password ){
-
-
-//        String result = memberService.LoginMember(email,password);
-//        Integer id = memberService.findByEmail(email);
-//        System.out.println("result=" +result);
-//        if(result.equals("success")){
-//            session.setAttribute("email",email);
-//            System.out.println("email" + session.getAttribute("email"));
-//            session.setAttribute("id",id);
-//
-//        }
 
         return memberService.LoginMember(email,password);
     }
@@ -107,7 +97,7 @@ public class MemberController {
 
     /**이메일이 DB에 존재하는지 확인 **/
     @GetMapping("/checkEmail")
-    public boolean checkEmail(@RequestParam("memberEmail") String memberEmail){
+    public ResponseDTO<?> checkEmail(@RequestParam("memberEmail") String memberEmail){
 
         log.info("checkEmail 진입");
         return memberService.checkEmail(memberEmail);
@@ -140,6 +130,21 @@ public class MemberController {
         }catch (Exception e) {
             return "failed";
         }
+    }
+
+
+    /** 이메일 중복검사 **/
+    @GetMapping("/email-duplicateTest")
+    public ResponseDTO<?> checkEmailDuplicate(@RequestParam("Email")String Email){
+        return memberService.checkEmailDuplicate(Email);
+
+    }
+
+
+    /** memberName 중복 검사 **/
+    @GetMapping("/memberName-duplicateTest")
+    public ResponseDTO<?> checkMemberNameDuplicate(@RequestParam("memberName") String memberName){
+        return memberService.checkMemberNameDuplicate(memberName);
     }
 
 

@@ -3,7 +3,9 @@ package com.example.fieldpasserbe.member.entity;
 import com.example.fieldpasserbe.admin.entity.Admin;
 import com.example.fieldpasserbe.chat.entity.ChatMessage;
 import com.example.fieldpasserbe.chat.entity.ChatRoom;
+import com.example.fieldpasserbe.support.entity.Question;
 import lombok.*;
+import org.hibernate.annotations.CreationTimestamp;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
 import javax.persistence.*;
@@ -40,7 +42,8 @@ public class Member {
     @Column(name = "AUTHORITY",columnDefinition = "TINYINT(1) DEFAULT 0",length = 1)
     private int authority;
 
-    @Column(name = "SIGNUP_DATE")
+    @CreationTimestamp
+    @Column(name = "SIGNUP_DATE", nullable = false)
     private LocalDateTime signUpDate;
 
     @Column(name = "VISIT_COUNT")
