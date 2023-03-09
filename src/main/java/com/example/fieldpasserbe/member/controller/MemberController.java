@@ -14,7 +14,6 @@ import com.example.fieldpasserbe.member.dto.MemberUpdatePassword;
 import com.example.fieldpasserbe.member.service.MailService;
 import com.example.fieldpasserbe.member.service.MemberService;
 import com.example.fieldpasserbe.member.vo.MailVo;
-import io.swagger.models.Response;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.transaction.annotation.Transactional;
@@ -47,7 +46,6 @@ public class MemberController {
     // 로그아웃
     @PostMapping("/api/auth/logout")
     public ResponseDTO<?> logout( ){
-        System.out.println("email"+session.getAttribute("email"));
 
         if(session.getAttribute("email")!= null){
             session.setAttribute("email",null);
@@ -108,7 +106,6 @@ public class MemberController {
     @PostMapping("/sendPwd")
     public String sendPwdEmail(@RequestParam("memberEmail") String memberEmail) {
 
-        //Integer memberId = (int)session.getAttribute("id");
         try{
 
             log.info("sendPwdEmail 진입");
@@ -139,15 +136,12 @@ public class MemberController {
         return memberService.checkEmailDuplicate(Email);
 
     }
-
-
+    
     /** memberName 중복 검사 **/
     @GetMapping("/memberName-duplicateTest")
     public ResponseDTO<?> checkMemberNameDuplicate(@RequestParam("memberName") String memberName){
         return memberService.checkMemberNameDuplicate(memberName);
     }
-
-
 
 
 }
