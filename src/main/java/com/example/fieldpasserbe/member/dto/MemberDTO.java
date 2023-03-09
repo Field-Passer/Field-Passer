@@ -54,6 +54,7 @@ public class MemberDTO {
     }
 
     public MemberDTO(Member member){
+        this.memberId = member.getMemberId();
         this.email=member.getEmail();
         this.memberName = member.getMemberName();
         this.profileImg = member.getProfileImg();

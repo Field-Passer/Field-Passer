@@ -28,6 +28,7 @@ public class MemberUpdate {
     }
 
     public MemberUpdate(Member member){
+        this.memberId = member.getMemberId();
         this.email = member.getEmail();
         this.memberName = member.getMemberName();
         this.profileImg = member.getProfileImg();
