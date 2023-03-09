@@ -17,6 +17,7 @@ public class MemberUpdatePassword {
 
 
     public MemberUpdatePassword(Member member){
+
         this.password = member.getPassword();
     }
 }
