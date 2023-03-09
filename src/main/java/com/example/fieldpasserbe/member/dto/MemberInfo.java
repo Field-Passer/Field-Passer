@@ -19,6 +19,7 @@ public class MemberInfo {
     private String profileImg;
 
     public MemberInfo(Member member) {
+        this.memberId = member.getMemberId();
         this.email = member.getEmail();
         this.memberName = member.getMemberName();
         this.profileImg = member.getProfileImg();

@@ -169,8 +169,7 @@ public class MemberServiceImpl implements MemberService {
         }else{
             session.setAttribute("email",member.getEmail());
             session.setAttribute("id",member.getMemberId());
-            System.out.println("id = "+session.getAttribute("id"));
-            System.out.println("email = "+session.getAttribute("email"));
+
 
             MemberDTO memberDTO = new MemberDTO(member);
 
@@ -212,15 +211,12 @@ public class MemberServiceImpl implements MemberService {
 
     // 회원 정보 조회
     public ResponseDTO<?> selectMember(int memberId)throws NullPointerException {
-        System.out.println("sessionID =" + session.getAttribute("id"));
 
         try {
 
-
-
             MemberInfo memberinfo= memberRepository.findMemberByMemberId(memberId).
                     map(member -> new MemberInfo(member)).get();
-            System.out.println("memberinfo = "+memberinfo);
+
             return new ResponseDTO<>(memberinfo);
         } catch (NullPointerException e) {
 
@@ -298,9 +294,6 @@ public class MemberServiceImpl implements MemberService {
 
         session.setAttribute("email",member.getEmail());
 
-        System.out.println("email" + session.getAttribute("email"));
-
-
         return new ResponseDTO<>(member.getEmail());
 
 
@@ -333,7 +326,6 @@ public class MemberServiceImpl implements MemberService {
     public void updatePasswordMail(String tmpPassword, String memberEmail) {
 
         String sessionEmail = (String)session.getAttribute("email");
-        System.out.println("Email = " +sessionEmail );
 
         if(memberEmail == null){
             log.info("해당 이메일이 없습니다 ");
@@ -341,7 +333,6 @@ public class MemberServiceImpl implements MemberService {
             String encryptPassword = bCryptPasswordEncoder.encode(tmpPassword);
             Member member = memberRepository.findByEmail(memberEmail);
 
-            System.out.println("memberemail = " + member.getEmail());
             member.updatePassword(encryptPassword);
             log.info("임시 비밀번호 업데이트");
         }
