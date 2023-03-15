@@ -38,10 +38,10 @@ public interface MemberRepositoryJPA extends JpaRepository<Member, Integer> {
     Page<Member> findAllMembers(Pageable pageable);
 
     //신규 회원 기간 조회
-    @Query(value = "select Date_Format(m.signUp_Date, '%Y-%m-%d') as date, count(m.id) as memberNum from field_passer.Member as m where Date_Format(m.signUp_Date, '%Y-%m-%d') between :startDate AND :endDate AND m.DELETE_CHECK = 0 GROUP BY Date_Format(m.signUp_Date, '%Y-%m-%d') order by date asc",
+    @Query(value = "select Date_Format(m.signUp_Date, '%Y-%m-%d') as date, count(m.id) as memberNum from fieldpasser.Member as m where Date_Format(m.signUp_Date, '%Y-%m-%d') between :startDate AND :endDate AND m.DELETE_CHECK = 0 GROUP BY Date_Format(m.signUp_Date, '%Y-%m-%d') order by date asc",
              countQuery = "select count(*) as count " +
                      "from(" +
-                     "select Date_Format(m.signUp_Date, '%Y-%m-%d') as date, count(m.id) as count from field_passer.Member as m where Date_Format(m.signUp_Date, '%Y-%m-%d') between :startDate AND :endDate AND m.DELETE_CHECK = 0 GROUP BY Date_Format(m.signUp_Date, '%Y-%m-%d')" +
+                     "select Date_Format(m.signUp_Date, '%Y-%m-%d') as date, count(m.id) as count from fieldpasser.Member as m where Date_Format(m.signUp_Date, '%Y-%m-%d') between :startDate AND :endDate AND m.DELETE_CHECK = 0 GROUP BY Date_Format(m.signUp_Date, '%Y-%m-%d')" +
                      ") as c", nativeQuery = true)
     Page<PeriodMemberResponseDTO> findNewMember(@Param("startDate") String startDate, @Param("endDate") String endDate, PageRequest pageRequest);
 
