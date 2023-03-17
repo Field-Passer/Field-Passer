@@ -7,6 +7,7 @@ import com.example.fieldpasserbe.member.dto.MemberUpdate;
 import com.example.fieldpasserbe.member.dto.MemberUpdatePassword;
 import com.example.fieldpasserbe.member.entity.Member;
 import org.springframework.data.domain.Page;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.Optional;
 
@@ -28,7 +29,7 @@ public interface MemberService {
 
     Integer findByEmail(String email); // session id 저장용
 
-    ResponseDTO<?> signUp(MemberDTO memberDTO);// 회원가입
+    ResponseDTO<?> signUp(MemberDTO memberDTO, MultipartFile file);// 회원가입
 
     ResponseDTO<?> selectMember(int memberId); // 회원정보 조회
 
