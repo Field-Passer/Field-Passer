@@ -75,14 +75,14 @@ public interface PostRepositoryJPA extends JpaRepository<Post, Integer> {
             "p.PRICE as price," +
             "p.TRANSACTION_STATUS as transactionStatus," +
             "p.blind as blind " +
-            "FROM field_passer.post as p " +
-            "left join field_passer.stadium_list as s " +
+            "FROM fieldpasser.post as p " +
+            "left join fieldpasser.stadium_list as s " +
             "on s.stadium_id = p.stadium_id " +
-            "left join field_passer.district_list as d " +
+            "left join fieldpasser.district_list as d " +
             "on d.district_id = p.district_id " +
-            "left join field_passer.category_list as c " +
+            "left join fieldpasser.category_list as c " +
             "on c.category_id = p.category_id " +
-            "left join field_passer.member as m " +
+            "left join fieldpasser.member as m " +
             "on m.id = p.id " +
             "where p.id = :memberId " +
             "and p.DELETE_CHECK = 0", nativeQuery = true)
@@ -101,39 +101,39 @@ public interface PostRepositoryJPA extends JpaRepository<Post, Integer> {
             "p.PRICE as price, " +
             "p.TRANSACTION_STATUS as transactionStatus, " +
             "p.blind as blind " +
-            "FROM field_passer.post as p " +
-            "left join field_passer.stadium_list as s " +
+            "FROM fieldpasser.post as p " +
+            "left join fieldpasser.stadium_list as s " +
             "on s.stadium_id = p.stadium_id " +
-            "left join field_passer.district_list as d " +
+            "left join fieldpasser.district_list as d " +
             "on d.district_id = p.district_id " +
-            "left join field_passer.category_list as c " +
+            "left join fieldpasser.category_list as c " +
             "on c.category_id = p.category_id " +
-            "left join field_passer.member as m " +
+            "left join fieldpasser.member as m " +
             "on m.id = p.id " +
             "where p.DELETE_CHECK = 0 " +
             "AND Date_Format(p.register_Date, '%Y-%m-%d') between :startDate AND :endDate",
             countQuery = "select count(p.post_id) " +
-            "FROM field_passer.post as p " +
-            "left join field_passer.stadium_list as s " +
+            "FROM fieldpasser.post as p " +
+            "left join fieldpasser.stadium_list as s " +
             "on s.stadium_id = p.stadium_id " +
-            "left join field_passer.district_list as d " +
+            "left join fieldpasser.district_list as d " +
             "on d.district_id = p.district_id " +
-            "left join field_passer.category_list as c " +
+            "left join fieldpasser.category_list as c " +
             "on c.category_id = p.category_id " +
-            "left join field_passer.member as m " +
+            "left join fieldpasser.member as m " +
             "on m.id = p.id " +
             "where p.DELETE_CHECK = 0 " +
             "AND Date_Format(p.register_Date, '%Y-%m-%d') between :startDate AND :endDate", nativeQuery = true)
     Page<PostResponseDTO> findTotalPosts(@Param("startDate") String startDate, @Param("endDate") String endDate, PageRequest pageRequest);
 
-    @Query(value = "select Date_Format(p.register_Date, '%Y-%m-%d') as date, count(p.post_id) as postNum from field_passer.post as p where Date_Format(p.register_Date, '%Y-%m-%d') between :startDate AND :endDate AND p.DELETE_CHECK = 0 GROUP BY Date_Format(p.register_Date, '%Y-%m-%d') order by date asc",
+    @Query(value = "select Date_Format(p.register_Date, '%Y-%m-%d') as date, count(p.post_id) as postNum from fieldpasser.post as p where Date_Format(p.register_Date, '%Y-%m-%d') between :startDate AND :endDate AND p.DELETE_CHECK = 0 GROUP BY Date_Format(p.register_Date, '%Y-%m-%d') order by date asc",
             countQuery = "select count(*) as count " +
                     "from(" +
-                    "select Date_Format(p.register_Date, '%Y-%m-%d') as date, count(p.post_id) as postNum from field_passer.post as p where Date_Format(p.register_Date, '%Y-%m-%d') between :startDate AND :endDate AND p.DELETE_CHECK = 0 GROUP BY Date_Format(p.register_Date, '%Y-%m-%d')" +
+                    "select Date_Format(p.register_Date, '%Y-%m-%d') as date, count(p.post_id) as postNum from fieldpasser.post as p where Date_Format(p.register_Date, '%Y-%m-%d') between :startDate AND :endDate AND p.DELETE_CHECK = 0 GROUP BY Date_Format(p.register_Date, '%Y-%m-%d')" +
                     ") as c", nativeQuery = true)
     Page<PeriodPostResponseDTO> findNewPosts(String startDate, String endDate, PageRequest pageRequest);
 
-    @Query(value = "select * from field_passer.post as p where p.post_id = :postId", nativeQuery = true)
+    @Query(value = "select * from fieldpasser.post as p where p.post_id = :postId", nativeQuery = true)
     Optional<Post> findByPostIdIncludeBlind(@Param("postId") int postId);
 
 }
