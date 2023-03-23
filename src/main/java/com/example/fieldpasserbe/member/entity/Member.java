@@ -34,7 +34,7 @@ public class Member {
     @Column(name = "MEMBERNAME")
     private String memberName;
 
-    @Column(name = "PROFILE_IMG")
+    @Column(name = "PROFILE_IMG",nullable = false)
     private String profileImg;
     @Column(name = "PRIVILEGE",columnDefinition = "TINYINT(1) DEFAULT 0",length = 1)
     private int privilege;

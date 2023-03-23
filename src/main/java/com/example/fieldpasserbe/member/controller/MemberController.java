@@ -19,6 +19,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpSession;
 
@@ -57,9 +58,9 @@ public class MemberController {
 
     //회원가입
     @PostMapping("/api/auth/register")
-    public ResponseDTO<?> Signup(@ModelAttribute @Validated MemberDTO memberdto){
+    public ResponseDTO<?> Signup(@ModelAttribute @Validated MemberDTO memberdto,@RequestParam("file") MultipartFile file){
 
-        return memberService.signUp(memberdto);
+        return memberService.signUp(memberdto,file);
     }
 
     // 회원 정보 조회

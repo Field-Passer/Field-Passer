@@ -8,6 +8,7 @@ import com.example.fieldpasserbe.member.entity.Member;
 import com.example.fieldpasserbe.member.repository.MemberRepositoryJPA;
 import com.example.fieldpasserbe.member.service.MemberService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Value;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -15,13 +16,18 @@ import org.springframework.data.domain.Sort;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpSession;
+import java.io.File;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Optional;
-
-
+import java.util.UUID;
 
 
 @Service
@@ -38,6 +44,9 @@ public class MemberServiceImpl implements MemberService {
     private final HttpSession session;
 
     private final PasswordEncoder passwordEncoder;
+
+    @Value("C:/Users/zan04/file/")
+    private String uploadDir;
 
     /**
      * 회원 id로 회원 정보 조회
@@ -187,12 +196,14 @@ public class MemberServiceImpl implements MemberService {
     }
 
     //회원가입
+    @Transactional
     @Override
-    public ResponseDTO<?> signUp(MemberDTO memberDTO) {
+    public ResponseDTO<?> signUp(MemberDTO memberDTO, MultipartFile file) {
 
 
         try{
-
+            String image = uploadPic(file);
+            memberDTO.setProfileImg(image);
             Member newMember = memberDTO.toEntity();
             newMember.Authority();
             newMember.hashPassword(bCryptPasswordEncoder);
@@ -366,6 +377,22 @@ public class MemberServiceImpl implements MemberService {
             return new ResponseDTO<>("닉네임 사용 가능합니다! ");
 
         }
+    }
+
+    /**  파일 업로드 관련 메서드  **/
+
+    public String uploadPic(MultipartFile file) throws IOException{
+        Path uploadPath = Paths.get(uploadDir);
+        if(!Files.isDirectory(uploadPath)){
+            Files.createDirectories(uploadPath);
+        }
+
+        UUID uuid = UUID.randomUUID();// 중복 방지를 위한 랜덤값
+        String originFileName = file.getOriginalFilename(); // 파일 원래 이름
+        String fullPath = uploadDir + uuid.toString() + "_" + originFileName;
+        file.transferTo(new File(fullPath));
+
+        return fullPath;
     }
 
 
