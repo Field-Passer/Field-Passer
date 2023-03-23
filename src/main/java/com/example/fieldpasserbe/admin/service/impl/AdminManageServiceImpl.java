@@ -57,10 +57,13 @@ public class AdminManageServiceImpl implements AdminManageService {
     @Override
     @Transactional
     public SimpleVO blind(BlindRequestDTO blind) {
-        Post post = postRepository.findByPostId(blind.getPostId()).get();
-        if (blind.isBlind()) {
+        Post post = postRepository.findByPostIdIncludeBlind(blind.getPostId()).get();
+        if (post.getBlind() == 0) {
             post.BlindPost();
+        } else if (post.getBlind() == 1){
+            post.unBlindPost();
         }
+
         return SimpleVO.builder()
                 .resultCode("success")
                 .build();
