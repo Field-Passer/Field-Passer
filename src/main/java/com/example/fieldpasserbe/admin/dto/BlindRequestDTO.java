@@ -11,5 +11,4 @@ import lombok.NoArgsConstructor;
 @Builder
 public class BlindRequestDTO {
     private int postId;
-    private boolean blind;
 }
