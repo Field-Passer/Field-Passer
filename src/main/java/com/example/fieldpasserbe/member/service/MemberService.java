@@ -34,7 +34,9 @@ public interface MemberService {
 
     ResponseDTO<?> selectMember(int memberId); // 회원정보 조회
 
-    ResponseDTO<?> updateMember(int memberId, MemberUpdate memberUpdate,MultipartFile profileImg) throws IOException; // 회원 정보 수정
+
+    ResponseDTO<?> updateMember(int memberId, MemberUpdate memberUpdate,MultipartFile profileImg); // 회원 정보 수정
+
 
     ResponseDTO<?> deleteMember(int memberId); // 회원 탈퇴
 
