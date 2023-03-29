@@ -240,24 +240,28 @@ public class MemberServiceImpl implements MemberService {
 
 
     // 회원 정보 수정
+    @Transactional
     @Override
-    public ResponseDTO<?> updateMember(int memberId , MemberUpdate memberUpdate) {
-
+    public ResponseDTO<?> updateMember(int memberId , MemberUpdate memberUpdate,MultipartFile profileImg) {
+    try{
+        String img =  uploadPic(profileImg);
+        memberUpdate.setImage(img);
 
         Member member = memberRepository.findById(memberId).get();
+        
+        member.updateMember(memberUpdate.getEmail(),
+                memberUpdate.getMemberName()  ,memberUpdate.getImage());
 
-        if(member != null){
-
-            member.updateMeber(memberUpdate.getEmail(),
-                    memberUpdate.getProfileImg(),memberUpdate.getMemberName());
-
-            MemberUpdate memberupdate = new MemberUpdate(member);
+        MemberUpdate memberupdate = new MemberUpdate(member);
 
 
-            return new ResponseDTO<>(memberupdate);
+
+        return new ResponseDTO<>(memberupdate);
+    }catch (Exception e){
+
+            e.printStackTrace();
+            return new ErrorResponseDTO(500,"해당 회원을 수정 할 수 없습니다").toResponse();
         }
-
-        return new ErrorResponseDTO(500,"해당 회원을 수정 할 수 없습니다").toResponse();
     }
 
     //회원 삭제
@@ -268,7 +272,7 @@ public class MemberServiceImpl implements MemberService {
         Member findMember = memberRepository.findById(memberId).get();
 
         if(findMember != null){
-            findMember.delteMember();
+            findMember.deleteMember();
 
             MemberDelete memberDelete = new MemberDelete(findMember);
             return new ResponseDTO<>(memberDelete);
