@@ -225,6 +225,7 @@ public class MemberServiceImpl implements MemberService {
 
         try {
 
+
             MemberInfo memberinfo= memberRepository.findMemberByMemberId(memberId).
                     map(member -> new MemberInfo(member)).get();
 
@@ -240,16 +241,21 @@ public class MemberServiceImpl implements MemberService {
 
 
     // 회원 정보 수정
+    @Transactional
     @Override
-    public ResponseDTO<?> updateMember(int memberId , MemberUpdate memberUpdate) {
+    public ResponseDTO<?> updateMember(int memberId , MemberUpdate memberUpdate,MultipartFile profileImg) throws IOException {
+
 
 
         Member member = memberRepository.findById(memberId).get();
 
         if(member != null){
 
-            member.updateMeber(memberUpdate.getEmail(),
-                    memberUpdate.getProfileImg(),memberUpdate.getMemberName());
+            String img = uploadPic(profileImg);
+            memberUpdate.setImage(img);
+
+            member.updateMember(memberUpdate.getEmail(),
+                    memberUpdate.getImage(),memberUpdate.getMemberName());
 
             MemberUpdate memberupdate = new MemberUpdate(member);
 
@@ -268,7 +274,7 @@ public class MemberServiceImpl implements MemberService {
         Member findMember = memberRepository.findById(memberId).get();
 
         if(findMember != null){
-            findMember.delteMember();
+            findMember.deleteMember();
 
             MemberDelete memberDelete = new MemberDelete(findMember);
             return new ResponseDTO<>(memberDelete);

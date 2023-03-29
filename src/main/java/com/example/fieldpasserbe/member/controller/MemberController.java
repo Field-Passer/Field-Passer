@@ -22,6 +22,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpSession;
+import java.io.IOException;
 
 @RequiredArgsConstructor
 @RestController
@@ -73,9 +74,9 @@ public class MemberController {
 
     //회원 정보 수정
     @PatchMapping("/api/:userid/userinfo")
-    public ResponseDTO<?> updateMember(MemberUpdate memberUpdate){
+    public ResponseDTO<?> updateMember(MemberUpdate memberUpdate,@RequestParam("profileImg") MultipartFile profileImg) throws IOException {
         Integer memberId = (int)session.getAttribute("id");
-        return memberService.updateMember(memberId,memberUpdate);
+        return memberService.updateMember(memberId,memberUpdate,profileImg);
     }
 
 

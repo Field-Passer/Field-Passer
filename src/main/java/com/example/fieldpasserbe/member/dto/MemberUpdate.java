@@ -15,23 +15,23 @@ public class MemberUpdate {
     private String email;
     private String password;
     private String memberName;
-    private String profileImg;
+    private String image;
 
-    public Member toEntity(){
-        return Member.builder()
-                .memberId(this.memberId)
-                .email(this.email)
-                .password(this.password)
-                .profileImg(this.profileImg)
-                .memberName(this.memberName)
-                .build();
-    }
+//    public Member toEntity(){
+//        return Member.builder()
+//                .memberId(this.memberId)
+//                .email(this.email)
+//                .password(this.password)
+//                .profileImg(this.image)
+//                .memberName(this.memberName)
+//                .build();
+//    }
 
     public MemberUpdate(Member member){
         this.memberId = member.getMemberId();
         this.email = member.getEmail();
         this.memberName = member.getMemberName();
-        this.profileImg = member.getProfileImg();
+        this.image = member.getProfileImg();
 
 
     }
