@@ -29,7 +29,7 @@ public interface MemberService {
 
     Integer findByEmail(String email); // session id 저장용
 
-    ResponseDTO<?> signUp(MemberDTO memberDTO, MultipartFile file);// 회원가입
+    ResponseDTO<?> signUp(MemberDTO memberDTO, MultipartFile profileImg);// 회원가입
 
     ResponseDTO<?> selectMember(int memberId); // 회원정보 조회
 

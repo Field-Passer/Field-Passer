@@ -198,12 +198,12 @@ public class MemberServiceImpl implements MemberService {
     //회원가입
     @Transactional
     @Override
-    public ResponseDTO<?> signUp(MemberDTO memberDTO, MultipartFile file) {
+    public ResponseDTO<?> signUp(MemberDTO memberDTO, MultipartFile profileImg) {
 
 
         try{
-            String image = uploadPic(file);
-            memberDTO.setProfileImg(image);
+            String image2 = uploadPic(profileImg);
+            memberDTO.setImage(image2);
             Member newMember = memberDTO.toEntity();
             newMember.Authority();
             newMember.hashPassword(bCryptPasswordEncoder);
@@ -381,16 +381,16 @@ public class MemberServiceImpl implements MemberService {
 
     /**  파일 업로드 관련 메서드  **/
 
-    public String uploadPic(MultipartFile file) throws IOException{
+    public String uploadPic(MultipartFile profileImg) throws IOException{
         Path uploadPath = Paths.get(uploadDir);
         if(!Files.isDirectory(uploadPath)){
             Files.createDirectories(uploadPath);
         }
 
         UUID uuid = UUID.randomUUID();// 중복 방지를 위한 랜덤값
-        String originFileName = file.getOriginalFilename(); // 파일 원래 이름
+        String originFileName = profileImg.getOriginalFilename(); // 파일 원래 이름
         String fullPath = uploadDir + uuid.toString() + "_" + originFileName;
-        file.transferTo(new File(fullPath));
+        profileImg.transferTo(new File(fullPath));
 
         return fullPath;
     }

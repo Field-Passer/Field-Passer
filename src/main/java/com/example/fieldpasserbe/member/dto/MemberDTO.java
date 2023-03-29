@@ -25,7 +25,7 @@ public class MemberDTO {
 
     @Size(min = 2, max = 10, message = "닉네임은 2자 이상 10자 이하로 입력해주세요.")
     private String memberName;
-    private String profileImg;
+    private String image;
 
     private byte privilege;
     private byte authority;
@@ -43,7 +43,7 @@ public class MemberDTO {
                 .password(this.password)
                 .email(this.email)
                 .memberName(this.memberName)
-                .profileImg(this.profileImg)
+                .profileImg(this.image)
                 .privilege(this.privilege)
                 .authority(this.authority)
                 .visitCount(this.visitCount)
@@ -57,7 +57,7 @@ public class MemberDTO {
         this.memberId = member.getMemberId();
         this.email=member.getEmail();
         this.memberName = member.getMemberName();
-        this.profileImg = member.getProfileImg();
+        this.image = member.getProfileImg();
         this.signUpDate = member.getSignUpDate();
     }
 

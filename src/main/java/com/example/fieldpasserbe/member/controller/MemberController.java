@@ -58,9 +58,9 @@ public class MemberController {
 
     //회원가입
     @PostMapping("/api/auth/register")
-    public ResponseDTO<?> Signup(@ModelAttribute @Validated MemberDTO memberdto,@RequestParam("file") MultipartFile file){
+    public ResponseDTO<?> Signup(@ModelAttribute @Validated MemberDTO memberdto,@RequestParam("profileImg") MultipartFile profileImg){
 
-        return memberService.signUp(memberdto,file);
+        return memberService.signUp(memberdto,profileImg);
     }
 
     // 회원 정보 조회
