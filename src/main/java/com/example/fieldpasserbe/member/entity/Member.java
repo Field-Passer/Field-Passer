@@ -111,14 +111,14 @@ public class Member {
         return passwordEncoder.matches(plainPassword, this.password);
     }
 
-    public void updateMeber(String email, String memberName,String profileImg){
+    public void updateMember(String email, String memberName,String profileImg){
         this.email = email;
         this.memberName = memberName;
         this.profileImg = profileImg;
 
     }
 
-    public void delteMember(){
+    public void deleteMember(){
         this.delete = 1;
     }
 

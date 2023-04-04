@@ -22,6 +22,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpSession;
+import java.io.IOException;
 
 @RequiredArgsConstructor
 @RestController
@@ -58,9 +59,9 @@ public class MemberController {
 
     //회원가입
     @PostMapping("/api/auth/register")
-    public ResponseDTO<?> Signup(@ModelAttribute @Validated MemberDTO memberdto,@RequestParam("file") MultipartFile file){
+    public ResponseDTO<?> Signup(@ModelAttribute @Validated MemberDTO memberdto,@RequestParam("profileImg") MultipartFile profileImg){
 
-        return memberService.signUp(memberdto,file);
+        return memberService.signUp(memberdto,profileImg);
     }
 
     // 회원 정보 조회
@@ -73,9 +74,10 @@ public class MemberController {
 
     //회원 정보 수정
     @PatchMapping("/api/:userid/userinfo")
-    public ResponseDTO<?> updateMember(MemberUpdate memberUpdate){
+
+    public ResponseDTO<?> updateMember(MemberUpdate memberUpdate, @RequestParam("profileImg") MultipartFile profileImg){
         Integer memberId = (int)session.getAttribute("id");
-        return memberService.updateMember(memberId,memberUpdate);
+        return memberService.updateMember(memberId,memberUpdate,profileImg);
     }
 
 
