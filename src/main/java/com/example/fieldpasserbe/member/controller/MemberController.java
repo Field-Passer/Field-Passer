@@ -50,7 +50,9 @@ public class MemberController {
     public ResponseDTO<?> logout( ){
 
         if(session.getAttribute("email")!= null){
-            session.setAttribute("email",null);
+           // session.setAttribute("email",null);
+            session.invalidate();
+            System.out.println("session="+session.getAttribute("email"));
             return new ResponseDTO<>(null);
         }else{
             return new ErrorResponseDTO(500,"로그아웃을 하지 못 했습니다").toResponse();
